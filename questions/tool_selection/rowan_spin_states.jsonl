@@ -1,0 +1,20 @@
+{"prompt": "Determine the spin multiplicity of oxygen molecule", "expected_tools": ["rowan_spin_states"], "category": "reactivity_analysis"}
+{"prompt": "What is the ground state spin of iron(II) complex?", "expected_tools": ["rowan_spin_states"], "category": "reactivity_analysis"}
+{"prompt": "Calculate spin states of cobalt(III) compound", "expected_tools": ["rowan_spin_states"], "category": "reactivity_analysis"}
+{"prompt": "Find the spin multiplicity of NO radical", "expected_tools": ["rowan_spin_states"], "category": "reactivity_analysis"}
+{"prompt": "Determine spin state of manganese dioxide", "expected_tools": ["rowan_spin_states"], "category": "reactivity_analysis"}
+{"prompt": "What's the spin of copper(II) acetate?", "expected_tools": ["rowan_spin_states"], "category": "reactivity_analysis"}
+{"prompt": "Calculate possible spin states of chromium complex", "expected_tools": ["rowan_spin_states"], "category": "reactivity_analysis"}
+{"prompt": "Find spin multiplicity of nickel catalyst", "expected_tools": ["rowan_spin_states"], "category": "reactivity_analysis"}
+{"prompt": "Determine the spin state of vanadium oxide", "expected_tools": ["rowan_spin_states"], "category": "reactivity_analysis"}
+{"prompt": "What is the ground state spin of titanium compound?", "expected_tools": ["rowan_spin_states"], "category": "reactivity_analysis"}
+{"prompt": "Calculate spin states of ruthenium complex", "expected_tools": ["rowan_spin_states"], "category": "reactivity_analysis"}
+{"prompt": "Find the spin multiplicity of carbene", "expected_tools": ["rowan_spin_states"], "category": "reactivity_analysis"}
+{"prompt": "Determine spin state of nitroxide radical", "expected_tools": ["rowan_spin_states"], "category": "reactivity_analysis"}
+{"prompt": "What's the spin of triplet oxygen?", "expected_tools": ["rowan_spin_states"], "category": "reactivity_analysis"}
+{"prompt": "Calculate possible spins of biradical species", "expected_tools": ["rowan_spin_states"], "category": "reactivity_analysis"}
+{"prompt": "Find spin multiplicity of methylene", "expected_tools": ["rowan_spin_states"], "category": "reactivity_analysis"}
+{"prompt": "Determine the spin state of superoxide", "expected_tools": ["rowan_spin_states"], "category": "reactivity_analysis"}
+{"prompt": "What is the ground state spin of palladium catalyst?", "expected_tools": ["rowan_spin_states"], "category": "reactivity_analysis"}
+{"prompt": "Calculate spin states of rhodium complex", "expected_tools": ["rowan_spin_states"], "category": "reactivity_analysis"}
+{"prompt": "Find the spin multiplicity of platinum compound", "expected_tools": ["rowan_spin_states"], "category": "reactivity_analysis"}

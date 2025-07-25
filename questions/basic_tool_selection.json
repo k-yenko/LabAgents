@@ -1,0 +1,348 @@
+{
+  "benchmark_type": "basic",
+  "questions": [
+    {
+      "question": "What is the pKa of aspirin (CC(=O)Oc1ccccc1C(=O)O)?",
+      "correct_tool": "rowan_pka",
+      "category": "acid_base",
+      "molecule": "CC(=O)Oc1ccccc1C(=O)O",
+      "explanation": "This question asks for a single pKa value, which is directly calculated by rowan_pka"
+    },
+    {
+      "question": "I need to find the most stable conformer of cyclohexanol (OC1CCCCC1). Which tool should I use?",
+      "correct_tool": "rowan_conformers",
+      "category": "conformational_analysis",
+      "molecule": "OC1CCCCC1",
+      "explanation": "Finding stable conformers is the primary purpose of rowan_conformers"
+    },
+    {
+      "question": "Calculate the bond dissociation energy of the O-H bond in phenol (Oc1ccccc1).",
+      "correct_tool": "rowan_bde",
+      "category": "thermodynamics",
+      "molecule": "Oc1ccccc1",
+      "explanation": "Bond dissociation energy calculations are specifically handled by rowan_bde"
+    },
+    {
+      "question": "Predict the ADMET properties of this drug candidate: CC(C)Cc1ccc(cc1)C(C)C(=O)O",
+      "correct_tool": "rowan_admet",
+      "category": "drug_properties",
+      "molecule": "CC(C)Cc1ccc(cc1)C(C)C(=O)O",
+      "explanation": "ADMET property prediction is the sole purpose of rowan_admet"
+    },
+    {
+      "question": "I need to identify the most reactive sites for electrophilic attack on pyrrole (c1cc[nH]c1).",
+      "correct_tool": "rowan_fukui",
+      "category": "reactivity",
+      "molecule": "c1cc[nH]c1",
+      "explanation": "Fukui indices are specifically designed to predict reactivity sites"
+    },
+    {
+      "question": "What are the possible tautomers of 2-hydroxypyridine (Oc1ccccn1)?",
+      "correct_tool": "rowan_tautomers",
+      "category": "acid_base",
+      "molecule": "Oc1ccccn1",
+      "explanation": "Tautomer enumeration is exclusively handled by rowan_tautomers"
+    },
+    {
+      "question": "Calculate the oxidation potential of ferrocene.",
+      "correct_tool": "rowan_redox_potential",
+      "category": "thermodynamics",
+      "molecule": "[Fe+2].c1cc[cH-]c1.c1cc[cH-]c1",
+      "explanation": "Redox potential calculations are specifically done by rowan_redox_potential"
+    },
+    {
+      "question": "I need to dock this small molecule (CC(=O)Nc1ccc(O)cc1) to a protein active site.",
+      "correct_tool": "rowan_docking",
+      "category": "drug_properties",
+      "molecule": "CC(=O)Nc1ccc(O)cc1",
+      "explanation": "Protein-ligand docking is exclusively performed by rowan_docking"
+    },
+    {
+      "question": "Predict the solubility of caffeine (CN1C=NC2=C1C(=O)N(C(=O)N2C)C) in water and ethanol.",
+      "correct_tool": "rowan_solubility",
+      "category": "solubility",
+      "molecule": "CN1C=NC2=C1C(=O)N(C(=O)N2C)C",
+      "explanation": "Solubility predictions in different solvents are handled by rowan_solubility"
+    },
+    {
+      "question": "I need to follow the reaction coordinate from a transition state to products for this Diels-Alder reaction.",
+      "correct_tool": "rowan_irc",
+      "category": "reactivity",
+      "molecule": null,
+      "explanation": "Following intrinsic reaction coordinates is the specific purpose of rowan_irc"
+    },
+    {
+      "question": "Calculate molecular descriptors for QSAR modeling of this compound: CCOc1ccc(cc1)S(=O)(=O)N",
+      "correct_tool": "rowan_descriptors",
+      "category": "drug_properties",
+      "molecule": "CCOc1ccc(cc1)S(=O)(=O)N",
+      "explanation": "Molecular descriptor calculation for ML/QSAR is done by rowan_descriptors"
+    },
+    {
+      "question": "What is the hydrogen bond basicity (pKBHX) of dimethyl sulfoxide?",
+      "correct_tool": "rowan_hydrogen_bond_basicity",
+      "category": "acid_base",
+      "molecule": "CS(C)=O",
+      "explanation": "pKBHX values are specifically calculated by rowan_hydrogen_bond_basicity"
+    },
+    {
+      "question": "I need to run a molecular dynamics simulation to study the flexibility of this peptide at 300K.",
+      "correct_tool": "rowan_molecular_dynamics",
+      "category": "dynamics",
+      "molecule": null,
+      "explanation": "Molecular dynamics simulations are exclusively performed by rowan_molecular_dynamics"
+    },
+    {
+      "question": "Optimize the geometry of benzophenone (O=C(c1ccccc1)c1ccccc1) using multiple levels of theory.",
+      "correct_tool": "rowan_multistage_opt",
+      "category": "conformational_analysis",
+      "molecule": "O=C(c1ccccc1)c1ccccc1",
+      "explanation": "Multi-level geometry optimization is the purpose of rowan_multistage_opt"
+    },
+    {
+      "question": "Calculate the HOMO-LUMO gap for anthracene (c1ccc2cc3ccccc3cc2c1).",
+      "correct_tool": "rowan_electronic_properties",
+      "category": "electronic_structure",
+      "molecule": "c1ccc2cc3ccccc3cc2c1",
+      "explanation": "Electronic structure properties like HOMO-LUMO gaps are calculated by rowan_electronic_properties"
+    },
+    {
+      "question": "What is the macroscopic pKa of citric acid considering all ionizable groups?",
+      "correct_tool": "rowan_macropka",
+      "category": "acid_base",
+      "molecule": "OC(=O)CC(O)(CC(=O)O)C(=O)O",
+      "explanation": "Macroscopic pKa for polyprotic acids is calculated by rowan_macropka"
+    },
+    {
+      "question": "Compare the relative energies of singlet and triplet states for carbene (:CH2).",
+      "correct_tool": "rowan_spin_states",
+      "category": "electronic_structure",
+      "molecule": "[CH2]",
+      "explanation": "Comparing different spin multiplicities is done by rowan_spin_states"
+    },
+    {
+      "question": "I need to scan the C-C bond rotation in butane to find the energy barrier.",
+      "correct_tool": "rowan_scan",
+      "category": "conformational_analysis",
+      "molecule": "CCCC",
+      "explanation": "Potential energy surface scans are performed by rowan_scan"
+    },
+    {
+      "question": "Extract the transition state geometry from my completed scan results for further IRC calculations.",
+      "correct_tool": "rowan_scan_analyzer",
+      "category": "reactivity",
+      "molecule": null,
+      "explanation": "Analyzing scan results and extracting TS geometries is done by rowan_scan_analyzer"
+    },
+    {
+      "question": "Calculate the pKa of imidazole (c1c[nH]cn1).",
+      "correct_tool": "rowan_pka",
+      "category": "acid_base",
+      "molecule": "c1c[nH]cn1",
+      "explanation": "Single pKa calculations are performed by rowan_pka"
+    },
+    {
+      "question": "Generate all low-energy conformers of glucose (OC[C@H]1OC(O)[C@H](O)[C@@H](O)[C@@H]1O).",
+      "correct_tool": "rowan_conformers",
+      "category": "conformational_analysis",
+      "molecule": "OC[C@H]1OC(O)[C@H](O)[C@@H](O)[C@@H]1O",
+      "explanation": "Conformer generation and optimization is done by rowan_conformers"
+    },
+    {
+      "question": "What is the reduction potential of quinone to hydroquinone?",
+      "correct_tool": "rowan_redox_potential",
+      "category": "thermodynamics",
+      "molecule": "O=C1C=CC(=O)C=C1",
+      "explanation": "Redox potential calculations are handled by rowan_redox_potential"
+    },
+    {
+      "question": "Predict the oral bioavailability and blood-brain barrier permeability of this compound: Cc1ccc(cc1)C(=O)Nc2ccccc2",
+      "correct_tool": "rowan_admet",
+      "category": "drug_properties",
+      "molecule": "Cc1ccc(cc1)C(=O)Nc2ccccc2",
+      "explanation": "ADMET properties including bioavailability are predicted by rowan_admet"
+    },
+    {
+      "question": "I need to identify the most nucleophilic sites on this heterocycle: c1cnc2[nH]ccc2c1",
+      "correct_tool": "rowan_fukui",
+      "category": "reactivity",
+      "molecule": "c1cnc2[nH]ccc2c1",
+      "explanation": "Nucleophilic reactivity sites are identified using Fukui indices"
+    },
+    {
+      "question": "Calculate the C-Cl bond dissociation energy in chlorobenzene (Clc1ccccc1).",
+      "correct_tool": "rowan_bde",
+      "category": "thermodynamics",
+      "molecule": "Clc1ccccc1",
+      "explanation": "Bond dissociation energies are calculated by rowan_bde"
+    },
+    {
+      "question": "Find all tautomers of uracil (O=c1cc[nH]c(=O)[nH]1).",
+      "correct_tool": "rowan_tautomers",
+      "category": "acid_base",
+      "molecule": "O=c1cc[nH]c(=O)[nH]1",
+      "explanation": "Tautomer enumeration is performed by rowan_tautomers"
+    },
+    {
+      "question": "Dock this HIV protease inhibitor to the target protein and score the binding poses.",
+      "correct_tool": "rowan_docking",
+      "category": "drug_properties",
+      "molecule": null,
+      "explanation": "Protein-ligand docking and scoring is done by rowan_docking"
+    },
+    {
+      "question": "What is the solubility of ibuprofen (CC(C)Cc1ccc(cc1)C(C)C(=O)O) in different pH conditions?",
+      "correct_tool": "rowan_solubility",
+      "category": "solubility",
+      "molecule": "CC(C)Cc1ccc(cc1)C(C)C(=O)O",
+      "explanation": "Solubility predictions across conditions are made by rowan_solubility"
+    },
+    {
+      "question": "Calculate descriptors for machine learning prediction of this molecule's properties: COc1ccc(cc1)C=CC(=O)O",
+      "correct_tool": "rowan_descriptors",
+      "category": "drug_properties",
+      "molecule": "COc1ccc(cc1)C=CC(=O)O",
+      "explanation": "Molecular descriptors for ML are calculated by rowan_descriptors"
+    },
+    {
+      "question": "I need to verify this is a true transition state by following the IRC in both directions.",
+      "correct_tool": "rowan_irc",
+      "category": "reactivity",
+      "molecule": null,
+      "explanation": "IRC calculations to verify transition states are done by rowan_irc"
+    },
+    {
+      "question": "What is the pKBHX of pyridine (c1ccncc1)?",
+      "correct_tool": "rowan_hydrogen_bond_basicity",
+      "category": "acid_base",
+      "molecule": "c1ccncc1",
+      "explanation": "Hydrogen bond basicity (pKBHX) is calculated by rowan_hydrogen_bond_basicity"
+    },
+    {
+      "question": "Run a 10 ns molecular dynamics simulation of this drug-protein complex at physiological temperature.",
+      "correct_tool": "rowan_molecular_dynamics",
+      "category": "dynamics",
+      "molecule": null,
+      "explanation": "MD simulations are performed by rowan_molecular_dynamics"
+    },
+    {
+      "question": "Optimize this strained molecule (C1CC1C#N) starting with a cheap method then refining with DFT.",
+      "correct_tool": "rowan_multistage_opt",
+      "category": "conformational_analysis",
+      "molecule": "C1CC1C#N",
+      "explanation": "Multi-level optimization strategies are implemented in rowan_multistage_opt"
+    },
+    {
+      "question": "Calculate the dipole moment and partial charges for acetone (CC(=O)C).",
+      "correct_tool": "rowan_electronic_properties",
+      "category": "electronic_structure",
+      "molecule": "CC(=O)C",
+      "explanation": "Electronic properties like dipole moments are calculated by rowan_electronic_properties"
+    },
+    {
+      "question": "What is the pH-dependent speciation of phosphoric acid?",
+      "correct_tool": "rowan_macropka",
+      "category": "acid_base",
+      "molecule": "OP(=O)(O)O",
+      "explanation": "pH-dependent properties of polyprotic acids are handled by rowan_macropka"
+    },
+    {
+      "question": "Determine if the ground state of this radical is doublet or quartet.",
+      "correct_tool": "rowan_spin_states",
+      "category": "electronic_structure",
+      "molecule": null,
+      "explanation": "Spin state comparisons are performed by rowan_spin_states"
+    },
+    {
+      "question": "Scan the N-N bond distance in hydrazine to locate the dissociation transition state.",
+      "correct_tool": "rowan_scan",
+      "category": "reactivity",
+      "molecule": "NN",
+      "explanation": "Potential energy scans for TS location are done by rowan_scan"
+    },
+    {
+      "question": "I have scan results and need to extract geometries at specific energy points for further analysis.",
+      "correct_tool": "rowan_scan_analyzer",
+      "category": "reactivity",
+      "molecule": null,
+      "explanation": "Extracting data from scan results is done by rowan_scan_analyzer"
+    },
+    {
+      "question": "Calculate the pKa of benzoic acid (O=C(O)c1ccccc1).",
+      "correct_tool": "rowan_pka",
+      "category": "acid_base",
+      "molecule": "O=C(O)c1ccccc1",
+      "explanation": "pKa calculations are performed by rowan_pka"
+    },
+    {
+      "question": "Find the global minimum conformer of this flexible drug molecule: COc1ccc(cc1)CCNC(=O)C",
+      "correct_tool": "rowan_conformers",
+      "category": "conformational_analysis",
+      "molecule": "COc1ccc(cc1)CCNC(=O)C",
+      "explanation": "Conformer search and optimization is done by rowan_conformers"
+    },
+    {
+      "question": "What is the oxidation potential of dopamine?",
+      "correct_tool": "rowan_redox_potential",
+      "category": "thermodynamics",
+      "molecule": "NCCc1ccc(O)c(O)c1",
+      "explanation": "Oxidation potentials are calculated by rowan_redox_potential"
+    },
+    {
+      "question": "Predict the CYP450 metabolism sites for this drug: Fc1ccc(cc1)C(=O)CCCN2CCC(CC2)c3ccccc3",
+      "correct_tool": "rowan_admet",
+      "category": "drug_properties",
+      "molecule": "Fc1ccc(cc1)C(=O)CCCN2CCC(CC2)c3ccccc3",
+      "explanation": "Metabolism predictions are part of ADMET properties"
+    },
+    {
+      "question": "Where will radical addition most likely occur on styrene (C=Cc1ccccc1)?",
+      "correct_tool": "rowan_fukui",
+      "category": "reactivity",
+      "molecule": "C=Cc1ccccc1",
+      "explanation": "Radical reactivity sites are predicted using Fukui indices"
+    },
+    {
+      "question": "Calculate the N-H bond dissociation energy in methylamine (CN).",
+      "correct_tool": "rowan_bde",
+      "category": "thermodynamics",
+      "molecule": "CN",
+      "explanation": "BDE calculations are performed by rowan_bde"
+    },
+    {
+      "question": "Enumerate keto-enol tautomers of acetylacetone (CC(=O)CC(=O)C).",
+      "correct_tool": "rowan_tautomers",
+      "category": "acid_base",
+      "molecule": "CC(=O)CC(=O)C",
+      "explanation": "Tautomer enumeration is done by rowan_tautomers"
+    },
+    {
+      "question": "I need to screen this compound library against a kinase target using molecular docking.",
+      "correct_tool": "rowan_docking",
+      "category": "drug_properties",
+      "molecule": null,
+      "explanation": "Virtual screening via docking is performed by rowan_docking"
+    },
+    {
+      "question": "Predict the LogP and aqueous solubility of nicotine (CN1CCC[C@H]1c2cccnc2).",
+      "correct_tool": "rowan_solubility",
+      "category": "solubility",
+      "molecule": "CN1CCC[C@H]1c2cccnc2",
+      "explanation": "LogP and solubility predictions are made by rowan_solubility"
+    },
+    {
+      "question": "Generate fingerprints and physicochemical descriptors for this dataset of 1000 molecules.",
+      "correct_tool": "rowan_descriptors",
+      "category": "drug_properties",
+      "molecule": null,
+      "explanation": "Descriptor generation for datasets is done by rowan_descriptors"
+    },
+    {
+      "question": "What is the hydrogen bond accepting ability of tetrahydrofuran (C1CCOC1)?",
+      "correct_tool": "rowan_hydrogen_bond_basicity",
+      "category": "acid_base",
+      "molecule": "C1CCOC1",
+      "explanation": "Hydrogen bond basicity is quantified by rowan_hydrogen_bond_basicity"
+    }
+  ]
+}

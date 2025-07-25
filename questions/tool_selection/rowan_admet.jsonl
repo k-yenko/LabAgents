@@ -1,0 +1,20 @@
+{"prompt": "Predict ADME properties of aspirin", "expected_tools": ["rowan_admet"], "category": "drug_discovery"}
+{"prompt": "Calculate the toxicity profile of caffeine", "expected_tools": ["rowan_admet"], "category": "drug_discovery"}
+{"prompt": "What are the pharmacokinetic properties of ibuprofen?", "expected_tools": ["rowan_admet"], "category": "drug_discovery"}
+{"prompt": "Estimate ADMET properties for paracetamol", "expected_tools": ["rowan_admet"], "category": "drug_discovery"}
+{"prompt": "Predict drug metabolism of morphine", "expected_tools": ["rowan_admet"], "category": "drug_discovery"}
+{"prompt": "Calculate absorption properties of nicotine", "expected_tools": ["rowan_admet"], "category": "drug_discovery"}
+{"prompt": "What's the distribution profile of dopamine?", "expected_tools": ["rowan_admet"], "category": "drug_discovery"}
+{"prompt": "Determine metabolic stability of serotonin", "expected_tools": ["rowan_admet"], "category": "drug_discovery"}
+{"prompt": "Find excretion properties of vitamin C", "expected_tools": ["rowan_admet"], "category": "drug_discovery"}
+{"prompt": "Predict toxicity of cholesterol", "expected_tools": ["rowan_admet"], "category": "drug_discovery"}
+{"prompt": "Calculate bioavailability of testosterone", "expected_tools": ["rowan_admet"], "category": "drug_discovery"}
+{"prompt": "What are the ADME properties of estradiol?", "expected_tools": ["rowan_admet"], "category": "drug_discovery"}
+{"prompt": "Estimate pharmacokinetics of cortisol", "expected_tools": ["rowan_admet"], "category": "drug_discovery"}
+{"prompt": "Predict drug-likeness of melatonin", "expected_tools": ["rowan_admet"], "category": "drug_discovery"}
+{"prompt": "Find ADMET profile of adrenaline", "expected_tools": ["rowan_admet"], "category": "drug_discovery"}
+{"prompt": "Calculate hepatotoxicity risk of insulin", "expected_tools": ["rowan_admet"], "category": "drug_discovery"}
+{"prompt": "What's the clearance rate of penicillin?", "expected_tools": ["rowan_admet"], "category": "drug_discovery"}
+{"prompt": "Determine BBB permeability of vanillin", "expected_tools": ["rowan_admet"], "category": "drug_discovery"}
+{"prompt": "Predict CYP450 interactions of capsaicin", "expected_tools": ["rowan_admet"], "category": "drug_discovery"}
+{"prompt": "Estimate half-life of warfarin", "expected_tools": ["rowan_admet"], "category": "drug_discovery"}

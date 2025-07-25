@@ -1,0 +1,20 @@
+{"prompt": "Optimize the geometry of caffeine", "expected_tools": ["rowan_multistage_opt"], "category": "chemistry_calculations"}
+{"prompt": "Find the minimum energy structure of aspirin", "expected_tools": ["rowan_multistage_opt"], "category": "chemistry_calculations"}
+{"prompt": "Perform geometry optimization on ibuprofen", "expected_tools": ["rowan_multistage_opt"], "category": "chemistry_calculations"}
+{"prompt": "What is the optimized structure of paracetamol?", "expected_tools": ["rowan_multistage_opt"], "category": "chemistry_calculations"}
+{"prompt": "Minimize the energy of glucose molecule", "expected_tools": ["rowan_multistage_opt"], "category": "chemistry_calculations"}
+{"prompt": "Find the equilibrium geometry of vitamin C", "expected_tools": ["rowan_multistage_opt"], "category": "chemistry_calculations"}
+{"prompt": "Optimize the molecular structure of dopamine", "expected_tools": ["rowan_multistage_opt"], "category": "chemistry_calculations"}
+{"prompt": "What's the minimum energy conformation of serotonin?", "expected_tools": ["rowan_multistage_opt"], "category": "chemistry_calculations"}
+{"prompt": "Perform structural optimization on nicotine", "expected_tools": ["rowan_multistage_opt"], "category": "chemistry_calculations"}
+{"prompt": "Find the optimized geometry of morphine", "expected_tools": ["rowan_multistage_opt"], "category": "chemistry_calculations"}
+{"prompt": "Minimize the structure of cholesterol", "expected_tools": ["rowan_multistage_opt"], "category": "chemistry_calculations"}
+{"prompt": "What is the equilibrium structure of testosterone?", "expected_tools": ["rowan_multistage_opt"], "category": "chemistry_calculations"}
+{"prompt": "Optimize the geometry of estradiol", "expected_tools": ["rowan_multistage_opt"], "category": "chemistry_calculations"}
+{"prompt": "Find the minimum energy structure of cortisol", "expected_tools": ["rowan_multistage_opt"], "category": "chemistry_calculations"}
+{"prompt": "Perform geometry optimization on melatonin", "expected_tools": ["rowan_multistage_opt"], "category": "chemistry_calculations"}
+{"prompt": "What's the optimized structure of adrenaline?", "expected_tools": ["rowan_multistage_opt"], "category": "chemistry_calculations"}
+{"prompt": "Minimize the energy of insulin molecule", "expected_tools": ["rowan_multistage_opt"], "category": "chemistry_calculations"}
+{"prompt": "Find the equilibrium geometry of penicillin", "expected_tools": ["rowan_multistage_opt"], "category": "chemistry_calculations"}
+{"prompt": "Optimize the molecular structure of vanillin", "expected_tools": ["rowan_multistage_opt"], "category": "chemistry_calculations"}
+{"prompt": "What is the minimum energy conformation of capsaicin?", "expected_tools": ["rowan_multistage_opt"], "category": "chemistry_calculations"}

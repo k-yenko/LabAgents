@@ -1,0 +1,20 @@
+{"prompt": "Calculate Fukui indices for benzene", "expected_tools": ["rowan_fukui"], "category": "reactivity_analysis"}
+{"prompt": "Find the most reactive sites in toluene", "expected_tools": ["rowan_fukui"], "category": "reactivity_analysis"}
+{"prompt": "What are the nucleophilic attack sites of aniline?", "expected_tools": ["rowan_fukui"], "category": "reactivity_analysis"}
+{"prompt": "Determine electrophilic sites in phenol", "expected_tools": ["rowan_fukui"], "category": "reactivity_analysis"}
+{"prompt": "Calculate reactivity indices for pyridine", "expected_tools": ["rowan_fukui"], "category": "reactivity_analysis"}
+{"prompt": "Find Fukui functions of naphthalene", "expected_tools": ["rowan_fukui"], "category": "reactivity_analysis"}
+{"prompt": "What's the most reactive position in furan?", "expected_tools": ["rowan_fukui"], "category": "reactivity_analysis"}
+{"prompt": "Identify nucleophilic sites in thiophene", "expected_tools": ["rowan_fukui"], "category": "reactivity_analysis"}
+{"prompt": "Determine radical attack sites of anthracene", "expected_tools": ["rowan_fukui"], "category": "reactivity_analysis"}
+{"prompt": "Calculate local reactivity of imidazole", "expected_tools": ["rowan_fukui"], "category": "reactivity_analysis"}
+{"prompt": "Find electrophilic positions in pyrrole", "expected_tools": ["rowan_fukui"], "category": "reactivity_analysis"}
+{"prompt": "What are the Fukui indices of quinone?", "expected_tools": ["rowan_fukui"], "category": "reactivity_analysis"}
+{"prompt": "Predict reactive sites in acetophenone", "expected_tools": ["rowan_fukui"], "category": "reactivity_analysis"}
+{"prompt": "Identify nucleophilic centers of benzaldehyde", "expected_tools": ["rowan_fukui"], "category": "reactivity_analysis"}
+{"prompt": "Calculate reactivity map for nitrobenzene", "expected_tools": ["rowan_fukui"], "category": "reactivity_analysis"}
+{"prompt": "Find radical reaction sites in styrene", "expected_tools": ["rowan_fukui"], "category": "reactivity_analysis"}
+{"prompt": "What's the most electrophilic carbon in acrolein?", "expected_tools": ["rowan_fukui"], "category": "reactivity_analysis"}
+{"prompt": "Determine Fukui functions of anisole", "expected_tools": ["rowan_fukui"], "category": "reactivity_analysis"}
+{"prompt": "Calculate reactive positions in chlorobenzene", "expected_tools": ["rowan_fukui"], "category": "reactivity_analysis"}
+{"prompt": "Identify nucleophilic sites in benzoic acid", "expected_tools": ["rowan_fukui"], "category": "reactivity_analysis"}
