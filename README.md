@@ -1,6 +1,6 @@
-# Agentic Scientific Tool Selection Benchmark 
+# LabBench
 
-A comprehensive benchmark system for evaluating tool selection and chaining capabilities across different AI agents and computational chemistry/biology tools.
+LabBench is an open‑source benchmark that challenges autonomous AI agents to select, orchestrate, and chain real‑world scientific tools. Centered on computational chemistry and biology workflows, it tests how well agents can navigate through these problems, just as a scientist would. 
 
 ## Models Being Tested
 
