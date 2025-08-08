@@ -14,6 +14,8 @@ ENV/
 # Environment
 .env
 config/.env
+config/
+.claude/
 
 # IDE
 .vscode/
