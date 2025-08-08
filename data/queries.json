@@ -1,0 +1,37 @@
+[
+  {
+    "id": "pka_aspirin",
+    "question": "What is the pKa of aspirin?",
+    "smiles": "CC(=O)Oc1ccccc1C(=O)O",
+    "tool": "rowan_pka",
+    "tolerance": 0.5
+  },
+  {
+    "id": "solubility_caffeine",
+    "question": "What is the logS (solubility) of caffeine in water at 25°C?",
+    "smiles": "CN1C=NC2=C1C(=O)N(C(=O)N2C)C",
+    "tool": "rowan_solubility",
+    "tolerance": 0.3
+  },
+  {
+    "id": "homo_lumo_benzoic",
+    "question": "What is the HOMO-LUMO gap of benzoic acid in eV?",
+    "smiles": "c1ccc(cc1)C(=O)O",
+    "tool": "rowan_electronic_properties",
+    "tolerance": 0.1
+  },
+  {
+    "id": "geometry_ibuprofen",
+    "question": "What is the optimized bond length between the carbonyl carbon and oxygen in ibuprofen (in Angstroms)?",
+    "smiles": "CC(C)Cc1ccc(cc1)C(C)C(=O)O",
+    "tool": "rowan_multistage_opt",
+    "tolerance": 0.02
+  },
+  {
+    "id": "admet_nicotine",
+    "question": "Is nicotine predicted to have high blood-brain barrier permeability?",
+    "smiles": "CN1CCCC1c2cccnc2",
+    "tool": "rowan_admet",
+    "tolerance": null
+  }
+]
