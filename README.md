@@ -1,6 +1,6 @@
 # Agentic Scientific Tool Selection Benchmark 
 
-A comprehensive benchmark system for evaluating tool selection and chaining capabilities across different AI agents and computational chemistry tools.
+A comprehensive benchmark system for evaluating tool selection and chaining capabilities across different AI agents and computational chemistry/biology tools.
 
 ## Models Being Tested
 
