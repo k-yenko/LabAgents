@@ -15,7 +15,7 @@ TL;DR, it tests how well agents can navigate through problems, just as a scienti
 - **GPT-5** - Latest OpenAI model
 - **Claude Sonnet** - Latest Anthropic Sonnet model  
 - **Claude Opus** - Latest Anthropic Opus model
-- **O3** - OpenAI's reasoning model
+- **o3** - OpenAI's reasoning model
 - **DeepSeek** - DeepSeek's latest model
 - **Grok** - xAI's model
 - **Qwen** - Alibaba's latest model
