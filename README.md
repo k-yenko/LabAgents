@@ -1,6 +1,14 @@
-# LabBench
+# LabAgents
 
-LabBench is an open‑source benchmark that challenges autonomous AI agents to select, orchestrate, and chain real‑world scientific tools. Centered on computational chemistry and biology workflows, it tests how well agents can navigate through these problems, just as a scientist would. 
+Large Language Model (LLM) agents are increasingly capable of using external tools via MCP to perform complex tasks. However, existing benchmarks rarely focus on life sciences research contexts or simulate tool-rich experimental environments. LabAgents addresses this gap as a domain-specific benchmark for chemistry and biology research workflows, evaluating how well AI agents leverage MCP (Model Context Protocol) tools. It measures an agent's ability to:
+
+1. Select the right tools from a chemistry/biology MCP suite
+2. Plan and execute multi-step experimental workflows
+3. Deliver correct results on scientific tasks
+
+TL;DR, it tests how well agents can navigate through problems, just as a scientist would.
+
+---
 
 ## Models Being Tested
 
