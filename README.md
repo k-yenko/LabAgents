@@ -1,4 +1,4 @@
-# Multi-Agent Tool Selection Benchmark
+# Agentic Scientific Tool Selection Benchmark 
 
 A comprehensive benchmark system for evaluating tool selection and chaining capabilities across different AI agents and computational chemistry tools.
 
