@@ -1,5 +1,20 @@
 # Rowan MCP Benchmark Queries
 
+## How to Run Eval Sessions
+
+Copy-paste the commands below to run eval sessions. Each command starts the session, then you ask the question, and finally end the session with your answer.
+
+### Usage Pattern:
+1. Copy-paste the start command and **change [MODEL]** to match what you're testing
+2. Available models: `claude-4.1-opus`, `claude-4-sonnet`, `gpt-5`, `o3`, `grok-4`, `gemini-2.5-pro`, `deepseek-v3.1`, `grok-code-fast-1`
+3. Let the model work on the question
+4. **At the end, copy-paste this logging prompt:**
+   ```
+   Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer.
+   ```
+
+---
+
 ## Tier 1: Single Tool Calls
 Every tool tested with simplest possible invocation.
 
@@ -16,67 +31,138 @@ Every tool tested with simplest possible invocation.
 11. **Docking**: "Dock aspirin to CDK2 kinase" ✅
 12. **Protein Cofolding**: "Fold CDK2 with a small molecule ligand" ✅
 
+---
+
 ## Tier 2: Moderate Complexity with Known Literature Values
 
-### 1. Aspirin pKa and Solubility
-**Query**: "Calculate the pKa of aspirin (acetylsalicylic acid), then predict its solubility in water at pH 1.2 (stomach) and pH 7.4 (blood)"
+### 1. Ibuprofen Conformational Analysis [tier2_002]
 
-**Literature Values**:
-- pKa: 3.5 (carboxylic acid group) [J. Pharm. Sci. 1967, 56, 847]
-- Solubility at 25°C: 3.3 mg/mL in water [Merck Index]
-- pH-dependent solubility well characterized
+**Copy-paste to start eval (replace [MODEL] with your target model):**
+```
+Use the start_eval_session tool with question_id="tier2_002", model="[MODEL]", question="Generate conformers of ibuprofen, optimize the lowest energy conformer, then calculate its logP and pKa values. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+```
 
----
-
-### 2. Ibuprofen Conformational Analysis
-**Query**: "Generate conformers of ibuprofen, optimize the lowest energy conformer, then calculate its logP and pKa values"
-
-**Literature Values**:
-- pKa: 4.91 [J. Pharm. Biomed. Anal. 1996, 15, 383]
-- logP: 3.97 [Drug Bank]
-- Crystal structure available (CSD: IBPRAC)
+**Expected**: pKa = 4.91; logP = 3.97; Multiple conformers within 2-3 kcal/mol
 
 ---
 
-### 3. Caffeine Multi-Property Analysis
-**Query**: "Calculate molecular descriptors for caffeine, predict its solubility in water at 25°C, and determine its dipole moment"
+### 2. Caffeine Multi-Property Analysis [tier2_003]
 
-**Literature Values**:
-- Solubility: 21.6 mg/mL at 25°C [J. Chem. Eng. Data 2010, 55, 3804]
-- Dipole moment: 3.64 D [J. Mol. Struct. 1995, 372, 113]
-- MW: 194.19 g/mol, logP: -0.07
+**Copy-paste to start eval (replace [MODEL] with your target model):**
+```
+Use the start_eval_session tool with question_id="tier2_003", model="[MODEL]", question="Calculate molecular descriptors for caffeine, predict its solubility in water at 25°C, and determine its dipole moment. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+```
+
+**Expected**: Solubility = 21.6 mg/mL at 25°C; Dipole moment = 3.64 D
+
+---
+
+### 3. Morphine Tautomer Analysis [tier2_004]
+
+**Copy-paste to start eval (replace [MODEL] with your target model):**
+```
+Use the start_eval_session tool with question_id="tier2_004", model="[MODEL]", question="Find all tautomers of morphine and calculate the pKa of each tautomeric form to determine which is dominant at physiological pH. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+```
+
+**Expected**: Primary pKa around 8.0 for tertiary amine; phenolic OH pKa around 9.9
+
+---
+
+### 4. Paracetamol Electronic Structure [tier2_005]
+
+**Copy-paste to start eval (replace [MODEL] with your target model):**
+```
+Use the start_eval_session tool with question_id="tier2_005", model="[MODEL]", question="Optimize paracetamol geometry, calculate its electronic properties including HOMO/LUMO energies and dipole moment. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+```
+
+**Expected**: HOMO-LUMO gap ~4-5 eV; significant dipole moment due to polar groups
+
+---
+
+### 5. Benzene Redox Potential [tier2_006]
+
+**Copy-paste to start eval (replace [MODEL] with your target model):**
+```
+Use the start_eval_session tool with question_id="tier2_006", model="[MODEL]", question="Calculate the oxidation and reduction potentials of benzene versus SCE in acetonitrile. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+```
+
+**Expected**: High oxidation potential (~2.5 V vs SCE); benzene is electron-rich aromatic
+
+---
+
+### 6. Caffeine Temperature Solubility [tier2_007]
+
+**Copy-paste to start eval (replace [MODEL] with your target model):**
+```
+Use the start_eval_session tool with question_id="tier2_007", model="[MODEL]", question="Predict the solubility of caffeine in water at 25°C, 37°C, and 50°C to determine the temperature dependence. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+```
+
+**Expected**: Increasing solubility with temperature; ~21 mg/mL at 25°C
 
 ---
 
 ## Tier 3: Complex Workflows with Literature Validation
 
-### 4. Warfarin Tautomer-pKa Relationship
-**Query**: "Find the major tautomers of warfarin, calculate the pKa for each tautomeric form, identify the dominant form at pH 7.4, then predict its protein binding affinity"
+### 1. Warfarin Tautomer-pKa Relationship [tier3_001]
 
-**Literature Values**:
-- pKa: 5.0-5.1 (enolic OH) [J. Pharm. Sci. 1979, 68, 1195]
-- Exists primarily in cyclic hemiketal form at physiological pH
-- 99% plasma protein bound [Clinical Pharmacokinetics 1992, 22, 359]
-- Multiple tautomers characterized by NMR
+**Copy-paste to start eval (replace [MODEL] with your target model):**
+```
+Use the start_eval_session tool with question_id="tier3_001", model="[MODEL]", question="Find the major tautomers of warfarin, calculate the pKa for each tautomeric form, identify the dominant form at pH 7.4, then predict its protein binding affinity. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+```
 
----
-
-### 5. Acetaminophen Metabolic Sites
-**Query**: "Optimize acetaminophen structure, calculate Fukui indices to identify reactive sites, predict sites of glucuronidation and sulfation, then calculate the ADMET properties"
-
-**Literature Values**:
-- Primary metabolic sites: phenolic OH (glucuronidation/sulfation)
-- Reactive metabolite: N-acetyl-p-benzoquinone imine (NAPQI)
-- Hepatotoxicity well characterized
-- Bioavailability: 63-89% [Clin. Pharmacokinet. 1982, 7, 93]
+**Expected**: pKa = 5.0-5.1 for enolic OH; 99% protein binding
 
 ---
 
-### 6. Atorvastatin Conformer-Activity
-**Query**: "Generate conformers of atorvastatin, dock the top 5 conformers to HMG-CoA reductase (PDB: 1HWK), calculate binding energies, and compare to the crystal structure conformation"
+### 2. Acetaminophen Metabolic Sites [tier3_002]
 
-**Literature Values**:
-- IC50: 8 nM for HMG-CoA reductase [Nature 1985, 318, 324]
-- Crystal structure with enzyme available (PDB: 1HWK)
-- Known bioactive conformation
-- Specific hydrogen bonding pattern documented
+**Copy-paste to start eval (replace [MODEL] with your target model):**
+```
+Use the start_eval_session tool with question_id="tier3_002", model="[MODEL]", question="Optimize acetaminophen structure, calculate Fukui indices to identify reactive sites, predict sites of glucuronidation and sulfation, then calculate the ADMET properties. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+```
+
+**Expected**: Phenolic OH = primary metabolic site; Bioavailability = 63-89%
+
+---
+
+### 3. Atorvastatin Conformer-Activity [tier3_003]
+
+**Copy-paste to start eval (replace [MODEL] with your target model):**
+```
+Use the start_eval_session tool with question_id="tier3_003", model="[MODEL]", question="Generate conformers of atorvastatin, dock the top 5 conformers to HMG-CoA reductase (PDB: 1HWK), calculate binding energies, and compare to the crystal structure conformation. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+```
+
+**Expected**: IC50 = 8 nM; Binding energy ≈ -11 to -12 kcal/mol
+
+---
+
+### 4. Serotonin Reaction Pathway [tier3_004]
+
+**Copy-paste to start eval (replace [MODEL] with your target model):**
+```
+Use the start_eval_session tool with question_id="tier3_004", model="[MODEL]", question="Run a dihedral scan on serotonin's ethylamine chain, identify the energy minimum, then calculate Fukui indices to predict the most reactive sites for electrophilic attack. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+```
+
+**Expected**: Multiple conformational minima; highest f(-) indices at aromatic positions ortho to OH
+
+---
+
+### 5. Taxol Conformer-ADMET Analysis [tier3_005]
+
+**Copy-paste to start eval (replace [MODEL] with your target model):**
+```
+Use the start_eval_session tool with question_id="tier3_005", model="[MODEL]", question="Generate conformers of paclitaxel (taxol), select the lowest energy conformer, then predict its ADMET properties focusing on blood-brain barrier permeability. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+```
+
+**Expected**: Complex conformational landscape; poor BBB permeability due to size and polarity
+
+---
+
+### 6. Penicillin G Comprehensive Study [tier3_006]
+
+**Copy-paste to start eval (replace [MODEL] with your target model):**
+```
+Use the start_eval_session tool with question_id="tier3_006", model="[MODEL]", question="Optimize penicillin G geometry, calculate molecular descriptors, predict solubility at multiple temperatures, then dock to a β-lactamase enzyme to understand resistance mechanisms. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+```
+
+**Expected**: β-lactam ring strain; moderate solubility; competitive binding to β-lactamase active site
