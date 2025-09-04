@@ -259,6 +259,21 @@ def get_event_log(model: str = None, event_type: str = None) -> list:
     return events[-50:]  # Return last 50 events
 
 @mcp.tool()
+def log_workflow_timeout(model: str, workflow_uuid: str = "", tool_name: str = "workflow_wait_for_result") -> str:
+    """Log when a workflow times out or MCP tools disconnect"""
+    question_id = None
+    if model in active_sessions:
+        question_id = active_sessions[model].get("question_id")
+    
+    log_event("workflow_timeout", model, question_id, {
+        "workflow_uuid": workflow_uuid,
+        "tool_name": tool_name,
+        "reason": "MCP connection timeout during long workflow"
+    })
+    print(f"⏰ Workflow timeout logged for {model}: {tool_name}")
+    return f"Logged workflow timeout for {model}"
+
+@mcp.tool()
 def get_current_session_status() -> dict:
     """Get current session status for debugging"""
     global active_sessions

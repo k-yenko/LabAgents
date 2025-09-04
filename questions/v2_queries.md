@@ -6,7 +6,7 @@ Copy-paste the commands below to run eval sessions. Each command starts the sess
 
 ### Usage Pattern:
 1. Copy-paste the start command and **change [MODEL]** to match what you're testing
-2. Available models: `claude-4.1-opus`, `claude-4-sonnet`, `gpt-5`, `o3`, `grok-4`, `gemini-2.5-pro`, `deepseek-v3.1`, `grok-code-fast-1`
+2. Available models: `claude-4.1-opus`, `claude-4-sonnet`, `gpt-5`, `o3`, `grok-4`, `gemini-2.5-pro`, `deepseek-v3.1`, `sonic`
 3. Let the model work on the question
 4. **At the end, copy-paste this logging prompt:**
    ```
@@ -39,7 +39,7 @@ Every tool tested with simplest possible invocation.
 
 **Copy-paste to start eval (replace [MODEL] with your target model):**
 ```
-Use the start_eval_session tool with question_id="tier2_002", model="[MODEL]", question="Generate conformers of ibuprofen, optimize the lowest energy conformer, then calculate its logP and pKa values. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+Use the start_eval_session tool with question_id="tier2_002", model="[MODEL]", question="Generate conformers of ibuprofen, optimize the lowest energy conformer, then calculate its logP and pKa values"
 ```
 
 **Expected**: pKa = 4.91; logP = 3.97; Multiple conformers within 2-3 kcal/mol
@@ -50,7 +50,7 @@ Use the start_eval_session tool with question_id="tier2_002", model="[MODEL]", q
 
 **Copy-paste to start eval (replace [MODEL] with your target model):**
 ```
-Use the start_eval_session tool with question_id="tier2_003", model="[MODEL]", question="Calculate molecular descriptors for caffeine, predict its solubility in water at 25°C, and determine its dipole moment. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+Use the start_eval_session tool with question_id="tier2_003", model="[MODEL]", question="Calculate molecular descriptors for caffeine, predict its solubility in water at 25°C, and determine its dipole moment"
 ```
 
 **Expected**: Solubility = 21.6 mg/mL at 25°C; Dipole moment = 3.64 D
@@ -61,7 +61,7 @@ Use the start_eval_session tool with question_id="tier2_003", model="[MODEL]", q
 
 **Copy-paste to start eval (replace [MODEL] with your target model):**
 ```
-Use the start_eval_session tool with question_id="tier2_004", model="[MODEL]", question="Find all tautomers of morphine and calculate the pKa of each tautomeric form to determine which is dominant at physiological pH. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+Use the start_eval_session tool with question_id="tier2_004", model="[MODEL]", question="Find all tautomers of morphine and calculate the pKa of each tautomeric form to determine which is dominant at physiological pH"
 ```
 
 **Expected**: Primary pKa around 8.0 for tertiary amine; phenolic OH pKa around 9.9
@@ -72,7 +72,7 @@ Use the start_eval_session tool with question_id="tier2_004", model="[MODEL]", q
 
 **Copy-paste to start eval (replace [MODEL] with your target model):**
 ```
-Use the start_eval_session tool with question_id="tier2_005", model="[MODEL]", question="Optimize paracetamol geometry, calculate its electronic properties including HOMO/LUMO energies and dipole moment. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+Use the start_eval_session tool with question_id="tier2_005", model="[MODEL]", question="Optimize paracetamol geometry, calculate its electronic properties including HOMO/LUMO energies and dipole moment"
 ```
 
 **Expected**: HOMO-LUMO gap ~4-5 eV; significant dipole moment due to polar groups
@@ -94,7 +94,7 @@ Use the start_eval_session tool with question_id="tier2_006", model="[MODEL]", q
 
 **Copy-paste to start eval (replace [MODEL] with your target model):**
 ```
-Use the start_eval_session tool with question_id="tier2_007", model="[MODEL]", question="Predict the solubility of caffeine in water at 25°C, 37°C, and 50°C to determine the temperature dependence. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+Use the start_eval_session tool with question_id="tier2_007", model="[MODEL]", question="Predict the solubility of caffeine in water at 25°C, 37°C, and 50°C to determine the temperature dependence"
 ```
 
 **Expected**: Increasing solubility with temperature; ~21 mg/mL at 25°C
@@ -107,7 +107,7 @@ Use the start_eval_session tool with question_id="tier2_007", model="[MODEL]", q
 
 **Copy-paste to start eval (replace [MODEL] with your target model):**
 ```
-Use the start_eval_session tool with question_id="tier3_001", model="[MODEL]", question="Find the major tautomers of warfarin, calculate the pKa for each tautomeric form, identify the dominant form at pH 7.4, then predict its protein binding affinity. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+Use the start_eval_session tool with question_id="tier3_001", model="[MODEL]", question="Find the major tautomers of warfarin, calculate the pKa for each tautomeric form, identify the dominant form at pH 7.4, then predict its protein binding affinity"
 ```
 
 **Expected**: pKa = 5.0-5.1 for enolic OH; 99% protein binding
@@ -118,7 +118,7 @@ Use the start_eval_session tool with question_id="tier3_001", model="[MODEL]", q
 
 **Copy-paste to start eval (replace [MODEL] with your target model):**
 ```
-Use the start_eval_session tool with question_id="tier3_002", model="[MODEL]", question="Optimize acetaminophen structure, calculate Fukui indices to identify reactive sites, predict sites of glucuronidation and sulfation, then calculate the ADMET properties. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+Use the start_eval_session tool with question_id="tier3_002", model="[MODEL]", question="Optimize acetaminophen structure, calculate Fukui indices to identify reactive sites, predict sites of glucuronidation and sulfation, then calculate the ADMET properties"
 ```
 
 **Expected**: Phenolic OH = primary metabolic site; Bioavailability = 63-89%
@@ -129,7 +129,7 @@ Use the start_eval_session tool with question_id="tier3_002", model="[MODEL]", q
 
 **Copy-paste to start eval (replace [MODEL] with your target model):**
 ```
-Use the start_eval_session tool with question_id="tier3_003", model="[MODEL]", question="Generate conformers of atorvastatin, dock the top 5 conformers to HMG-CoA reductase (PDB: 1HWK), calculate binding energies, and compare to the crystal structure conformation. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+Use the start_eval_session tool with question_id="tier3_003", model="[MODEL]", question="Generate conformers of atorvastatin, dock the top 5 conformers to HMG-CoA reductase (PDB: 1HWK), calculate binding energies, and compare to the crystal structure conformation"
 ```
 
 **Expected**: IC50 = 8 nM; Binding energy ≈ -11 to -12 kcal/mol
@@ -140,7 +140,7 @@ Use the start_eval_session tool with question_id="tier3_003", model="[MODEL]", q
 
 **Copy-paste to start eval (replace [MODEL] with your target model):**
 ```
-Use the start_eval_session tool with question_id="tier3_004", model="[MODEL]", question="Run a dihedral scan on serotonin's ethylamine chain, identify the energy minimum, then calculate Fukui indices to predict the most reactive sites for electrophilic attack. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+Use the start_eval_session tool with question_id="tier3_004", model="[MODEL]", question="Run a dihedral scan on serotonin's ethylamine chain, identify the energy minimum, then calculate Fukui indices to predict the most reactive sites for electrophilic attack"
 ```
 
 **Expected**: Multiple conformational minima; highest f(-) indices at aromatic positions ortho to OH
@@ -151,7 +151,7 @@ Use the start_eval_session tool with question_id="tier3_004", model="[MODEL]", q
 
 **Copy-paste to start eval (replace [MODEL] with your target model):**
 ```
-Use the start_eval_session tool with question_id="tier3_005", model="[MODEL]", question="Generate conformers of paclitaxel (taxol), select the lowest energy conformer, then predict its ADMET properties focusing on blood-brain barrier permeability. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+Use the start_eval_session tool with question_id="tier3_005", model="[MODEL]", question="Generate conformers of paclitaxel (taxol), select the lowest energy conformer, then predict its ADMET properties focusing on blood-brain barrier permeability"
 ```
 
 **Expected**: Complex conformational landscape; poor BBB permeability due to size and polarity
@@ -162,7 +162,7 @@ Use the start_eval_session tool with question_id="tier3_005", model="[MODEL]", q
 
 **Copy-paste to start eval (replace [MODEL] with your target model):**
 ```
-Use the start_eval_session tool with question_id="tier3_006", model="[MODEL]", question="Optimize penicillin G geometry, calculate molecular descriptors, predict solubility at multiple temperatures, then dock to a β-lactamase enzyme to understand resistance mechanisms. Log all Rowan tools you used with log_rowan_tool_call, then use end_eval_session with your complete answer."
+Use the start_eval_session tool with question_id="tier3_006", model="[MODEL]", question="Optimize penicillin G geometry, calculate molecular descriptors, predict solubility at multiple temperatures, then dock to a β-lactamase enzyme to understand resistance mechanisms"
 ```
 
 **Expected**: β-lactam ring strain; moderate solubility; competitive binding to β-lactamase active site
