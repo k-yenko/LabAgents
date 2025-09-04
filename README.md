@@ -1,6 +1,14 @@
-# Multi-Agent Tool Selection Benchmark
+# LabAgents
 
-A comprehensive benchmark system for evaluating tool selection and chaining capabilities across different AI agents and computational chemistry tools.
+Large Language Model (LLM) agents are increasingly capable of using external tools via MCP to perform complex tasks. However, existing benchmarks rarely focus on life sciences research contexts or simulate tool-rich experimental environments. LabAgents addresses this gap as a domain-specific benchmark for chemistry and biology research workflows, evaluating how well AI agents leverage MCP (Model Context Protocol) tools. It measures an agent's ability to:
+
+1. Select the right tools from a chemistry/biology MCP suite
+2. Plan and execute multi-step experimental workflows
+3. Deliver correct results on scientific tasks
+
+TL;DR, it tests how well agents can navigate through problems, just as a scientist would.
+
+---
 
 ## Getting Started
 
@@ -24,7 +32,7 @@ Or using the wrapper script:
 - **grok-4** - xAI's latest model
 - **gemini-2.5-pro** - Google's latest Gemini model
 - **deepseek-v3.1** - DeepSeek's latest model
-- **grok-code-fast-1** - Anthropic's new reasoning model
+- **qwen** - Alibaba's latest model
 
 ## Available Rowan MCP Tools
 
@@ -77,8 +85,7 @@ Advanced scenarios requiring conditional logic, multiple tool chains, and decisi
 
 **Tier 3:** "Analyze the binding of semaglutide to the GLP-1 receptor, optimize the docked pose, then compare how modifications to the fatty acid chain length affect both binding affinity and predicted half-life."
 
-
-## Current (More Relevant/Personally Interesting) Questions Tested: 
+## Current Questions Being Tested
 
 **Tier 2 (6 questions):**
   - Ibuprofen conformers + pKa/logP - Major NSAID, widely studied
