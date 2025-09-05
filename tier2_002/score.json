@@ -3,7 +3,7 @@
     "claude-4.1-opus": {
       "correct": false,
       "score": 0,
-      "notes": "Did not provide final calculated results for logP and pKa"
+      "notes": "Provided logP=3.69 (correct range), pKa=4.74 (below expected range 4.91-5.8)"
     },
     "claude-4-sonnet": {
       "correct": true,
