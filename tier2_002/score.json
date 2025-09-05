@@ -1,0 +1,56 @@
+{
+  "tier2_002_scores": {
+    "claude-4.1-opus": {
+      "correct": false,
+      "score": 0,
+      "notes": "Did not provide final calculated results for logP and pKa"
+    },
+    "claude-4-sonnet": {
+      "correct": true,
+      "score": 1,
+      "notes": "Provided accurate results: logP=3.073, pKa=5.692 (within expected ranges)"
+    },
+    "gpt-5": {
+      "correct": true,
+      "score": 1,
+      "notes": "Provided accurate results: logP=3.073, pKa=5.604 (within expected ranges)"
+    },
+    "o3": {
+      "correct": true,
+      "score": 1,
+      "notes": "Provided accurate results: logP=3.07, pKa=5.58 (within expected ranges)"
+    },
+    "grok-4": {
+      "correct": true,
+      "score": 1,
+      "notes": "Provided accurate results: logP=3.073, pKa=5.53 (within expected ranges)"
+    },
+    "gemini-2.5-pro": {
+      "correct": true,
+      "score": 1,
+      "notes": "Provided accurate results: logP=3.073, pKa=5.577 (within expected ranges)"
+    },
+    "deepseek-v3.1": {
+      "correct": false,
+      "score": 0,
+      "notes": "Empty response - no answer provided"
+    },
+    "grok-code-fast-1": {
+      "correct": true,
+      "score": 1,
+      "notes": "Provided accurate results: logP=3.073, pKa=5.49 (within expected ranges)"
+    }
+  },
+  "evaluation_criteria": {
+    "scoring_method": "binary_correctness",
+    "correct_answer_requirements": "Must provide both logP and pKa values within reasonable ranges",
+    "expected_logP_range": [2.48, 3.97],
+    "expected_pKa_range": [4.91, 5.8]
+  },
+  "summary": {
+    "total_models": 8,
+    "correct_answers": 6,
+    "incorrect_answers": 2,
+    "success_rate": "75%"
+  }
+}
