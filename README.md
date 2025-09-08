@@ -96,3 +96,13 @@ Complex tasks where outputs from one workflow become inputs of another.
   - Atorvastatin docking - Major statin, structure-activity relationships
   - Serotonin reaction pathways - Neurotransmitter research
   - Taxol ADMET analysis - Major cancer drug, BBB permeability
+
+## Evaluation Results
+
+We evaluated 8 foundation models on computational chemistry tasks requiring agentic tool-use.
+
+**Key Findings:**
+- GPT-5 had the highest correctness score (16/30 weighted score)
+- Claude 4 Sonnet had the highest tool selection score (8/10 tasks)  
+
+**📊 [View Full Evaluation Report →](EVALUATION.md)**
