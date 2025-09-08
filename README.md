@@ -116,7 +116,7 @@ My first time evaluating agentic tool-use revealed how **nuanced** this area is 
 I still need to noodle on this - even madness needs its method. Difficulty assessment was based off "vibes" rather than empirical validation, which is lousy for reproducibility.
 
 **Data collection gaps**  
-Hindsight is 20/20. Future work needs consistent logging of:
+Future work needs consistent logging of:
 - Parameter extraction
 - Function call results  
 - Intermediate responses
