@@ -18,10 +18,6 @@ TL;DR, it tests how well agents can navigate through problems, just as a scienti
 source venv/bin/activate && python3 eval_tracker_server.py
 ```
 
-Or using the wrapper script:
-```bash
-./python_wrapper.sh eval_tracker_server.py
-```
 
 ## Models Being Tested
 
@@ -32,7 +28,7 @@ Or using the wrapper script:
 - **grok-4** - xAI's latest model
 - **gemini-2.5-pro** - Google's latest Gemini model
 - **deepseek-v3.1** - DeepSeek's latest model
-- **qwen** - Alibaba's latest model
+- **grok-code-fast-1** - xAI's fast coding model
 
 ## Available Rowan MCP Tools
 
@@ -71,11 +67,11 @@ Or using the wrapper script:
 ### Tier 1: Basic Tool Selection
 Simple, direct questions requiring selection of a single appropriate tool.
 
-### Tier 2: Tool Chaining
-Questions requiring sequential use of multiple tools where output from one feeds into the next.
+### Tier 2: Multi-Tool Orchestration
+Tasks requiring workflow planning and independent calculations across multiple tools. 
 
-### Tier 3: Complex Workflows
-Advanced scenarios requiring conditional logic, multiple tool chains, and decision-making based on intermediate results.
+### Tier 3: Scientific Planning and Conditional Logic
+Complex tasks where outputs from one workflow become inputs of another.
 
 ## Example Questions:
 
@@ -87,18 +83,16 @@ Advanced scenarios requiring conditional logic, multiple tool chains, and decisi
 
 ## Current Questions Being Tested
 
-**Tier 2 (6 questions):**
+**Tier 2 (5 questions):**
   - Ibuprofen conformers + pKa/logP - Major NSAID, widely studied
   - Caffeine descriptors + solubility - Model drug compound
   - Morphine tautomers + pKa - Important opioid pharmacology
   - Paracetamol electronic structure - Essential drug, HOMO/LUMO analysis
-  - Benzene redox potential - Fundamental organic chemistry
   - Caffeine temperature solubility - Temperature-dependent solubility studies
 
-**Tier 3 (6 questions):**
+**Tier 3 (5 questions):**
   - Warfarin tautomers - Critical anticoagulant research
   - Acetaminophen metabolic sites - Drug metabolism studies
   - Atorvastatin docking - Major statin, structure-activity relationships
   - Serotonin reaction pathways - Neurotransmitter research
   - Taxol ADMET analysis - Major cancer drug, BBB permeability
-  - Penicillin β-lactamase - Antibiotic resistance mechanisms

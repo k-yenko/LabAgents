@@ -1,0 +1,54 @@
+{
+  "tier3_002_scores": {
+    "claude-4.1-opus": {
+      "correct": true,
+      "score": 1,
+      "notes": "Comprehensive and accurate response. Correctly identified phenolic hydroxyl as primary site for both glucuronidation and sulfation, provided detailed Fukui indices calculations with specific values, and included appropriate ADMET properties (LogP=1.351, TPSA=49.33). Successfully completed structure optimization and provided sound chemical reasoning for metabolic site predictions. Minor difference: didn't mention specific UGT/SULT enzymes or NAPQI formation, but core predictions and computational analysis are correct."
+    },
+    "claude-4-sonnet": {
+      "correct": true,
+      "score": 1,
+      "notes": "Excellent comprehensive analysis. Correctly identified phenolic hydroxyl as primary site for both glucuronidation and sulfation (f\u207b = 0.110). Properly calculated Fukui indices for nucleophilic (f\u207b), electrophilic (f\u207a), and identified key reactive sites. ADMET properties show good drug-like characteristics (MW=151.06 Da, LogP=1.351, Lipinski compliant). Successfully mentions UGT and SULT enzyme involvement. Only minor omission is specific percentages of metabolic pathways and CYP2E1/NAPQI formation, but core scientific understanding and computational results are sound."
+    },
+    "gpt-5": {
+      "correct": true,
+      "score": 1,
+      "notes": "Response correctly identifies acetaminophen structure and performs all requested calculations. Fukui indices properly calculated with f+ and f- values identifying reactive sites. Correctly identifies phenolic oxygen as primary conjugation site for both glucuronidation and sulfation based on high f+ values and pKa analysis (pKa=9.509). ADMET properties are comprehensive and reasonable: MW=151.063, SLogP=1.351, TPSA=104.093, HBD=2, HBA=2, Lipinski=1, logS=-1.247. All computational methods are properly justified using Rowan workflows with appropriate quantum chemical methods (GFN2-xTB for optimization, GFN1-xTB for Fukui indices)."
+    },
+    "o3": {
+      "correct": true,
+      "score": 1,
+      "notes": "Excellent comprehensive response. Correctly identified phenolic OH as primary site for glucuronidation/sulfation using Fukui indices (phenolic O atom 9, f- = 0.084). ADMET properties are accurate: MW=151 Da, cLogP\u22481.35, TPSA=49 \u00c5\u00b2, H-bond donors/acceptors=2/2 (all within expected ranges). Sound chemical reasoning throughout, including identification of amide N as secondary conjugation site and aromatic carbons for potential oxidation. Successfully completed all requested computational tasks with proper interpretation."
+    },
+    "grok-4": {
+      "correct": true,
+      "score": 1,
+      "notes": "Response demonstrates sound chemical reasoning with correct identification of reactive sites using Fukui indices. Correctly identifies phenolic OH as primary site for glucuronidation/sulfation, which aligns with expected metabolism. ADMET properties are reasonable (LogP=1.351 within typical range, appropriate molecular descriptors). While missing specific enzyme details and quantitative metabolism percentages from expected answer, the core chemical insights and methodology are scientifically valid."
+    },
+    "gemini-2.5-pro": {
+      "correct": false,
+      "score": 0,
+      "notes": "Major errors in metabolic site prediction: incorrectly identifies carbonyl oxygen/carbon as primary sites for glucuronidation/sulfation instead of the phenolic hydroxyl group. Missing critical information about specific enzymes (UGT1A1/1A6, SULT1A1/1A3, CYP2E1), metabolic percentages, and hepatotoxic NAPQI formation. ADMET values appear reasonable but incomplete analysis of key sites."
+    },
+    "deepseek-v3.1": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response provides no scientific content - only reports technical errors with tool calls. Does not address any aspect of the question including structure optimization, Fukui indices, metabolic site prediction, or ADMET properties. Cannot be considered correct as it contains no chemical analysis or calculations."
+    },
+    "grok-code-fast-1": {
+      "correct": true,
+      "score": 1,
+      "notes": "Comprehensive and accurate response. Correctly identifies phenolic OH as primary site for both glucuronidation and sulfation, mentions hepatotoxic NAPQI formation, provides appropriate Fukui indices analysis for reactive sites, and includes relevant ADMET properties (MW=151.063 Da, LogP=1.351, TPSA=49.33 \u00c5\u00b2) within expected ranges. Successfully addresses all key components of the question with sound chemical reasoning."
+    }
+  },
+  "evaluation_criteria": {
+    "scoring_method": "llm_judge_claude_sonnet",
+    "judge_model": "claude-sonnet-4-20250514"
+  },
+  "summary": {
+    "total_models": 8,
+    "correct_answers": 6,
+    "incorrect_answers": 2,
+    "success_rate": "75.0%"
+  }
+}

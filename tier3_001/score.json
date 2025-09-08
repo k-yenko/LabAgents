@@ -1,0 +1,54 @@
+{
+  "tier3_001_scores": {
+    "claude-4.1-opus": {
+      "correct": false,
+      "score": 0,
+      "notes": "Major discrepancies in key findings: (1) Only identified 3 tautomers vs expected 40 distinct forms, missing critical T4S and T10S_R forms; (2) Calculated pKa of 2.61 is significantly outside literature range of 5.05-5.2 - this is a substantial error for warfarin's well-established coumarin 4-hydroxyl pKa; (3) While correctly identifies anionic form at pH 7.4 and high protein binding, the fundamental tautomer enumeration and pKa calculation errors are too significant to overlook"
+    },
+    "claude-4-sonnet": {
+      "correct": false,
+      "score": 0,
+      "notes": "Major discrepancies in key values: calculated pKa of 2.56/4.88 vs expected 5.05-5.2 (outside acceptable range), identified only 3 tautomers vs expected 40 distinct forms, and provided incorrect SMILES structures. While protein binding prediction (>95-99%) aligns with expected values and chemical reasoning about binding mechanisms is sound, the fundamental tautomer analysis and pKa calculations are significantly inaccurate."
+    },
+    "gpt-5": {
+      "correct": true,
+      "score": 1,
+      "notes": "Excellent comprehensive response. pKa value of 4.87 is very close to expected 5.05-5.2 range (within computational uncertainty). Correctly identifies anionic form as dominant at pH 7.4 (~99.7% vs 0.3% neutral). Accurately reports 97-99% HSA binding at Sudlow Site I with appropriate binding constants (3-5\u00d710^5 M\u207b1). Provides detailed tautomer analysis with energy differences. All key chemical insights are captured with sound reasoning."
+    },
+    "o3": {
+      "correct": false,
+      "score": 0,
+      "notes": "Critical error in pKa calculation: reported 2.67 vs expected 5.05-5.2 range. This ~2.5 unit difference is far outside acceptable uncertainty and affects the chemical reasoning. While correctly identified deprotonated form as dominant at pH 7.4, the fundamental pKa error is too significant. Also found only 3 tautomers vs expected 40 forms, and failed to complete protein binding prediction due to technical issues."
+    },
+    "grok-4": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response provides no chemical analysis, calculations, or insights about warfarin tautomers, pKa values, or protein binding. Claims tool failure but provides no alternative approach or partial analysis. Does not address any aspect of the multi-part question."
+    },
+    "gemini-2.5-pro": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response provides no scientific content - only reports technical difficulties with computational tools. Does not address any aspect of the question: no tautomer identification, no pKa calculations, no pH 7.4 analysis, and no protein binding predictions. While technical issues may be legitimate, the response fails to meet any of the evaluation criteria."
+    },
+    "deepseek-v3.1": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response provides no chemical information about warfarin tautomers, pKa values, or protein binding. Instead reports technical tool failures without attempting alternative approaches or providing any substantive chemical analysis. Does not address any aspect of the multi-part question."
+    },
+    "grok-code-fast-1": {
+      "correct": false,
+      "score": 0,
+      "notes": "Major discrepancies: Claims only 3 tautomers vs expected 40 distinct forms, missing key T4S and T10S_R forms. pKa values (5.0-5.5) are close but slightly high compared to expected 5.05-5.2. Correctly identifies deprotonated form at pH 7.4 and high protein binding to albumin at Sudlow Site I, but lacks specificity about 99% binding and crystal structure details. The tautomer analysis is significantly incomplete."
+    }
+  },
+  "evaluation_criteria": {
+    "scoring_method": "llm_judge_claude_sonnet",
+    "judge_model": "claude-sonnet-4-20250514"
+  },
+  "summary": {
+    "total_models": 8,
+    "correct_answers": 1,
+    "incorrect_answers": 7,
+    "success_rate": "12.5%"
+  }
+}

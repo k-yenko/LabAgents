@@ -1,0 +1,349 @@
+{
+  "tier3_004_tool_selection": {
+    "claude-4.1-opus": {
+      "tool_selection_score": 1,
+      "missing_critical_tools": [],
+      "extra_tools": [
+        "workflow_is_finished",
+        "molecule_lookup",
+        "workflow_get_status",
+        "retrieve_calculation_molecules",
+        "retrieve_workflow"
+      ],
+      "has_all_required": true,
+      "normalized_expected": [
+        "submit_fukui_workflow",
+        "submit_scan_workflow"
+      ],
+      "normalized_actual": [
+        "workflow_is_finished",
+        "molecule_lookup",
+        "submit_scan_workflow",
+        "workflow_get_status",
+        "retrieve_calculation_molecules",
+        "submit_fukui_workflow",
+        "retrieve_workflow"
+      ],
+      "notes": "Simple binary evaluation: PASS - All required tools present (normalized tool names)",
+      "expected_tools": [
+        "submit_scan_workflow",
+        "submit_fukui_workflow"
+      ],
+      "actual_tools": [
+        "molecule_lookup",
+        "submit_scan_workflow",
+        "submit_fukui_workflow",
+        "workflow_get_status",
+        "workflow_get_status",
+        "workflow_get_status",
+        "workflow_get_status",
+        "workflow_get_status",
+        "workflow_get_status",
+        "workflow_is_finished",
+        "workflow_is_finished",
+        "workflow_is_finished",
+        "workflow_is_finished",
+        "retrieve_workflow",
+        "workflow_is_finished",
+        "workflow_is_finished",
+        "retrieve_workflow",
+        "retrieve_calculation_molecules",
+        "retrieve_calculation_molecules",
+        "retrieve_calculation_molecules"
+      ],
+      "tools_overlap": [
+        "submit_fukui_workflow",
+        "submit_scan_workflow"
+      ]
+    },
+    "claude-4-sonnet": {
+      "tool_selection_score": 1,
+      "missing_critical_tools": [],
+      "extra_tools": [
+        "molecule_lookup"
+      ],
+      "has_all_required": true,
+      "normalized_expected": [
+        "submit_fukui_workflow",
+        "submit_scan_workflow"
+      ],
+      "normalized_actual": [
+        "molecule_lookup",
+        "submit_fukui_workflow",
+        "submit_scan_workflow"
+      ],
+      "notes": "Simple binary evaluation: PASS - All required tools present (normalized tool names)",
+      "expected_tools": [
+        "submit_scan_workflow",
+        "submit_fukui_workflow"
+      ],
+      "actual_tools": [
+        "mcp_rowan_molecule_lookup",
+        "mcp_rowan_submit_scan_workflow",
+        "mcp_rowan_submit_fukui_workflow"
+      ],
+      "tools_overlap": [
+        "submit_fukui_workflow",
+        "submit_scan_workflow"
+      ]
+    },
+    "gpt-5": {
+      "tool_selection_score": 1,
+      "missing_critical_tools": [],
+      "extra_tools": [
+        "molecule_lookup",
+        "list_workflows",
+        "workflow_fetch_latest",
+        "workflow_get_status",
+        "retrieve_calculation_molecules",
+        "retrieve_workflow"
+      ],
+      "has_all_required": true,
+      "normalized_expected": [
+        "submit_fukui_workflow",
+        "submit_scan_workflow"
+      ],
+      "normalized_actual": [
+        "molecule_lookup",
+        "list_workflows",
+        "workflow_fetch_latest",
+        "submit_scan_workflow",
+        "workflow_get_status",
+        "retrieve_calculation_molecules",
+        "submit_fukui_workflow",
+        "retrieve_workflow"
+      ],
+      "notes": "Simple binary evaluation: PASS - All required tools present (normalized tool names)",
+      "expected_tools": [
+        "submit_scan_workflow",
+        "submit_fukui_workflow"
+      ],
+      "actual_tools": [
+        "mcp_rowan_molecule_lookup",
+        "mcp_rowan_submit_scan_workflow",
+        "mcp_rowan_workflow_get_status",
+        "mcp_rowan_workflow_fetch_latest",
+        "mcp_rowan_list_workflows",
+        "mcp_rowan_submit_fukui_workflow",
+        "mcp_rowan_retrieve_workflow",
+        "mcp_rowan_submit_fukui_workflow",
+        "mcp_rowan_retrieve_calculation_molecules"
+      ],
+      "tools_overlap": [
+        "submit_fukui_workflow",
+        "submit_scan_workflow"
+      ]
+    },
+    "o3": {
+      "tool_selection_score": 1,
+      "missing_critical_tools": [],
+      "extra_tools": [
+        "molecule_lookup",
+        "workflow_wait_for_result"
+      ],
+      "has_all_required": true,
+      "normalized_expected": [
+        "submit_fukui_workflow",
+        "submit_scan_workflow"
+      ],
+      "normalized_actual": [
+        "submit_scan_workflow",
+        "molecule_lookup",
+        "submit_fukui_workflow",
+        "workflow_wait_for_result"
+      ],
+      "notes": "Simple binary evaluation: PASS - All required tools present (normalized tool names)",
+      "expected_tools": [
+        "submit_scan_workflow",
+        "submit_fukui_workflow"
+      ],
+      "actual_tools": [
+        "mcp_rowan_molecule_lookup",
+        "workflow_wait_for_result",
+        "mcp_rowan_submit_scan_workflow",
+        "mcp_rowan_submit_fukui_workflow",
+        "mcp_rowan_workflow_wait_for_result"
+      ],
+      "tools_overlap": [
+        "submit_fukui_workflow",
+        "submit_scan_workflow"
+      ]
+    },
+    "grok-4": {
+      "tool_selection_score": 0,
+      "missing_critical_tools": [
+        "submit_fukui_workflow"
+      ],
+      "extra_tools": [
+        "molecule_lookup",
+        "workflow_delete",
+        "workflow_stop",
+        "list_workflows",
+        "submit_basic_calculation_workflow",
+        "workflow_fetch_latest",
+        "workflow_get_status",
+        "retrieve_workflow"
+      ],
+      "has_all_required": false,
+      "normalized_expected": [
+        "submit_fukui_workflow",
+        "submit_scan_workflow"
+      ],
+      "normalized_actual": [
+        "molecule_lookup",
+        "workflow_stop",
+        "list_workflows",
+        "workflow_delete",
+        "submit_basic_calculation_workflow",
+        "workflow_fetch_latest",
+        "submit_scan_workflow",
+        "workflow_get_status",
+        "retrieve_workflow"
+      ],
+      "notes": "Simple binary evaluation: FAIL - All required tools missing (normalized tool names)",
+      "expected_tools": [
+        "submit_scan_workflow",
+        "submit_fukui_workflow"
+      ],
+      "actual_tools": [
+        "mcp_rowan_molecule_lookup",
+        "mcp_rowan_submit_scan_workflow",
+        "mcp_rowan_workflow_get_status",
+        "mcp_rowan_retrieve_workflow",
+        "mcp_rowan_workflow_fetch_latest",
+        "mcp_rowan_workflow_stop",
+        "mcp_rowan_list_workflows",
+        "mcp_rowan_workflow_delete",
+        "mcp_rowan_submit_basic_calculation_workflow"
+      ],
+      "tools_overlap": [
+        "submit_scan_workflow"
+      ]
+    },
+    "gemini-2.5-pro": {
+      "tool_selection_score": 1,
+      "missing_critical_tools": [],
+      "extra_tools": [
+        "submit_basic_calculation_workflow",
+        "submit_scan_workflow_failed",
+        "retrieve_calculation_molecules",
+        "molecule_lookup"
+      ],
+      "has_all_required": true,
+      "normalized_expected": [
+        "submit_fukui_workflow",
+        "submit_scan_workflow"
+      ],
+      "normalized_actual": [
+        "molecule_lookup",
+        "submit_scan_workflow_failed",
+        "submit_basic_calculation_workflow",
+        "submit_scan_workflow",
+        "retrieve_calculation_molecules",
+        "submit_fukui_workflow"
+      ],
+      "notes": "Simple binary evaluation: PASS - All required tools present (normalized tool names)",
+      "expected_tools": [
+        "submit_scan_workflow",
+        "submit_fukui_workflow"
+      ],
+      "actual_tools": [
+        "molecule_lookup",
+        "submit_basic_calculation_workflow",
+        "retrieve_calculation_molecules",
+        "submit_scan_workflow",
+        "submit_scan_workflow",
+        "submit_scan_workflow",
+        "submit_scan_workflow_failed",
+        "submit_fukui_workflow"
+      ],
+      "tools_overlap": [
+        "submit_fukui_workflow",
+        "submit_scan_workflow"
+      ]
+    },
+    "deepseek-v3.1": {
+      "tool_selection_score": 0,
+      "missing_critical_tools": [
+        "submit_scan_workflow"
+      ],
+      "extra_tools": [
+        "submit_dihedral_scan_workflow",
+        "retrieve_workflow"
+      ],
+      "has_all_required": false,
+      "normalized_expected": [
+        "submit_fukui_workflow",
+        "submit_scan_workflow"
+      ],
+      "normalized_actual": [
+        "submit_dihedral_scan_workflow",
+        "submit_fukui_workflow",
+        "retrieve_workflow"
+      ],
+      "notes": "Simple binary evaluation: FAIL - All required tools missing (normalized tool names)",
+      "expected_tools": [
+        "submit_scan_workflow",
+        "submit_fukui_workflow"
+      ],
+      "actual_tools": [
+        "submit_dihedral_scan_workflow",
+        "submit_fukui_workflow",
+        "retrieve_workflow"
+      ],
+      "tools_overlap": [
+        "submit_fukui_workflow"
+      ]
+    },
+    "grok-code-fast-1": {
+      "tool_selection_score": 1,
+      "missing_critical_tools": [],
+      "extra_tools": [
+        "workflow_get_status",
+        "molecule_lookup",
+        "retrieve_workflow"
+      ],
+      "has_all_required": true,
+      "normalized_expected": [
+        "submit_fukui_workflow",
+        "submit_scan_workflow"
+      ],
+      "normalized_actual": [
+        "molecule_lookup",
+        "submit_scan_workflow",
+        "workflow_get_status",
+        "submit_fukui_workflow",
+        "retrieve_workflow"
+      ],
+      "notes": "Simple binary evaluation: PASS - All required tools present (normalized tool names)",
+      "expected_tools": [
+        "submit_scan_workflow",
+        "submit_fukui_workflow"
+      ],
+      "actual_tools": [
+        "molecule_lookup",
+        "submit_scan_workflow",
+        "submit_fukui_workflow",
+        "workflow_get_status",
+        "retrieve_workflow"
+      ],
+      "tools_overlap": [
+        "submit_fukui_workflow",
+        "submit_scan_workflow"
+      ]
+    }
+  },
+  "evaluation_criteria": {
+    "evaluation_type": "simple_binary_tool_selection",
+    "scoring": "1 if all expected tools present (any order), 0 otherwise",
+    "allows_extra_tools": true,
+    "focus": "required_tool_completeness"
+  },
+  "summary": {
+    "total_models": 8,
+    "average_tool_selection_score": 0.8,
+    "passing_models": 6,
+    "failing_models": 2,
+    "expected_tools_count": 2
+  }
+}
