@@ -112,10 +112,10 @@ My first time evaluating agentic tool-use revealed how **nuanced** this area is 
 
 ### What's Next
 
-**Better scoring methods**  
+#### Better scoring methods
 I still need to noodle on this - even madness needs its method. Difficulty assessment was based off "vibes" rather than empirical validation, which is lousy for reproducibility.
 
-**Data collection gaps**  
+#### Data collection gaps
 Future work needs consistent logging of:
 - Parameter extraction
 - Function call results  
@@ -124,11 +124,11 @@ Future work needs consistent logging of:
 
 Current logging was inconsistent and missed important interactions.
 
-**Eval-as-you-go**  
+#### Eval-as-you-go
 Can real-time assessment catch edge cases as they emerge? Can new problems be generated dynamically in response to model performance?
 
-**Community engagement**  
+#### Community engagement
 An LMArena-style platform for biology/chemistry AI where researchers submit challenging problems and see head-to-head comparisons could create a dynamic benchmark that evolves with the field's needs.
 
-**Model shortcuts**  
+#### Model shortcuts
 Some models gave correct answers without calling expected tools (Claude 4.1 Opus predicted pKa accurately without using the pKa tool). There's also an untouched layer - do agents choose scientifically sound computational methods?
