@@ -52,8 +52,8 @@ def load_correctness_scores():
     all_scores = {}
     
     # All question folders (excluding tier2_006 and tier3_006)
-    folders = ['tier2_002', 'tier2_003', 'tier2_004', 'tier2_005', 'tier2_007',
-               'tier3_001', 'tier3_002', 'tier3_003', 'tier3_004', 'tier3_005']
+    folders = ['questions/tier2_002', 'questions/tier2_003', 'questions/tier2_004', 'questions/tier2_005', 'questions/tier2_007',
+               'questions/tier3_001', 'questions/tier3_002', 'questions/tier3_003', 'questions/tier3_004', 'questions/tier3_005']
     
     for folder in folders:
         score_file = f"{folder}/score.json"
@@ -74,8 +74,8 @@ def load_tool_selection_scores():
     all_scores = {}
     
     # All question folders (excluding tier2_006 and tier3_006)
-    folders = ['tier2_002', 'tier2_003', 'tier2_004', 'tier2_005', 'tier2_007',
-               'tier3_001', 'tier3_002', 'tier3_003', 'tier3_004', 'tier3_005']
+    folders = ['questions/tier2_002', 'questions/tier2_003', 'questions/tier2_004', 'questions/tier2_005', 'questions/tier2_007',
+               'questions/tier3_001', 'questions/tier3_002', 'questions/tier3_003', 'questions/tier3_004', 'questions/tier3_005']
     
     for folder in folders:
         score_file = f"{folder}/tool_selection_scores.json"

@@ -176,4 +176,7 @@ if __name__ == "__main__":
         sys.exit(1)
     
     folder = sys.argv[1]
+    # Add questions/ prefix if not already present
+    if not folder.startswith('questions/'):
+        folder = f'questions/{folder}'
     evaluate_question_folder(folder)
