@@ -84,18 +84,18 @@ Complex tasks where outputs from one workflow become inputs of another.
 ## Current Questions Being Tested
 
 **Tier 2 (5 questions):**
-  - Ibuprofen conformers + pKa/logP - Major NSAID, widely studied
+  - Ibuprofen conformers + pKa/logP - NSAID, lots of information on this
   - Caffeine descriptors + solubility - Model drug compound
-  - Morphine tautomers + pKa - Important opioid pharmacology
-  - Paracetamol electronic structure - Essential drug, HOMO/LUMO analysis
+  - Morphine tautomers + pKa - Opioid pharmacology
+  - Paracetamol electronic structure - Common drug, HOMO/LUMO analysis
   - Caffeine temperature solubility - Temperature-dependent solubility studies
 
 **Tier 3 (5 questions):**
-  - Warfarin tautomers - Critical anticoagulant research
+  - Warfarin tautomers - Anticoagulant research
   - Acetaminophen metabolic sites - Drug metabolism studies
-  - Atorvastatin docking - Major statin, structure-activity relationships
+  - Atorvastatin docking - Statin, structure-activity relationships
   - Serotonin reaction pathways - Neurotransmitter research
-  - Taxol ADMET analysis - Major cancer drug, BBB permeability
+  - Taxol ADMET analysis - Cancer drug, BBB permeability
 
 ## Evaluation Results
 
