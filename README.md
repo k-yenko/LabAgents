@@ -72,15 +72,15 @@ Complex tasks where outputs from one workflow become inputs of another.
 
 | Tier | Question |
 |------|----------|
-| **Tier 1** | "Calculate the ADMET properties of semaglutide to assess its pharmacokinetic profile." |
-| **Tier 2** | "Generate conformers of semaglutide and identify the lowest energy structure, then calculate its solubility in water at physiological pH." |
-| **Tier 3** | "Analyze the binding of semaglutide to the GLP-1 receptor, optimize the docked pose, then compare how modifications to the fatty acid chain length affect both binding affinity and predicted half-life." |
+| **1** | "Calculate the ADMET properties of semaglutide to assess its pharmacokinetic profile." |
+| **2** | "Generate conformers of semaglutide and identify the lowest energy structure, then calculate its solubility in water at physiological pH." |
+| **3** | "Analyze the binding of semaglutide to the GLP-1 receptor, optimize the docked pose, then compare how modifications to the fatty acid chain length affect both binding affinity and predicted half-life." |
 
 ## Benchmark Questions
 
 **10 multi-step computational chemistry tasks** spanning drug discovery, pharmacology, and molecular analysis.
 
-**[→ See All Questions](questions/v2_queries.md)** | **[→ Questions Folder](questions/)**
+**[→ See All Questions](questions/v2_queries.md)** 
 
 ---
 
@@ -106,8 +106,16 @@ Complex tasks where outputs from one workflow become inputs of another.
 
 ## Future Directions
 
-**Enhanced Evaluation**: Better weighting methods and data collection including parameter choices, reasoning chains, and computational resource tracking
+This is... very far from complete. 
 
-**Real-Time Evaluation**: To catch edge cases and have adaptive question generation
+This was my first time evaluating agentic tool-use, and the experience revealed just how nuanced this area is - there's no one-size-fits-all solution. Running evaluations in this space truly exists at the intersection of art and science. On one hand, there exist objective correct and incorrect answers in chemistry; on the other hand, it feels like selecting meaningful metrics (and knowing when metrics start yielding diminishing returns) requires some intuition from domain experience.
 
-**Community Platform**: LMArena-style interface for biology/chemistry AI where researchers submit challenging problems and compare models head-to-head
+**Better scoring methods**. I still need to noodle on this a bit more - even madness needs its method. Otherwise, it's just lousy for reproducibility. Difficulty assessment was based a bit off "vibes" rather than empirical validation.
+
+**Data collection gaps**. You know what they say - hindsight is 20/20. Beyond user queries and end results, future work needs consistent and detailed recording of parameter extraction, individual function call results, intermediate agent responses, and time tracking. Logging was inconsistent, sometimes capturing all tool calls, and sometimes missing important interactions.
+
+**Eval-as-you-go**. Rather than batch eval after data collection, can a real-time assessment be used? Can it catch edge cases and model behaviors as they emerge? And can new problems be generated dynamically as a response?
+
+**Gamification and community engagement**. An LMArena-style platform for biology/chemistry AI would be fun, where the community can submit challenging questions in real-time and see head-to-head comparisons. Getting public input on question difficulty and having researchers give genuinely hard problems at the system could create a dynamic benchmark that evolves with the field's needs.
+
+**Model behavior surprises**. Some models arrived at the right answer without calling expected and crucial workflows (i.e. Claude 4.1 Opus gave an accurate pKa prediction without calling the one and only pKa tool). Indicative of model shortcuts/room for improvement in prompts. And beyond all of these, there's an entire layer within parameters I haven't touched - does the agent choose scientifically sound engines or methods?
