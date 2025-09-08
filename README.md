@@ -105,4 +105,4 @@ We evaluated 8 foundation models on computational chemistry tasks requiring agen
 - GPT-5 had the highest correctness score (16/30 weighted score)
 - Claude 4 Sonnet had the highest tool selection score (8/10 tasks)  
 
-**📊 [View Full Evaluation Report →](EVALUATION.md)**
+**📊 [See Full Evaluation Report →](EVALUATION.md)**
