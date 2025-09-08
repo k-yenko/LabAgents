@@ -100,7 +100,7 @@ Complex tasks where outputs from one workflow become inputs of another.
 - **GPT-5**: Highest correctness score (16/30 weighted)
 - **Claude 4 Sonnet**: Best tool selection (8/10 complete)
 
-**[→ The full 'There and Back Again'](EVALUATION.md)**
+**[→ The full 'There and Back Again'](REFLECTIONS.md)**
 
 ---
 
@@ -108,14 +108,14 @@ Complex tasks where outputs from one workflow become inputs of another.
 
 This is... very far from complete. 
 
-This was my first time evaluating agentic tool-use, and the experience revealed just how nuanced this area is - there's no one-size-fits-all solution. Running evaluations in this space truly exists at the intersection of art and science. On one hand, there exist objective correct and incorrect answers in chemistry; on the other hand, it feels like selecting meaningful metrics (and knowing when metrics start yielding diminishing returns) requires some intuition from domain experience.
+My first time evaluating agentic tool-use revealed how nuanced this area is - evaluations exist at the intersection of art and science. While chemistry has objective answers, selecting meaningful metrics requires domain intuition.
 
-**Better scoring methods**. I still need to noodle on this a bit more - even madness needs its method. Otherwise, it's just lousy for reproducibility. Difficulty assessment was based a bit off "vibes" rather than empirical validation.
+**Better scoring methods**. I still need to noodle on this - even madness needs its method. Difficulty assessment was based off "vibes" rather than empirical validation, which is lousy for reproducibility.
 
-**Data collection gaps**. You know what they say - hindsight is 20/20. Beyond user queries and end results, future work needs consistent and detailed recording of parameter extraction, individual function call results, intermediate agent responses, and time tracking. Logging was inconsistent, sometimes capturing all tool calls, and sometimes missing important interactions.
+**Data collection gaps**. Hindsight is 20/20. Future work needs consistent logging of parameter extraction, function call results, intermediate responses, and time tracking. Current logging was inconsistent and missed important interactions.
 
-**Eval-as-you-go**. Rather than batch eval after data collection, can a real-time assessment be used? Can it catch edge cases and model behaviors as they emerge? And can new problems be generated dynamically as a response?
+**Eval-as-you-go**. Can real-time assessment catch edge cases as they emerge? Can new problems be generated dynamically in response to model performance?
 
-**Gamification and community engagement**. An LMArena-style platform for biology/chemistry AI would be fun, where the community can submit challenging questions in real-time and see head-to-head comparisons. Getting public input on question difficulty and having researchers give genuinely hard problems at the system could create a dynamic benchmark that evolves with the field's needs.
+**Community engagement**. An LMArena-style platform for biology/chemistry AI where researchers submit challenging problems and see head-to-head comparisons could create a dynamic benchmark that evolves with the field's needs.
 
-**Model behavior surprises**. Some models arrived at the right answer without calling expected and crucial workflows (i.e. Claude 4.1 Opus gave an accurate pKa prediction without calling the one and only pKa tool). Indicative of model shortcuts/room for improvement in prompts. And beyond all of these, there's an entire layer within parameters I haven't touched - does the agent choose scientifically sound engines or methods?
+**Model shortcuts**. Some models gave correct answers without calling expected tools (Claude 4.1 Opus predicted pKa accurately without using the pKa tool). There's also an untouched layer - do agents choose scientifically sound computational methods?
