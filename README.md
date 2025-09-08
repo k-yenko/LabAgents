@@ -1,40 +1,35 @@
 # LabAgents
 
-Large Language Model (LLM) agents are increasingly capable of using external tools via MCP to perform complex tasks. However, existing benchmarks rarely focus on life sciences research contexts or simulate tool-rich experimental environments. LabAgents addresses this gap as a domain-specific benchmark for chemistry and biology research workflows, evaluating how well AI agents leverage MCP (Model Context Protocol) tools. It measures an agent's ability to:
+Large Language Model (LLM) agents are increasingly capable of using external tools via MCP to perform complex tasks. However, existing benchmarks rarely focus on life sciences research contexts or simulate tool-rich experimental environments. 
 
-1. Select the right tools from a chemistry/biology MCP suite
-2. Plan and execute multi-step experimental workflows
-3. Deliver correct results on scientific tasks
+**LabAgents** addresses this gap as a domain-specific benchmark for chemistry and biology research workflows, evaluating how well AI agents leverage MCP (Model Context Protocol) tools. It measures an agent's ability to:
 
-TL;DR, it tests how well agents can navigate through problems, just as a scientist would.
+1. **Select the right tools** from a chemistry/biology MCP suite
+2. **Plan and execute multi-step** experimental workflows  
+3. **Deliver correct results** on scientific tasks
+
+> *TL;DR: It tests how well agents can navigate through problems, just as a scientist would.*
 
 ---
 
-## Getting Started
+## Models Evaluated
 
-### Starting the Eval Tracker Server
+| Model | Provider | Type |
+|-------|----------|------|
+| **claude-4.1-opus** | Anthropic | Latest Opus model |
+| **claude-4-sonnet** | Anthropic | Latest Sonnet model |
+| **gpt-5** | OpenAI | Latest flagship model |
+| **o3** | OpenAI | Reasoning model |
+| **grok-4** | xAI | Latest model |
+| **gemini-2.5-pro** | Google | Latest Gemini model |
+| **deepseek-v3.1** | DeepSeek | Latest model |
+| **grok-code-fast-1** | xAI | Fast coding model |
 
-```bash
-source venv/bin/activate && python3 eval_tracker_server.py
-```
-
-
-## Models Being Tested
-
-- **claude-4.1-opus** - Latest Anthropic Opus model
-- **claude-4-sonnet** - Latest Anthropic Sonnet model
-- **gpt-5** - Latest OpenAI model
-- **o3** - OpenAI's reasoning model
-- **grok-4** - xAI's latest model
-- **gemini-2.5-pro** - Google's latest Gemini model
-- **deepseek-v3.1** - DeepSeek's latest model
-- **grok-code-fast-1** - xAI's fast coding model
-
-## Available Rowan MCP Tools
+## Rowan MCP Tools
 
 ### Core Calculations
 - `rowan_multistage_opt` - Multi-level geometry optimization with hierarchical methods
-- `rowan_conformers` - Conformer generation and optimization
+- `rowan_conformers` - Conformer generation and optimization  
 - `rowan_electronic_properties` - Electronic structure properties (orbitals, density, ESP)
 - `rowan_spin_states` - Spin state calculations for different multiplicities
 - `rowan_molecular_dynamics` - MD simulations with various ensembles
@@ -46,7 +41,7 @@ source venv/bin/activate && python3 eval_tracker_server.py
 - `rowan_tautomers` - Tautomer enumeration and ranking
 - `rowan_fukui` - Fukui indices for reactivity prediction
 
-### Drug Discovery
+### Drug Discovery  
 - `rowan_admet` - ADME-Tox property predictions
 - `rowan_descriptors` - Molecular descriptors for ML/QSAR
 - `rowan_docking` - Protein-ligand docking with ML refinement
@@ -62,47 +57,57 @@ source venv/bin/activate && python3 eval_tracker_server.py
 - `rowan_folder_management` - Organize calculations in folders
 - `rowan_system_management` - Server utilities and information
 
-## Benchmark Tiers
+## Benchmark Structure
 
 ### Tier 1: Basic Tool Selection
 Simple, direct questions requiring selection of a single appropriate tool.
 
-### Tier 2: Multi-Tool Orchestration
-Tasks requiring workflow planning and independent calculations across multiple tools. 
+### Tier 2: Multi-Tool Orchestration  
+Tasks requiring workflow planning and independent calculations across multiple tools.
 
 ### Tier 3: Scientific Planning and Conditional Logic
 Complex tasks where outputs from one workflow become inputs of another.
 
-## Example Questions:
+### Example Questions
 
-**Tier 1:** "Calculate the ADMET properties of semaglutide to assess its pharmacokinetic profile."
+| Tier | Question |
+|------|----------|
+| **Tier 1** | "Calculate the ADMET properties of semaglutide to assess its pharmacokinetic profile." |
+| **Tier 2** | "Generate conformers of semaglutide and identify the lowest energy structure, then calculate its solubility in water at physiological pH." |
+| **Tier 3** | "Analyze the binding of semaglutide to the GLP-1 receptor, optimize the docked pose, then compare how modifications to the fatty acid chain length affect both binding affinity and predicted half-life." |
 
-**Tier 2:** "Generate conformers of semaglutide and identify the lowest energy structure, then calculate its solubility in water at physiological pH."
+## Benchmark Questions
 
-**Tier 3:** "Analyze the binding of semaglutide to the GLP-1 receptor, optimize the docked pose, then compare how modifications to the fatty acid chain length affect both binding affinity and predicted half-life."
+**10 multi-step computational chemistry tasks** spanning drug discovery, pharmacology, and molecular analysis.
 
-## Current Questions Being Tested
+**[→ See All Questions](questions/v2_queries.md)** | **[→ Questions Folder](questions/)**
 
-**Tier 2 (5 questions):**
-  - Ibuprofen conformers + pKa/logP - NSAID, lots of information on this
-  - Caffeine descriptors + solubility - Model drug compound
-  - Morphine tautomers + pKa - Opioid pharmacology
-  - Paracetamol electronic structure - Common drug, HOMO/LUMO analysis
-  - Caffeine temperature solubility - Temperature-dependent solubility studies
+---
 
-**Tier 3 (5 questions):**
-  - Warfarin tautomers - Anticoagulant research
-  - Acetaminophen metabolic sites - Drug metabolism studies
-  - Atorvastatin docking - Statin, structure-activity relationships
-  - Serotonin reaction pathways - Neurotransmitter research
-  - Taxol ADMET analysis - Cancer drug, BBB permeability
+## Results
 
-## Evaluation Results
+8 commonly used foundational models were tested on computational chemistry tasks requiring agentic tool-use with weighted scoring (Tier 2 = 2pts, Tier 3 = 4pts, max 30pts).
 
-We evaluated 8 foundation models on computational chemistry tasks requiring agentic tool-use.
+### Correctness Evaluation
+![Correctness Results](figures/weighted_performance_eval.png)
+*Correctness assessment: GPT-5 leads, followed by Claude 4 Sonnet and o3. Evaluation via LLM-as-a-judge*
 
-**Key Findings:**
-- GPT-5 had the highest correctness score (16/30 weighted score)
-- Claude 4 Sonnet had the highest tool selection score (8/10 tasks)  
+### Tool Selection Assessment
+![Function Calling Results](figures/tool_selection_eval.png)  
+*Complete tool usage assessment: Claude 4 Sonnet leads, calling all expected tools for 8/10 tasks.*
 
-**📊 [See Full Evaluation Report →](EVALUATION.md)**
+### Top Performers
+- **GPT-5**: Highest correctness score (16/30 weighted)
+- **Claude 4 Sonnet**: Best tool selection (8/10 complete)
+
+**[→ The full 'There and Back Again'](EVALUATION.md)**
+
+---
+
+## Future Directions
+
+**Enhanced Evaluation**: Better weighting methods and data collection including parameter choices, reasoning chains, and computational resource tracking
+
+**Real-Time Evaluation**: To catch edge cases and have adaptive question generation
+
+**Community Platform**: LMArena-style interface for biology/chemistry AI where researchers submit challenging problems and compare models head-to-head
