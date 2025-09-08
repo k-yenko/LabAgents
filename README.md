@@ -108,7 +108,7 @@ Complex tasks where outputs from one workflow become inputs of another.
 
 > *This is... very far from complete.*
 
-My first time evaluating agentic tool-use revealed how **nuanced** this area is - evaluations exist at the intersection of art and science. While chemistry has objective answers, selecting meaningful metrics requires domain intuition.
+My first time evaluating agentic tool-use was naive, and the process revealed how nuanced this area can be. It feels like an intersection of science and art. While the science has objective answers, selecting meaningful metrics requires intuition from experience in the domain.
 
 ### What's Next
 
