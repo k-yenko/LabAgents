@@ -106,16 +106,29 @@ Complex tasks where outputs from one workflow become inputs of another.
 
 ## Future Directions
 
-This is... very far from complete. 
+> *This is... very far from complete.*
 
-My first time evaluating agentic tool-use revealed how nuanced this area is - evaluations exist at the intersection of art and science. While chemistry has objective answers, selecting meaningful metrics requires domain intuition.
+My first time evaluating agentic tool-use revealed how **nuanced** this area is - evaluations exist at the intersection of art and science. While chemistry has objective answers, selecting meaningful metrics requires domain intuition.
 
-**Better scoring methods**. I still need to noodle on this - even madness needs its method. Difficulty assessment was based off "vibes" rather than empirical validation, which is lousy for reproducibility.
+### What's Next
 
-**Data collection gaps**. Hindsight is 20/20. Future work needs consistent logging of parameter extraction, function call results, intermediate responses, and time tracking. Current logging was inconsistent and missed important interactions.
+**Better scoring methods**  
+I still need to noodle on this - even madness needs its method. Difficulty assessment was based off "vibes" rather than empirical validation, which is lousy for reproducibility.
 
-**Eval-as-you-go**. Can real-time assessment catch edge cases as they emerge? Can new problems be generated dynamically in response to model performance?
+**Data collection gaps**  
+Hindsight is 20/20. Future work needs consistent logging of:
+- Parameter extraction
+- Function call results  
+- Intermediate responses
+- Time tracking
 
-**Community engagement**. An LMArena-style platform for biology/chemistry AI where researchers submit challenging problems and see head-to-head comparisons could create a dynamic benchmark that evolves with the field's needs.
+Current logging was inconsistent and missed important interactions.
 
-**Model shortcuts**. Some models gave correct answers without calling expected tools (Claude 4.1 Opus predicted pKa accurately without using the pKa tool). There's also an untouched layer - do agents choose scientifically sound computational methods?
+**Eval-as-you-go**  
+Can real-time assessment catch edge cases as they emerge? Can new problems be generated dynamically in response to model performance?
+
+**Community engagement**  
+An LMArena-style platform for biology/chemistry AI where researchers submit challenging problems and see head-to-head comparisons could create a dynamic benchmark that evolves with the field's needs.
+
+**Model shortcuts**  
+Some models gave correct answers without calling expected tools (Claude 4.1 Opus predicted pKa accurately without using the pKa tool). There's also an untouched layer - do agents choose scientifically sound computational methods?
