@@ -1,16 +1,33 @@
 # LabAgents
 
-Large Language Model (LLM) agents are increasingly capable of using external tools via MCP to perform complex tasks. However, existing benchmarks rarely focus on life sciences research contexts or simulate tool-rich experimental environments. 
+Large Language Model (LLM) agents are increasingly capable of using external tools via MCP to perform complex tasks. However, existing benchmarks rarely focus on life sciences research contexts or simulate tool-rich experimental environments.
 
 **LabAgents** addresses this gap as a domain-specific benchmark for chemistry and biology research workflows, evaluating how well AI agents leverage MCP (Model Context Protocol) tools. It measures an agent's ability to:
 
 1. **Select the right tools** from a chemistry/biology MCP suite
-2. **Plan and execute multi-step** experimental workflows  
+2. **Plan and execute multi-step** experimental workflows
 3. **Deliver correct results** on scientific tasks
 
 > *TL;DR: It tests how well agents can navigate through problems, just as a scientist would.*
 
 ---
+
+## Quick Start
+
+1. **Activate environment:**
+   ```bash
+   source .venv/bin/activate
+   ```
+
+2. **Run a question:**
+   ```bash
+   python openrouter_agent.py tier1_001 -m "openai/gpt-5"
+   ```
+
+3. **Batch evaluate all models for a question:**
+   ```bash
+   python llm_judge_evaluator.py tier1_001
+   ```
 
 ## Models Evaluated
 
@@ -29,7 +46,7 @@ Large Language Model (LLM) agents are increasingly capable of using external too
 
 ### Core Calculations
 - `rowan_multistage_opt` - Multi-level geometry optimization with hierarchical methods
-- `rowan_conformers` - Conformer generation and optimization  
+- `rowan_conformers` - Conformer generation and optimization
 - `rowan_electronic_properties` - Electronic structure properties (orbitals, density, ESP)
 - `rowan_spin_states` - Spin state calculations for different multiplicities
 - `rowan_molecular_dynamics` - MD simulations with various ensembles
@@ -41,7 +58,7 @@ Large Language Model (LLM) agents are increasingly capable of using external too
 - `rowan_tautomers` - Tautomer enumeration and ranking
 - `rowan_fukui` - Fukui indices for reactivity prediction
 
-### Drug Discovery  
+### Drug Discovery
 - `rowan_admet` - ADME-Tox property predictions
 - `rowan_descriptors` - Molecular descriptors for ML/QSAR
 - `rowan_docking` - Protein-ligand docking with ML refinement
@@ -62,7 +79,7 @@ Large Language Model (LLM) agents are increasingly capable of using external too
 ### Tier 1: Basic Tool Selection
 Simple, direct questions requiring selection of a single appropriate tool.
 
-### Tier 2: Multi-Tool Orchestration  
+### Tier 2: Multi-Tool Orchestration
 Tasks requiring workflow planning and independent calculations across multiple tools.
 
 ### Tier 3: Scientific Planning and Conditional Logic
@@ -80,9 +97,51 @@ Complex tasks where outputs from one workflow become inputs of another.
 
 **10 multi-step computational chemistry tasks** spanning drug discovery, pharmacology, and molecular analysis.
 
-**[→ See All Questions](questions/v2_queries.md)** 
+**[→ See All Questions](questions/v2_queries.md)**
 
 ---
+
+## Commands
+
+### Run Questions
+```bash
+# Single question, single model
+python openrouter_agent.py tier1_001 -m "openai/gpt-5"
+
+# Single question, ALL 8 models
+python openrouter_agent.py tier1_001 --all-models
+
+# All questions in tier, single model
+python openrouter_agent.py tier1 --model "anthropic/claude-opus-4.1"
+
+# All questions in tier, ALL 8 models
+python openrouter_agent.py tier1 --all-models
+```
+
+### Evaluate Results
+```bash
+# Evaluate all models for one question
+python llm_judge_evaluator.py tier1_001
+
+# Evaluate all models for tier3_004 (serotonin example)
+python llm_judge_evaluator.py tier3_004
+
+# Single log file
+python llm_judge_evaluator.py --single logs/tier1_001/openai_gpt-5_timestamp.json
+```
+
+## Directory Structure
+
+```
+logs/{question_id}/{model}_{timestamp}.json     # Execution logs
+evaluations/{question_id}/{model}_evaluation.* # Evaluation results
+```
+
+## Available Questions
+
+- **Tier 1** (tier1_001-008): Basic single-tool questions
+- **Tier 2** (tier2_002-007): Multi-step intermediate questions
+- **Tier 3** (tier3_001-006): Complex advanced questions
 
 ## Results
 
@@ -93,7 +152,7 @@ Complex tasks where outputs from one workflow become inputs of another.
 *Correctness assessment: GPT-5 leads, followed by Claude 4 Sonnet and o3. Evaluation via LLM-as-a-judge*
 
 ### Tool Selection Assessment
-![Function Calling Results](figures/tool_selection_eval.png)  
+![Function Calling Results](figures/tool_selection_eval.png)
 *Complete tool usage assessment: Claude 4 Sonnet leads, calling all expected tools for 8/10 tasks.*
 
 ### Top Performers
@@ -118,7 +177,7 @@ I still need to noodle on this - even madness needs its method. Difficulty asses
 #### Data collection gaps
 Future work needs consistent logging of:
 - Parameter extraction
-- Function call results  
+- Function call results
 - Intermediate responses
 - Time tracking
 
@@ -132,3 +191,15 @@ An LMArena-style platform for biology/chemistry AI where researchers submit chal
 
 #### Model shortcuts
 Some models gave correct answers without calling expected tools (Claude 4.1 Opus predicted pKa accurately without using the pKa tool). There's also an untouched layer - do agents choose scientifically sound computational methods?
+
+## Evaluation Scoring
+
+**0-2 Scale:** Completion, Correctness (with literature validation), Tool Use
+**Overall:** pass (4+ points) / fail (3 or fewer points)
+**Judge:** Claude Sonnet 4 with scientific literature research
+
+## Requirements
+
+- `.env` with `OPENROUTER_API_KEY`
+- Rowan MCP server running at `/Users/katherineyenko/Desktop/sandbox/rowan-mcp`
+- Activate virtual environment: `source .venv/bin/activate`

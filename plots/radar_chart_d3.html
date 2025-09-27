@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computational Chemistry Agent Performance - Radar Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 20px;
+            background: #f8f9fa;
+        }
+        .chart-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <h1>Multi-Dimensional Model Performance</h1>
+        <p class="subtitle">Normalized: Each dimension scaled 0-1</p>
+        <div id="chart"></div>
+        <div class="legend" id="legend"></div>
+    </div>
+
+    <script>
+        // Model performance data (from our actual analysis)
+        const data = [
+            {model: "O3", metric: "Completion", value: 0.125, color: "#1f77b4"},
+            {model: "O3", metric: "Correctness", value: 0.000, color: "#1f77b4"},
+            {model: "O3", metric: "Tool Use", value: 0.500, color: "#1f77b4"},
+            {model: "O3", metric: "Pass Rate", value: 0.000, color: "#1f77b4"},
+            {model: "O3", metric: "Speed", value: 0.921, color: "#1f77b4"},
+            {model: "O3", metric: "Consistency", value: 1.000, color: "#1f77b4"},
+            {model: "Grok 4 Fast", metric: "Completion", value: 0.500, color: "#2ca02c"},
+            {model: "Grok 4 Fast", metric: "Correctness", value: 0.571, color: "#2ca02c"},
+            {model: "Grok 4 Fast", metric: "Tool Use", value: 0.750, color: "#2ca02c"},
+            {model: "Grok 4 Fast", metric: "Pass Rate", value: 0.200, color: "#2ca02c"},
+            {model: "Grok 4 Fast", metric: "Speed", value: 0.792, color: "#2ca02c"},
+            {model: "Grok 4 Fast", metric: "Consistency", value: 1.000, color: "#2ca02c"},
+            {model: "GPT-5", metric: "Completion", value: 0.500, color: "#d62728"},
+            {model: "GPT-5", metric: "Correctness", value: 0.429, color: "#d62728"},
+            {model: "GPT-5", metric: "Tool Use", value: 0.875, color: "#d62728"},
+            {model: "GPT-5", metric: "Pass Rate", value: 0.400, color: "#d62728"},
+            {model: "GPT-5", metric: "Speed", value: 0.379, color: "#d62728"},
+            {model: "GPT-5", metric: "Consistency", value: 1.000, color: "#d62728"},
+            {model: "Gemini 2.5 Pro", metric: "Completion", value: 1.000, color: "#ff7f0e"},
+            {model: "Gemini 2.5 Pro", metric: "Correctness", value: 0.357, color: "#ff7f0e"},
+            {model: "Gemini 2.5 Pro", metric: "Tool Use", value: 1.000, color: "#ff7f0e"},
+            {model: "Gemini 2.5 Pro", metric: "Pass Rate", value: 1.000, color: "#ff7f0e"},
+            {model: "Gemini 2.5 Pro", metric: "Speed", value: 0.000, color: "#ff7f0e"},
+            {model: "Gemini 2.5 Pro", metric: "Consistency", value: 1.000, color: "#ff7f0e"},
+            {model: "Grok Code Fast", metric: "Completion", value: 0.688, color: "#9467bd"},
+            {model: "Grok Code Fast", metric: "Correctness", value: 0.714, color: "#9467bd"},
+            {model: "Grok Code Fast", metric: "Tool Use", value: 0.812, color: "#9467bd"},
+            {model: "Grok Code Fast", metric: "Pass Rate", value: 0.400, color: "#9467bd"},
+            {model: "Grok Code Fast", metric: "Speed", value: 0.494, color: "#9467bd"},
+            {model: "Grok Code Fast", metric: "Consistency", value: 1.000, color: "#9467bd"},
+            {model: "Deepseek", metric: "Completion", value: 0.000, color: "#8c564b"},
+            {model: "Deepseek", metric: "Correctness", value: 0.000, color: "#8c564b"},
+            {model: "Deepseek", metric: "Tool Use", value: 0.500, color: "#8c564b"},
+            {model: "Deepseek", metric: "Pass Rate", value: 0.000, color: "#8c564b"},
+            {model: "Deepseek", metric: "Speed", value: 0.157, color: "#8c564b"},
+            {model: "Deepseek", metric: "Consistency", value: 1.000, color: "#8c564b"},
+            {model: "Claude Sonnet 4", metric: "Completion", value: 1.000, color: "#17becf"},
+            {model: "Claude Sonnet 4", metric: "Correctness", value: 1.000, color: "#17becf"},
+            {model: "Claude Sonnet 4", metric: "Tool Use", value: 1.000, color: "#17becf"},
+            {model: "Claude Sonnet 4", metric: "Pass Rate", value: 1.000, color: "#17becf"},
+            {model: "Claude Sonnet 4", metric: "Speed", value: 0.290, color: "#17becf"},
+            {model: "Claude Sonnet 4", metric: "Consistency", value: 1.000, color: "#17becf"}
+        ];
+
+        // Get unique models and metrics
+        const models = [...new Set(data.map(d => d.model))];
+        const metrics = [...new Set(data.map(d => d.metric))];
+
+        // Create radar chart
+        const chart = Plot.plot({
+            width: 600,
+            height: 600,
+            projection: {
+                type: "azimuthal-equal-area",
+                rotate: [0, -90],
+                domain: d3.geoCircle().center([0, 90]).radius(90)()
+            },
+            color: {
+                domain: models,
+                range: ["#1f77b4", "#2ca02c", "#d62728", "#ff7f0e", "#9467bd", "#8c564b", "#17becf"]
+            },
+            marks: [
+                // Grid circles
+                Plot.geo([0.2, 0.4, 0.6, 0.8, 1.0].map(r =>
+                    d3.geoCircle().center([0, 90]).radius(90 * r)()
+                ), {
+                    stroke: "#ddd",
+                    strokeWidth: 1,
+                    fill: "none"
+                }),
+
+                // Radial grid lines
+                Plot.geo(metrics.map((_, i) => {
+                    const angle = (i * 360 / metrics.length) - 90;
+                    return {
+                        type: "LineString",
+                        coordinates: [
+                            [angle, 90],
+                            [angle, 0]
+                        ]
+                    };
+                }), {
+                    stroke: "#ddd",
+                    strokeWidth: 1
+                }),
+
+                // Metric labels
+                Plot.text(metrics, {
+                    x: (d, i) => {
+                        const angle = (i * 360 / metrics.length) - 90;
+                        const radius = 105;
+                        return radius * Math.cos(angle * Math.PI / 180);
+                    },
+                    y: (d, i) => {
+                        const angle = (i * 360 / metrics.length) - 90;
+                        const radius = 105;
+                        return radius * Math.sin(angle * Math.PI / 180);
+                    },
+                    text: d => d,
+                    fontSize: 12,
+                    fontWeight: "bold",
+                    textAnchor: "middle"
+                }),
+
+                // Model lines and areas
+                ...models.map(model => {
+                    const modelData = data.filter(d => d.model === model);
+                    const coords = modelData.map((d, i) => {
+                        const angle = (i * 360 / metrics.length) - 90;
+                        const radius = 90 * d.value;
+                        return [angle, 90 - radius];
+                    });
+                    coords.push(coords[0]); // Close the polygon
+
+                    return [
+                        // Filled area
+                        Plot.geo([{
+                            type: "Polygon",
+                            coordinates: [coords]
+                        }], {
+                            fill: modelData[0].color,
+                            fillOpacity: 0.1,
+                            stroke: "none"
+                        }),
+
+                        // Border line
+                        Plot.geo([{
+                            type: "LineString",
+                            coordinates: coords
+                        }], {
+                            stroke: modelData[0].color,
+                            strokeWidth: 2,
+                            fill: "none"
+                        }),
+
+                        // Data points
+                        Plot.dot(modelData, {
+                            x: (d, i) => {
+                                const angle = (i * 360 / metrics.length) - 90;
+                                const radius = 90 * d.value;
+                                return radius * Math.cos(angle * Math.PI / 180);
+                            },
+                            y: (d, i) => {
+                                const angle = (i * 360 / metrics.length) - 90;
+                                const radius = 90 * d.value;
+                                return radius * Math.sin(angle * Math.PI / 180);
+                            },
+                            fill: modelData[0].color,
+                            stroke: "white",
+                            strokeWidth: 1,
+                            r: 3
+                        })
+                    ];
+                }).flat()
+            ]
+        });
+
+        // Add chart to DOM
+        document.getElementById("chart").appendChild(chart);
+
+        // Create legend
+        const legend = document.getElementById("legend");
+        models.forEach((model, i) => {
+            const colors = ["#1f77b4", "#2ca02c", "#d62728", "#ff7f0e", "#9467bd", "#8c564b", "#17becf"];
+            const item = document.createElement("div");
+            item.className = "legend-item";
+            item.innerHTML = `
+                <div class="legend-color" style="background-color: ${colors[i]}"></div>
+                <span>${model}</span>
+            `;
+            legend.appendChild(item);
+        });
+    </script>
+</body>
+</html>
