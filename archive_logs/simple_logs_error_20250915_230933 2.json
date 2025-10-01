@@ -1,0 +1,14 @@
+{
+  "question_id": "tier2_002",
+  "timestamp_start": "2025-09-15T23:09:32.215064",
+  "timestamp_end": "2025-09-15T23:09:33.590438",
+  "total_time_ms": 1375.3712177276611,
+  "user_question": "Calculate the pKa for acetic acid",
+  "execution_timeline": [],
+  "final_answer": "Error: Completions.create() got an unexpected keyword argument 'plugins'",
+  "completed_successfully": false,
+  "total_thinking_steps": 0,
+  "total_tool_calls": 0,
+  "successful_tool_calls": 0,
+  "total_web_searches": 0
+}

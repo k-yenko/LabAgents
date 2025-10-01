@@ -1,0 +1,54 @@
+{
+  "tier2_002_scores": {
+    "claude-4.1-opus": {
+      "correct": true,
+      "score": 1,
+      "notes": "Response provides valid computational results: 16 conformers generated (reasonable number), logP=3.69 (within experimental range 2.48-3.97), pKa=4.74 (very close to experimental 4.91). Energy values in Hartree are appropriate for DFT calculations. All key computational steps addressed."
+    },
+    "claude-4-sonnet": {
+      "correct": true,
+      "score": 1,
+      "notes": "Provided accurate results within expected ranges: logP=3.073 (falls between experimental values of 2.48-3.97), pKa=5.692 (close to experimental 4.91 and DFT prediction 5.8). Used appropriate computational methods (CREST/GFN-FF for conformers, AIMNet2/wb97md3 for optimization). Correctly identified carboxylic acid as ionizable site. Generated reasonable number of conformers (22) and properly optimized lowest energy structure."
+    },
+    "gpt-5": {
+      "correct": true,
+      "score": 1,
+      "notes": "Response correctly addresses all key components: conformer generation, optimization of lowest energy conformer, and calculation of both logP and pKa. The logP value of 3.073 falls within the expected experimental range (2.48-3.97), and the pKa of 5.604 is very close to the expected DFT prediction of 5.8 and reasonably close to experimental value of 4.91. The method (AIMNET2_WB97MD3) is a valid computational approach. Chemical reasoning is sound with correct identification of carboxylic acid deprotonation."
+    },
+    "o3": {
+      "correct": true,
+      "score": 1,
+      "notes": "Provided accurate results within expected ranges: logP=3.07 (falls between experimental values of 2.48-3.97), pKa=5.58 (close to experimental 4.91 and DFT prediction 5.8). Correctly identified carboxylic acid as the acidic site and noted no basic sites. Sound chemical reasoning throughout."
+    },
+    "grok-4": {
+      "correct": true,
+      "score": 1,
+      "notes": "Provided accurate results: logP=3.073 (within experimental range of 2.48-3.97), pKa=5.53 (close to expected 4.91-5.8 range). Response correctly identifies the computational approach and provides reasonable values for ibuprofen's physicochemical properties."
+    },
+    "gemini-2.5-pro": {
+      "correct": true,
+      "score": 1,
+      "notes": "Provided accurate results: logP=3.073 (within experimental range of 2.48-3.97), pKa=5.577 (close to experimental 4.91 and DFT prediction 5.8). Successfully completed conformer search and optimization. Values are well within expected literature ranges and computational uncertainty."
+    },
+    "deepseek-v3.1": {
+      "correct": false,
+      "score": 0,
+      "notes": "Evaluation error: No JSON found in Claude response"
+    },
+    "grok-code-fast-1": {
+      "correct": true,
+      "score": 1,
+      "notes": "Provided accurate results within expected ranges: logP=3.073 (falls between experimental values of 2.48-3.97), pKa=5.49 (close to experimental 4.91 and DFT prediction 5.8). Successfully completed all required steps including conformer generation (13 conformers), optimization of lowest energy conformer, and property calculations. Chemical reasoning is sound regarding carboxylic acid behavior and lipophilicity interpretation."
+    }
+  },
+  "evaluation_criteria": {
+    "scoring_method": "llm_judge_claude_sonnet",
+    "judge_model": "claude-sonnet-4-20250514"
+  },
+  "summary": {
+    "total_models": 8,
+    "correct_answers": 7,
+    "incorrect_answers": 1,
+    "success_rate": "87.5%"
+  }
+}

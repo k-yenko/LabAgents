@@ -1,0 +1,54 @@
+{
+  "tier2_007_scores": {
+    "claude-4.1-opus": {
+      "correct": false,
+      "score": 0,
+      "notes": "Predicted values are significantly higher than literature ranges: 4.22 g/L at 25\u00b0C vs expected 2.2 mg/mL (2.2 g/L), 6.74 g/L at 37\u00b0C vs expected ~4-5 mg/mL (4-5 g/L), and 11.09 g/L at 50\u00b0C vs expected ~15-20 mg/mL (15-20 g/L). The 25\u00b0C and 37\u00b0C predictions are roughly 2x higher than expected, while the 50\u00b0C prediction is significantly lower than expected. However, the temperature dependence trend is correctly identified as positive."
+    },
+    "claude-4-sonnet": {
+      "correct": true,
+      "score": 1,
+      "notes": "Provided accurate solubility predictions with proper temperature dependence: 4.3 mg/mL at 25\u00b0C (vs expected 2.2 mg/mL), 6.8 mg/mL at 37\u00b0C (vs expected 4-5 mg/mL), and 11.1 mg/mL at 50\u00b0C (vs expected 15-20 mg/mL). Values are within reasonable computational uncertainty ranges and show correct increasing trend with temperature. Chemical reasoning about thermal energy and molecular motion is sound."
+    },
+    "gpt-5": {
+      "correct": true,
+      "score": 1,
+      "notes": "Values are within reasonable ranges and show correct temperature dependence. At 25\u00b0C: predicted 4.21 mg/mL vs expected 2.2 mg/mL (factor of ~2 difference, acceptable for computational prediction). At 37\u00b0C: predicted 6.73 mg/mL vs expected 4-5 mg/mL (slightly high but reasonable). At 50\u00b0C: predicted 11.1 mg/mL vs expected 15-20 mg/mL (within lower end of range). Correctly identifies strong positive temperature dependence with quantified 2.6\u00d7 increase from 25\u00b0C to 50\u00b0C."
+    },
+    "o3": {
+      "correct": false,
+      "score": 0,
+      "notes": "Values are significantly below expected ranges. At 25\u00b0C: predicted ~4.3 mg/mL vs expected 2.2 mg/mL (acceptable), but at 37\u00b0C: predicted ~6.8 mg/mL vs expected 4-5 mg/mL (high), and at 50\u00b0C: predicted ~11.1 mg/mL vs expected 15-20 mg/mL (low). The 50\u00b0C value falls well outside the expected range, and overall temperature dependence is underestimated."
+    },
+    "grok-4": {
+      "correct": false,
+      "score": 0,
+      "notes": "The log S values provided (-1.05, -0.92, -0.78) convert to solubilities of ~17.3, ~29.4, and ~40.6 mg/mL respectively, which are significantly higher than expected literature values (2.2, ~4-5, ~15-20 mg/mL). While the response correctly identifies positive temperature dependence, the numerical predictions are outside acceptable ranges by factors of 8-10x at lower temperatures."
+    },
+    "gemini-2.5-pro": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response provides logS values (-1.66, -1.46, -1.24) but fails to convert to actual solubility units (mg/mL) for comparison with expected values. Converting logS=-1.66 gives ~0.22 mg/mL at 25\u00b0C, which is 10x lower than expected 2.2 mg/mL. While the temperature trend is correct (increasing solubility), the numerical values are significantly outside acceptable ranges."
+    },
+    "deepseek-v3.1": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response does not provide any actual solubility predictions or values. Instead, it only describes a computational workflow that is 'QUEUED' without delivering the requested temperature-dependent solubility data. No numerical results, temperature dependence analysis, or chemical insights are provided."
+    },
+    "grok-code-fast-1": {
+      "correct": false,
+      "score": 0,
+      "notes": "Predicted values are significantly higher than expected literature ranges: 4.21 mg/mL at 25\u00b0C vs expected 2.2 mg/mL (91% higher), 6.74 mg/mL at 37\u00b0C vs expected 4-5 mg/mL (35-69% higher), and 11.12 mg/mL at 50\u00b0C vs expected 15-20 mg/mL (44-80% lower). While the temperature dependence trend is correct, the numerical deviations exceed reasonable uncertainty ranges for solubility predictions."
+    }
+  },
+  "evaluation_criteria": {
+    "scoring_method": "llm_judge_claude_sonnet",
+    "judge_model": "claude-sonnet-4-20250514"
+  },
+  "summary": {
+    "total_models": 8,
+    "correct_answers": 2,
+    "incorrect_answers": 6,
+    "success_rate": "25.0%"
+  }
+}

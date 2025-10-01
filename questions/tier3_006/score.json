@@ -1,0 +1,54 @@
+{
+  "tier3_006_scores": {
+    "claude-4.1-opus": {
+      "correct": false,
+      "score": 0,
+      "notes": "Evaluation error: No JSON found in Claude response"
+    },
+    "claude-4-sonnet": {
+      "correct": false,
+      "score": 0,
+      "notes": "Several critical discrepancies from expected values: LogP=0.861 (expected 1.8-2.1), TPSA=178.581 \u00c5\u00b2 (expected 120-130 \u00c5\u00b2), H-bond acceptors=4 (expected 5-6). Docking workflow failed completely, missing all binding kinetics data (Kd, k\u2082, binding efficiency). While solubility predictions were provided, they don't match expected temperature-dependent data format. Molecular weight close but slightly off (334.099 vs 334.39). Missing critical \u03b2-lactam ring strain analysis and bond order information."
+    },
+    "gpt-5": {
+      "correct": false,
+      "score": 0,
+      "notes": "Evaluation error: No JSON found in Claude response"
+    },
+    "o3": {
+      "correct": false,
+      "score": 0,
+      "notes": "Evaluation error: No JSON found in Claude response"
+    },
+    "grok-4": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response provides only a vague summary statement without any specific numerical values, molecular descriptors, solubility data, or docking results. Expected detailed results including molecular weight (334.39 g/mol), LogP (1.8-2.1), binding parameters (Kd = 0.9 mM, k\u2082 = 180 s\u207b\u00b9), and structural analysis of the \u03b2-lactam ring. The response lacks all quantitative data and scientific detail required for evaluation."
+    },
+    "gemini-2.5-pro": {
+      "correct": false,
+      "score": 0,
+      "notes": "Major issues: Used GFN2-xTB instead of required B3LYP/6-31G(d) method without justification. LogP=0.861 is significantly below expected range (1.8-2.1). Missing critical structural analysis of \u03b2-lactam ring strain and N4-C7 bond order. Docking score -4.732 provided but lacks essential kinetic parameters (Kd, k\u2082, binding efficiency). No discussion of resistance mechanisms. While molecular weight (334.099 vs 334.39) and some descriptors are reasonable, the response fails to meet key technical requirements."
+    },
+    "deepseek-v3.1": {
+      "correct": false,
+      "score": 0,
+      "notes": "Evaluation error: No JSON found in Claude response"
+    },
+    "grok-code-fast-1": {
+      "correct": false,
+      "score": 0,
+      "notes": "Several critical discrepancies with expected values: MW 334.099 vs expected 334.39 (acceptable), but LogP 0.861 vs expected 1.8-2.1 (significantly low), TPSA 176.033 vs expected 120-130 \u00c5\u00b2 (significantly high), and 4 H-bond acceptors vs expected 5-6 (low). Used GFN2-xTB instead of expected B3LYP/6-31G(d). Missing critical \u03b2-lactamase kinetic parameters (Kd, k\u2082, binding efficiency). Docking scores provided but don't correspond to expected quantitative binding data. Chemical reasoning is sound but numerical values fall outside acceptable literature ranges for key descriptors."
+    }
+  },
+  "evaluation_criteria": {
+    "scoring_method": "llm_judge_claude_sonnet",
+    "judge_model": "claude-sonnet-4-20250514"
+  },
+  "summary": {
+    "total_models": 8,
+    "correct_answers": 0,
+    "incorrect_answers": 8,
+    "success_rate": "0.0%"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "tier3_003_scores": {
+    "claude-4.1-opus": {
+      "correct": false,
+      "score": 0,
+      "notes": "While the computational workflow is well-executed, the binding energies (-4.2 to -5.0 kcal/mol) are significantly weaker than expected literature values. Expected Ki values of 2-250 nM correspond to binding energies of approximately -11 to -13 kcal/mol, but the reported values suggest much weaker binding (micromolar range). The response lacks comparison to crystal structure conformation and doesn't address key expected findings like strain energy correlation, buried surface area (1060 \u00c5\u00b2), or the 10,000\u00d7 higher affinity than natural substrate."
+    },
+    "claude-4-sonnet": {
+      "correct": false,
+      "score": 0,
+      "notes": "While the response demonstrates proper computational workflow setup and conformer generation (13 conformers with 8.16 kcal/mol energy spread), it fails to deliver the key required results. No binding energies were calculated due to incomplete docking, no Ki values reported (expected 2-250 nM range), no binding enthalpy data (expected 0 to -9.3 kcal/mol), and no meaningful comparison to crystal structure conformation. The response acknowledges technical limitations but doesn't provide the essential binding affinity and thermodynamic data that constitutes the core of the question."
+    },
+    "gpt-5": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response fails to complete the core task due to technical limitations. While conformer generation was successful (5 conformers with energies around -1865 kcal/mol), docking could not be performed due to pocket format requirements. No binding energies, Ki values, or comparison to crystal structure were provided. The expected Ki range (2-250 nM), binding enthalpy (0 to -9.3 kcal/mol), and structural analysis (buried surface area 1060 \u00c5\u00b2) are completely missing. Response shows process transparency but lacks the essential scientific results."
+    },
+    "o3": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response does not provide any of the expected results due to technical failures with API endpoints. No conformer generation results, docking data, binding energies (expected Ki 2-250 nM range, binding enthalpy 0 to -9.3 kcal/mol), or crystal structure comparison provided. While the technical explanation is reasonable, the response lacks all substantive scientific content required for evaluation."
+    },
+    "grok-4": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response shows technical execution (42 conformers generated, protein prepared) but fails to complete the core task due to technical issues with retrieving 3D coordinates. No docking was performed, no binding energies calculated, and no comparison to crystal structure completed. Missing all expected quantitative results: Ki values (2-250 nM range), binding enthalpy (0 to -9.3 kcal/mol), buried surface area (1060 \u00c5\u00b2), and conformer-activity correlations."
+    },
+    "gemini-2.5-pro": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response only completed conformer generation but failed to perform the core tasks of docking, binding energy calculation, and comparison to crystal structure. While the technical limitation mentioned (binding pocket identification) is understandable, the response provides no numerical results, binding energies, or structural analysis that could be compared to the expected Ki values (2-250 nM), binding enthalpy (0 to -9.3 kcal/mol), or structural insights about the binding interactions."
+    },
+    "deepseek-v3.1": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response indicates incomplete execution - docking workflow failed and no binding energies, Ki values, or structural comparisons were provided. While conformer generation was mentioned as successful, no quantitative results or analysis were delivered to compare against expected ranges (Ki: 2-250 nM, binding enthalpy: 0 to -9.3 kcal/mol, buried surface area: 1060 \u00c5\u00b2)"
+    },
+    "grok-code-fast-1": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response only completed conformer generation but failed to deliver the core requirements: docking analysis, binding energy calculations, and comparison to crystal structure. While the conformer energies (-1865.43 hartrees range) appear reasonable, no binding affinities, Ki values, or structural comparisons were provided. The expected Ki range (2-250 nM), binding enthalpy (0 to -9.3 kcal/mol), and buried surface area (1060 \u00c5\u00b2) metrics are completely missing due to technical failures in the docking workflow."
+    }
+  },
+  "evaluation_criteria": {
+    "scoring_method": "llm_judge_claude_sonnet",
+    "judge_model": "claude-sonnet-4-20250514"
+  },
+  "summary": {
+    "total_models": 8,
+    "correct_answers": 0,
+    "incorrect_answers": 8,
+    "success_rate": "0.0%"
+  }
+}
