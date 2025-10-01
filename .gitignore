@@ -78,6 +78,10 @@ config/
 # Old project reference (not tracked in git)
 labagents_v1/
 
+# Specific files to ignore
+run_claude_batch.sh
+system_prompt_template.py
+
 # Evaluation files
 benchmark_reference.md
 EVALUATION_README.md
