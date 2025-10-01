@@ -2,7 +2,7 @@
 
 ## Tier 1 Questions
 
-**tier1_001**: What is the predicted aqueous solubility of remdesivir at physiological temperature?
+**tier1_001**: What is the predicted aqueous solubility of remdesivir at physiological temperature? (this is a trick question; remdesivir is not soluble in water)
 
 **tier1_002**: Calculate the pKa of the carboxyl group in gabapentin to understand its ionization at stomach pH
 

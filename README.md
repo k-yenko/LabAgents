@@ -143,83 +143,18 @@ evaluations/{question_id}/{model}_evaluation.* # Evaluation results
 - **Tier 2** (tier2_002-007): Multi-step intermediate questions
 - **Tier 3** (tier3_001-006): Complex advanced questions
 
-## Results
+## Project Structure
 
-8 commonly used foundational models were tested on computational chemistry tasks requiring agentic tool-use with weighted scoring (Tier 2 = 2pts, Tier 3 = 4pts, max 30pts).
-
-### Correctness Evaluation
-![Correctness Results](figures/weighted_performance_eval.png)
-*Correctness assessment: GPT-5 leads, followed by Claude 4 Sonnet and o3. Evaluation via LLM-as-a-judge*
-
-### Tool Selection Assessment
-![Function Calling Results](figures/tool_selection_eval.png)
-*Complete tool usage assessment: Claude 4 Sonnet leads, calling all expected tools for 8/10 tasks.*
-
-### Top Performers
-- **GPT-5**: Highest correctness score (16/30 weighted)
-- **Claude 4 Sonnet**: Best tool selection (8/10 complete)
-
-**[→ The full 'There and Back Again'](REFLECTIONS.md)**
-
----
-
-## Future Directions
-
-> *This is... very far from complete.*
-
-My first time evaluating agentic tool-use was naive, and the process revealed how nuanced this area can be. It feels like an intersection of science and art. While the science has objective answers, selecting meaningful metrics requires intuition from experience in the domain.
-
-### What's Next
-
-#### Better scoring methods
-I still need to noodle on this - even madness needs its method. Difficulty assessment was based off "vibes" rather than empirical validation, which is lousy for reproducibility.
-
-#### Data collection gaps
-Future work needs consistent logging of:
-- Parameter extraction
-- Function call results
-- Intermediate responses
-- Time tracking
-
-Current logging was inconsistent and missed important interactions.
-
-#### Eval-as-you-go
-Can real-time assessment catch edge cases as they emerge? Can new problems be generated dynamically in response to model performance?
-
-#### Community engagement
-An LMArena-style platform for biology/chemistry AI where researchers submit challenging problems and see head-to-head comparisons could create a dynamic benchmark that evolves with the field's needs.
-
-#### Model shortcuts
-Some models gave correct answers without calling expected tools (Claude 4.1 Opus predicted pKa accurately without using the pKa tool). There's also an untouched layer - do agents choose scientifically sound computational methods?
-
-## Run Evaluations for Each Question
-
-To evaluate all 8 models on each available question:
-
-```bash
-source .venv/bin/activate
-
-# Tier 1 questions (basic)
-python llm_judge_evaluator.py tier1_001
-python llm_judge_evaluator.py tier1_002
-python llm_judge_evaluator.py tier1_003
-python llm_judge_evaluator.py tier1_004
-python llm_judge_evaluator.py tier1_005
-python llm_judge_evaluator.py tier1_006
-python llm_judge_evaluator.py tier1_007
-python llm_judge_evaluator.py tier1_008
-
-# Tier 3 questions (advanced)
-python llm_judge_evaluator.py tier3_004
 ```
-
-Results will be in `evaluations/{question_id}/` with scientific literature validation.
-
-## Evaluation Scoring
-
-**0-2 Scale:** Completion, Correctness (with literature validation), Tool Use
-**Overall:** pass (4+ points) / fail (3 or fewer points)
-**Judge:** Claude Sonnet 4 with scientific literature research
+labagents/
+├── scripts/              # Auxiliary Python utilities
+├── reflections/          # Analysis and evaluation insights
+├── questions/            # Benchmark questions and documentation
+├── logs/                 # Execution logs by question/model
+├── evaluations/          # LLM-as-a-judge evaluation results
+├── openrouter_agent.py   # Main evaluation script
+└── llm_judge_evaluator.py # Evaluation analysis
+```
 
 ## Requirements
 
