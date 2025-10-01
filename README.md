@@ -85,19 +85,11 @@ Tasks requiring workflow planning and independent calculations across multiple t
 ### Tier 3: Scientific Planning and Conditional Logic
 Complex tasks where outputs from one workflow become inputs of another.
 
-### Example Questions
-
-| Tier | Question |
-|------|----------|
-| **1** | "Calculate the ADMET properties of semaglutide to assess its pharmacokinetic profile." |
-| **2** | "Generate conformers of semaglutide and identify the lowest energy structure, then calculate its solubility in water at physiological pH." |
-| **3** | "Analyze the binding of semaglutide to the GLP-1 receptor, optimize the docked pose, then compare how modifications to the fatty acid chain length affect both binding affinity and predicted half-life." |
-
 ## Benchmark Questions
 
-**10 multi-step computational chemistry tasks** spanning drug discovery, pharmacology, and molecular analysis.
+**16 computational chemistry tasks** across 3 tiers spanning basic tool use to complex multi-step workflows.
 
-**[→ See All Questions](questions/v2_queries.md)**
+**[→ See All Questions](QUESTIONS.md)**
 
 ---
 
@@ -136,12 +128,6 @@ python llm_judge_evaluator.py --single logs/tier1_001/openai_gpt-5_timestamp.jso
 logs/{question_id}/{model}_{timestamp}.json     # Execution logs
 evaluations/{question_id}/{model}_evaluation.* # Evaluation results
 ```
-
-## Available Questions
-
-- **Tier 1** (tier1_001-008): Basic single-tool questions
-- **Tier 2** (tier2_002-007): Multi-step intermediate questions
-- **Tier 3** (tier3_001-006): Complex advanced questions
 
 ## Project Structure
 
