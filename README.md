@@ -192,6 +192,29 @@ An LMArena-style platform for biology/chemistry AI where researchers submit chal
 #### Model shortcuts
 Some models gave correct answers without calling expected tools (Claude 4.1 Opus predicted pKa accurately without using the pKa tool). There's also an untouched layer - do agents choose scientifically sound computational methods?
 
+## Run Evaluations for Each Question
+
+To evaluate all 8 models on each available question:
+
+```bash
+source .venv/bin/activate
+
+# Tier 1 questions (basic)
+python llm_judge_evaluator.py tier1_001
+python llm_judge_evaluator.py tier1_002
+python llm_judge_evaluator.py tier1_003
+python llm_judge_evaluator.py tier1_004
+python llm_judge_evaluator.py tier1_005
+python llm_judge_evaluator.py tier1_006
+python llm_judge_evaluator.py tier1_007
+python llm_judge_evaluator.py tier1_008
+
+# Tier 3 questions (advanced)
+python llm_judge_evaluator.py tier3_004
+```
+
+Results will be in `evaluations/{question_id}/` with scientific literature validation.
+
 ## Evaluation Scoring
 
 **0-2 Scale:** Completion, Correctness (with literature validation), Tool Use
