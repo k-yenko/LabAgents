@@ -75,6 +75,9 @@ config/.env
 config/
 .claude/
 
+# Old project reference (not tracked in git)
+labagents_v1/
+
 # Evaluation files
 benchmark_reference.md
 EVALUATION_README.md

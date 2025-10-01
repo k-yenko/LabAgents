@@ -19,10 +19,10 @@ from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
 # Import our simple logger
-from simple_structured_logger import SimpleLogger
+from scripts.simple_structured_logger import SimpleLogger
 from system_prompt_template import create_system_prompt
-from questions import get_questions_by_tier, ALL_QUESTIONS
-from log_compressor import compress_log_file
+from scripts.questions import get_questions_by_tier, ALL_QUESTIONS
+from scripts.log_compressor import compress_log_file
 
 # Suppress pydantic warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
