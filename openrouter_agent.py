@@ -4,6 +4,7 @@ Captures: question, tools called, parameters, timestamps, thinking steps, result
 """
 
 from openai import OpenAI
+import anthropic
 import os
 import json
 import warnings
@@ -194,6 +195,52 @@ async def call_mcp_tool(tool_name, arguments):
             else:
                 return str(result)
 
+def openai_to_anthropic_tools(openai_tools):
+    """Convert OpenAI tool format to Anthropic tool format"""
+    anthropic_tools = []
+    for tool in openai_tools:
+        if tool.get("type") == "function":
+            func = tool["function"]
+            anthropic_tool = {
+                "name": func["name"],
+                "description": func.get("description", ""),
+                "input_schema": func.get("parameters", {})
+            }
+            anthropic_tools.append(anthropic_tool)
+    return anthropic_tools
+
+def anthropic_to_openai_message(anthropic_message):
+    """Convert Anthropic message format to OpenAI format for logging consistency"""
+    openai_message = {
+        "role": "assistant",
+        "content": ""
+    }
+
+    # Handle content and tool calls
+    if anthropic_message.content:
+        text_content = ""
+        tool_calls = []
+
+        for content_block in anthropic_message.content:
+            if content_block.type == "text":
+                text_content += content_block.text
+            elif content_block.type == "tool_use":
+                tool_call = {
+                    "id": content_block.id,
+                    "type": "function",
+                    "function": {
+                        "name": content_block.name,
+                        "arguments": json.dumps(content_block.input)
+                    }
+                }
+                tool_calls.append(tool_call)
+
+        openai_message["content"] = text_content
+        if tool_calls:
+            openai_message["tool_calls"] = tool_calls
+
+    return openai_message
+
 async def test_with_simple_logging(main_question: str, question_id: str, model_name: str = "anthropic/claude-sonnet-4", enable_web_search: bool = True):
     """Test with simple focused logging"""
 
@@ -212,11 +259,38 @@ async def test_with_simple_logging(main_question: str, question_id: str, model_n
         tools = await get_mcp_tools()
         print(f"Retrieved {len(tools)} available tools")
 
-        # Step 2: Set up OpenRouter client (no logging - this is system setup)
-        client = OpenAI(
-            base_url="https://openrouter.ai/api/v1",
-            api_key=os.getenv("OPENROUTER_API_KEY"),
-        )
+        # Step 2: Set up API client (no logging - this is system setup)
+        # Auto-route all Anthropic models to direct API
+        use_anthropic_direct = model_name.startswith("anthropic/") or model_name.startswith("anthropic-direct/")
+
+        if use_anthropic_direct:
+            # Use Anthropic's direct API
+            anthropic_client = anthropic.Anthropic(
+                api_key=os.getenv("ANTHROPIC_API_KEY"),
+            )
+
+            # Map OpenRouter model names to official Claude API names
+            model_mapping = {
+                "anthropic/claude-opus-4.1": "claude-opus-4-1-20250805",
+                "anthropic/claude-sonnet-4": "claude-3-5-sonnet-20241022",
+                "anthropic/claude-sonnet-4.5": "claude-sonnet-4-5-20250929",
+                "anthropic-direct/claude-3-5-sonnet-20241022": "claude-3-5-sonnet-20241022",
+                "anthropic-direct/claude-3-5-sonnet-20250106": "claude-3-5-sonnet-20250106",
+                "anthropic-direct/claude-opus-4-1-20250805": "claude-opus-4-1-20250805",
+                "anthropic-direct/claude-sonnet-4-5-20250929": "claude-sonnet-4-5-20250929"
+            }
+
+            actual_model_name = model_mapping.get(model_name, model_name.replace("anthropic/", "").replace("anthropic-direct/", ""))
+            client = None  # We'll use anthropic_client instead
+            print(f"🔄 Auto-routing {model_name} → Anthropic API ({actual_model_name})")
+        else:
+            # Use OpenRouter API for non-Anthropic models
+            client = OpenAI(
+                base_url="https://openrouter.ai/api/v1",
+                api_key=os.getenv("OPENROUTER_API_KEY"),
+            )
+            anthropic_client = None
+            actual_model_name = model_name
 
         # Step 3: Main conversation loop
         messages = [
@@ -234,17 +308,44 @@ async def test_with_simple_logging(main_question: str, question_id: str, model_n
 
             # Get response from AI with the determined model
             try:
-                completion = client.chat.completions.create(
-                    model=model_name,
-                    messages=messages,
-                    tools=tools,
-                    tool_choice="auto",
-                    extra_body={"usage": {"include": True}}  # Enable native tokenizer usage accounting
-                )
-                message = completion.choices[0].message
+                if use_anthropic_direct:
+                    # Use Anthropic direct API
+                    anthropic_tools = openai_to_anthropic_tools(tools)
+
+                    # Convert messages to Anthropic format (system message separate)
+                    system_message = None
+                    anthropic_messages = []
+
+                    for msg in messages:
+                        if msg["role"] == "system":
+                            system_message = msg["content"]
+                        else:
+                            anthropic_messages.append(msg)
+
+                    response = anthropic_client.messages.create(
+                        model=actual_model_name,
+                        max_tokens=4096,
+                        system=system_message,
+                        messages=anthropic_messages,
+                        tools=anthropic_tools if anthropic_tools else None
+                    )
+
+                    # Convert back to OpenAI format for consistent logging
+                    message = anthropic_to_openai_message(response)
+                else:
+                    # Use OpenRouter API
+                    completion = client.chat.completions.create(
+                        model=actual_model_name,
+                        messages=messages,
+                        tools=tools,
+                        tool_choice="auto",
+                        extra_body={"usage": {"include": True}}  # Enable native tokenizer usage accounting
+                    )
+                    message = completion.choices[0].message
             except json.JSONDecodeError as e:
-                # OpenRouter returned malformed JSON - log raw error and move on
-                error_msg = f"OpenRouter API returned malformed JSON: {str(e)}"
+                # API returned malformed JSON - log raw error and move on
+                api_name = "Anthropic" if use_anthropic_direct else "OpenRouter"
+                error_msg = f"{api_name} API returned malformed JSON: {str(e)}"
                 print(f"❌ API Error: {error_msg}")
                 logger.set_final_answer(error_msg, success=False)
 
@@ -470,8 +571,9 @@ if __name__ == "__main__":
 
     # Define all models for --all-models option
     ALL_MODELS = [
-        "anthropic/claude-opus-4.1",
-        "anthropic/claude-sonnet-4",
+        "anthropic/claude-opus-4.1",      # Auto-routes to claude-opus-4-1-20250805
+        "anthropic/claude-sonnet-4",      # Auto-routes to claude-3-5-sonnet-20241022
+        "anthropic/claude-sonnet-4.5",    # Auto-routes to claude-sonnet-4-5-20250929
         "openai/gpt-5",
         "openai/o3",
         "x-ai/grok-4-fast:free",
@@ -482,7 +584,8 @@ if __name__ == "__main__":
 
     # Budget models exclude expensive opus model
     BUDGET_MODELS = [
-        "anthropic/claude-sonnet-4",
+        "anthropic/claude-sonnet-4",      # Auto-routes to claude-3-5-sonnet-20241022
+        "anthropic/claude-sonnet-4.5",    # Auto-routes to claude-sonnet-4-5-20250929
         "openai/gpt-5",
         "openai/o3",
         "x-ai/grok-4-fast:free",
