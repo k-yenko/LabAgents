@@ -18,7 +18,7 @@
       "native_tokens_completion": 208,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.270075
     },
     {
       "timestamp": "2025-10-03T18:16:55.077423",
@@ -55,7 +55,7 @@
       "native_tokens_completion": 234,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.27558
     },
     {
       "timestamp": "2025-10-03T18:17:03.045245",
@@ -99,7 +99,7 @@
       "native_tokens_completion": 143,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.289965
     },
     {
       "timestamp": "2025-10-03T18:17:10.257810",
@@ -149,7 +149,7 @@
       "native_tokens_completion": 108,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.290895
     },
     {
       "timestamp": "2025-10-03T18:18:16.901933",
@@ -181,7 +181,7 @@
       "native_tokens_completion": 99,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.29325
     },
     {
       "timestamp": "2025-10-03T18:20:24.699204",
@@ -213,7 +213,7 @@
       "native_tokens_completion": 112,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.29715
     },
     {
       "timestamp": "2025-10-03T18:24:32.853523",
@@ -250,7 +250,7 @@
       "native_tokens_completion": 411,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.349095
     },
     {
       "timestamp": "2025-10-03T18:24:47.308614",
@@ -266,7 +266,7 @@
   "successful_tool_calls": 6,
   "total_web_searches": 0,
   "total_api_calls": 7,
-  "total_cost_usd": 0.0,
+  "total_cost_usd": 2.06601,
   "total_prompt_tokens": 131159,
   "total_completion_tokens": 1315,
   "total_tokens": 132474,

@@ -155,9 +155,9 @@ class SimpleLogger:
             cached_tokens=cached_tokens
         )
         self.execution_timeline.append(event)
-        print(f"💰 API call: {model} - {total_tokens} tokens (generation_id: {generation_id})")
+        print(f"💰 API call: {model} - {prompt_tokens} input + {completion_tokens} output = {total_tokens} total tokens")
 
-    def update_api_call_costs(self, generation_id: str, native_prompt_tokens: int, native_completion_tokens: int, cost: float):
+    def update_api_call_costs(self, generation_id: str, native_prompt_tokens: int, native_completion_tokens: int, cost: float, is_estimated: bool = False):
         """Update API call with cost and native token info"""
         # Find the most recent API call with this generation_id and update it
         for event in reversed(self.execution_timeline):
@@ -165,7 +165,11 @@ class SimpleLogger:
                 event.native_tokens_prompt = native_prompt_tokens
                 event.native_tokens_completion = native_completion_tokens
                 event.total_cost = cost
-                print(f"💰 Updated API call costs: ${cost:.6f} ({native_prompt_tokens + native_completion_tokens} native tokens)")
+
+                # Show if cost is estimated (Anthropic direct API) or actual (OpenRouter)
+                cost_label = "~$" if is_estimated else "$"
+                estimate_note = " (estimated)" if is_estimated else ""
+                print(f"💰 Updated API call costs: {cost_label}{cost:.6f} ({native_prompt_tokens + native_completion_tokens} native tokens){estimate_note}")
                 break
 
     def start_tool_call(self, tool_name: str, parameters: Dict[str, Any]) -> str:
@@ -393,21 +397,6 @@ class SimpleLogger:
     def save_to_file(self, filepath: str, format: str = "json"):
         """Save log entry to JSON or JSONL file, organized by model folders"""
         import os
-        import sys
-        from pathlib import Path
-
-        # Add scripts directory to path to import log_compressor
-        scripts_dir = Path(__file__).parent
-        if str(scripts_dir) not in sys.path:
-            sys.path.insert(0, str(scripts_dir))
-
-        try:
-            from log_compressor import compress_log_file
-        except ImportError:
-            # Fallback - define a simple compress function
-            def compress_log_file(filepath):
-                print(f"Warning: log_compressor not available, skipping compression for {filepath}")
-                return filepath
 
         log_entry = self.create_log_entry()
 
@@ -425,9 +414,8 @@ class SimpleLogger:
         # Update filepath to include model folder
         filepath = os.path.join(model_dir, filename)
 
-        # Get raw log data and compress it
-        raw_log_data = log_entry.model_dump()
-        compressed_log_data = compress_log_file(raw_log_data)
+        # Get raw log data - exclude None/null fields
+        compressed_log_data = log_entry.model_dump(exclude_none=True)
 
         if format == "json":
             # Save as pretty-printed JSON

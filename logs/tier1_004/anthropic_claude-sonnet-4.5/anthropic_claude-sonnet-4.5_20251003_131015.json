@@ -18,7 +18,7 @@
       "native_tokens_completion": 98,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.052926
     },
     {
       "timestamp": "2025-10-03T12:54:23.706615",
@@ -55,7 +55,7 @@
       "native_tokens_completion": 498,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.05934
     },
     {
       "timestamp": "2025-10-03T12:54:33.435407",
@@ -135,7 +135,7 @@
       "native_tokens_completion": 384,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.07416299999999999
     },
     {
       "timestamp": "2025-10-03T12:54:46.525564",
@@ -219,7 +219,7 @@
       "native_tokens_completion": 122,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.072363
     },
     {
       "timestamp": "2025-10-03T12:55:59.658748",
@@ -262,7 +262,7 @@
       "native_tokens_completion": 198,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.13172999999999999
     },
     {
       "timestamp": "2025-10-03T12:58:12.475655",
@@ -311,7 +311,7 @@
       "native_tokens_completion": 116,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.13175699999999999
     },
     {
       "timestamp": "2025-10-03T13:00:25.083469",
@@ -354,7 +354,7 @@
       "native_tokens_completion": 126,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.14322000000000001
     },
     {
       "timestamp": "2025-10-03T13:04:36.038169",
@@ -386,7 +386,7 @@
       "native_tokens_completion": 99,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.14346899999999999
     },
     {
       "timestamp": "2025-10-03T13:08:45.010094",
@@ -423,7 +423,7 @@
       "native_tokens_completion": 1889,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.177684
     },
     {
       "timestamp": "2025-10-03T13:10:15.437402",
@@ -439,7 +439,7 @@
   "successful_tool_calls": 13,
   "total_web_searches": 0,
   "total_api_calls": 9,
-  "total_cost_usd": 0.0,
+  "total_cost_usd": 0.9866520000000001,
   "total_prompt_tokens": 311234,
   "total_completion_tokens": 3530,
   "total_tokens": 314764,

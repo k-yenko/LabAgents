@@ -639,7 +639,22 @@ async def test_with_simple_logging(main_question: str, question_id: str, model_n
                 # Anthropic doesn't provide native tokenizer details the same way
                 native_prompt_tokens = prompt_tokens
                 native_completion_tokens = completion_tokens
-                cost = 0.0  # Cost calculation not available from direct API
+
+                # Estimate cost using Anthropic's pricing (as of Jan 2025)
+                # Opus 4.1: $15/M input, $75/M output
+                # Sonnet 4/4.5: $3/M input, $15/M output
+                if "opus" in actual_model_name.lower():
+                    input_cost_per_m = 15.0
+                    output_cost_per_m = 75.0
+                elif "sonnet" in actual_model_name.lower():
+                    input_cost_per_m = 3.0
+                    output_cost_per_m = 15.0
+                else:
+                    # Default to Sonnet pricing for unknown models
+                    input_cost_per_m = 3.0
+                    output_cost_per_m = 15.0
+
+                cost = (prompt_tokens / 1_000_000 * input_cost_per_m) + (completion_tokens / 1_000_000 * output_cost_per_m)
                 reasoning_tokens = 0
                 cached_tokens = 0
             else:
@@ -674,7 +689,8 @@ async def test_with_simple_logging(main_question: str, question_id: str, model_n
                 generation_id=generation_id,
                 native_prompt_tokens=native_prompt_tokens,
                 native_completion_tokens=native_completion_tokens,
-                cost=cost
+                cost=cost,
+                is_estimated=use_anthropic_direct  # Anthropic direct API has estimated costs
             )
 
             if reasoning_tokens > 0:

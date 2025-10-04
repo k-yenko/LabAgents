@@ -18,7 +18,7 @@
       "native_tokens_completion": 246,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.055134
     },
     {
       "timestamp": "2025-10-03T13:18:51.514985",
@@ -56,7 +56,7 @@
       "native_tokens_completion": 239,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.05587799999999999
     },
     {
       "timestamp": "2025-10-03T13:19:42.386074",
@@ -112,7 +112,7 @@
       "native_tokens_completion": 404,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.059325
     },
     {
       "timestamp": "2025-10-03T13:20:17.091261",
@@ -180,7 +180,7 @@
       "native_tokens_completion": 277,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.064416
     },
     {
       "timestamp": "2025-10-03T13:20:51.751926",
@@ -240,7 +240,7 @@
       "native_tokens_completion": 108,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.063396
     },
     {
       "timestamp": "2025-10-03T13:22:02.275606",
@@ -277,7 +277,7 @@
       "native_tokens_completion": 168,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.06804299999999999
     },
     {
       "timestamp": "2025-10-03T13:22:08.430497",
@@ -320,7 +320,7 @@
       "native_tokens_completion": 99,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.067797
     },
     {
       "timestamp": "2025-10-03T13:23:18.100467",
@@ -357,7 +357,7 @@
       "native_tokens_completion": 568,
       "reasoning_tokens": 0,
       "cached_tokens": 0,
-      "total_cost": 0.0
+      "total_cost": 0.08066999999999999
     },
     {
       "timestamp": "2025-10-03T13:23:38.492298",
@@ -373,7 +373,7 @@
   "successful_tool_calls": 10,
   "total_web_searches": 0,
   "total_api_calls": 8,
-  "total_cost_usd": 0.0,
+  "total_cost_usd": 0.514659,
   "total_prompt_tokens": 161008,
   "total_completion_tokens": 2109,
   "total_tokens": 163117,
