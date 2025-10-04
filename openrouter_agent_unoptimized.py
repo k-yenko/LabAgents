@@ -18,8 +18,6 @@ from contextlib import contextmanager, asynccontextmanager
 from dotenv import load_dotenv
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
-from collections import deque
-from datetime import datetime, timedelta
 
 # Import our simple logger
 from scripts.simple_structured_logger import SimpleLogger
@@ -29,125 +27,6 @@ from scripts.log_compressor import compress_log_file
 
 # Suppress pydantic warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
-
-# Token rate limiter for Anthropic API
-class TokenRateLimiter:
-    """Rate limiter to prevent hitting Anthropic's 30k tokens/minute limit"""
-    def __init__(self, tokens_per_minute=30000, buffer_ratio=0.8):
-        self.max_tokens = int(tokens_per_minute * buffer_ratio)  # Use 80% to be safe
-        self.window_seconds = 60
-        self.requests = deque()  # Store (timestamp, token_count) tuples
-
-    def wait_if_needed(self, estimated_tokens):
-        """Wait if adding this request would exceed rate limit"""
-        now = datetime.now()
-        cutoff = now - timedelta(seconds=self.window_seconds)
-
-        # Remove old requests outside the window
-        while self.requests and self.requests[0][0] < cutoff:
-            self.requests.popleft()
-
-        # Calculate tokens used in current window
-        tokens_in_window = sum(tokens for _, tokens in self.requests)
-
-        # If adding this request would exceed limit, wait
-        if tokens_in_window + estimated_tokens > self.max_tokens:
-            # Calculate how long to wait
-            if self.requests:
-                oldest_timestamp, oldest_tokens = self.requests[0]
-                wait_seconds = (oldest_timestamp + timedelta(seconds=self.window_seconds) - now).total_seconds()
-                if wait_seconds > 0:
-                    print(f"⏱️  Rate limit prevention: waiting {wait_seconds:.1f}s (current window: {tokens_in_window:,} tokens)")
-                    time.sleep(wait_seconds + 1)  # Add 1 second buffer
-                    # Recursively check again after waiting
-                    return self.wait_if_needed(estimated_tokens)
-
-        # Record this request
-        self.requests.append((now, estimated_tokens))
-
-    def reset(self):
-        """Reset the rate limiter"""
-        self.requests.clear()
-
-# Global rate limiter instance
-anthropic_rate_limiter = TokenRateLimiter()
-
-def prune_conversation_history(messages, max_recent_exchanges=3, always_keep_first=True):
-    """
-    Prune conversation history to reduce token usage while maintaining context.
-
-    Preserves tool_use/tool_result pairs to avoid breaking Anthropic API requirements.
-
-    Args:
-        messages: List of message dictionaries
-        max_recent_exchanges: Keep only the last N exchanges (user+assistant pairs)
-        always_keep_first: Always keep the first user message (the original question)
-
-    Returns:
-        Pruned list of messages
-    """
-    if len(messages) <= 2:  # Too short to prune
-        return messages
-
-    # Build a map of tool_use_id -> message_index for tool_use blocks
-    tool_use_map = {}
-    for i, msg in enumerate(messages):
-        if msg["role"] == "assistant":
-            content = msg.get("content", [])
-            if isinstance(content, list):
-                for block in content:
-                    if isinstance(block, dict) and block.get("type") == "tool_use":
-                        tool_use_map[block.get("id")] = i
-
-    # Build a set of message indices we MUST keep (tool dependencies)
-    must_keep_indices = set()
-
-    # For each tool_result, find its corresponding tool_use
-    for i, msg in enumerate(messages):
-        if msg["role"] == "user":
-            content = msg.get("content", [])
-            if isinstance(content, list):
-                for block in content:
-                    if isinstance(block, dict) and block.get("type") == "tool_result":
-                        tool_use_id = block.get("tool_use_id")
-                        if tool_use_id and tool_use_id in tool_use_map:
-                            # Mark both the tool_use and tool_result messages as must-keep
-                            must_keep_indices.add(tool_use_map[tool_use_id])
-                            must_keep_indices.add(i)
-
-    pruned = []
-
-    # Keep first message if requested (original question)
-    if always_keep_first and messages[0]["role"] == "user":
-        pruned.append(messages[0])
-        start_index = 1
-    else:
-        start_index = 0
-
-    # Keep only recent exchanges
-    recent_messages = messages[start_index:]
-
-    # Count backwards to keep last N exchanges
-    exchanges_to_keep = max_recent_exchanges * 3  # Rough estimate: user, assistant, tool result
-    if len(recent_messages) > exchanges_to_keep:
-        # Calculate the cutoff index (absolute, not relative)
-        cutoff_index = len(messages) - exchanges_to_keep
-
-        # Keep messages that are either:
-        # 1. After the cutoff (recent messages)
-        # 2. Required for tool dependencies
-        for i in range(start_index, len(messages)):
-            if i >= cutoff_index or i in must_keep_indices:
-                pruned.append(messages[i])
-    else:
-        pruned.extend(recent_messages)
-
-    # Log pruning
-    if len(pruned) < len(messages):
-        tokens_saved = sum(len(str(msg.get("content", ""))) for msg in messages if msg not in pruned) // 4
-        print(f"📉 Pruned conversation: {len(messages)} → {len(pruned)} messages (~{tokens_saved:,} tokens saved)")
-
-    return pruned
 
 @contextmanager
 def suppress_output():
@@ -330,29 +209,6 @@ def openai_to_anthropic_tools(openai_tools):
             anthropic_tools.append(anthropic_tool)
     return anthropic_tools
 
-class ToolCallWrapper:
-    """Wrapper for tool call dict to provide attribute access"""
-    def __init__(self, tool_call_dict):
-        self.id = tool_call_dict.get("id")
-        self.type = tool_call_dict.get("type")
-        self.function = type('obj', (object,), {
-            'name': tool_call_dict.get("function", {}).get("name"),
-            'arguments': tool_call_dict.get("function", {}).get("arguments")
-        })()
-
-class MessageWrapper:
-    """Simple wrapper to make dict behave like OpenRouter message object"""
-    def __init__(self, message_dict):
-        self.role = message_dict.get("role")
-        self.content = message_dict.get("content")
-
-        # Wrap tool_calls to provide attribute access
-        tool_calls = message_dict.get("tool_calls")
-        if tool_calls:
-            self.tool_calls = [ToolCallWrapper(tc) for tc in tool_calls]
-        else:
-            self.tool_calls = None
-
 def anthropic_to_openai_message(anthropic_message):
     """Convert Anthropic message format to OpenAI format for logging consistency"""
     openai_message = {
@@ -383,8 +239,7 @@ def anthropic_to_openai_message(anthropic_message):
         if tool_calls:
             openai_message["tool_calls"] = tool_calls
 
-    # Return wrapped object that behaves like OpenRouter message
-    return MessageWrapper(openai_message)
+    return openai_message
 
 async def test_with_simple_logging(main_question: str, question_id: str, model_name: str = "anthropic/claude-sonnet-4", enable_web_search: bool = True):
     """Test with simple focused logging"""
@@ -451,203 +306,101 @@ async def test_with_simple_logging(main_question: str, question_id: str, model_n
             iteration += 1
             print(f"\n--- Iteration {iteration} ---")
 
-            # Prune conversation history after iteration 5 to reduce token usage
-            if iteration > 5:
-                messages = prune_conversation_history(messages, max_recent_exchanges=3)
-
             # Get response from AI with the determined model
-            # Retry logic for transient errors (SSL, timeouts, etc)
-            max_retries = 3
-            retry_count = 0
-            last_error = None
+            try:
+                if use_anthropic_direct:
+                    # Use Anthropic direct API
+                    anthropic_tools = openai_to_anthropic_tools(tools)
 
-            while retry_count < max_retries:
-                try:
-                    if use_anthropic_direct:
-                        # Use Anthropic direct API
-                        anthropic_tools = openai_to_anthropic_tools(tools)
+                    # Convert messages to Anthropic format (system message separate)
+                    system_message = None
+                    anthropic_messages = []
 
-                        # Convert messages to Anthropic format (system message separate)
-                        system_message = None
-                        anthropic_messages = []
-
-                        for msg in messages:
-                            if msg["role"] == "system":
-                                system_message = msg["content"]
-                            else:
-                                anthropic_messages.append(msg)
-
-                        # Build API call parameters
-                        api_params = {
-                            "model": actual_model_name,
-                            "max_tokens": 4096,
-                            "messages": anthropic_messages,
-                        }
-
-                        # Only add system message if it exists
-                        if system_message:
-                            api_params["system"] = system_message
-
-                        # Only add tools if they exist
-                        if anthropic_tools:
-                            api_params["tools"] = anthropic_tools
-
-                        # Estimate tokens in the request (rough approximation)
-                        estimated_tokens = 0
-                        for msg in anthropic_messages:
-                            content = msg.get("content", "")
-                            if isinstance(content, str):
-                                estimated_tokens += len(content) // 4  # ~4 chars per token
-                            elif isinstance(content, list):
-                                for item in content:
-                                    if isinstance(item, dict) and "text" in item:
-                                        estimated_tokens += len(item["text"]) // 4
-                        if system_message:
-                            estimated_tokens += len(system_message) // 4
-
-                        # Wait if needed to avoid rate limit
-                        anthropic_rate_limiter.wait_if_needed(estimated_tokens)
-
-                        response = anthropic_client.messages.create(**api_params)
-
-                        # Convert back to OpenAI format for consistent logging
-                        message = anthropic_to_openai_message(response)
-                    else:
-                        # Use OpenRouter API
-                        completion = client.chat.completions.create(
-                            model=actual_model_name,
-                            messages=messages,
-                            tools=tools,
-                            tool_choice="auto",
-                            extra_body={"usage": {"include": True}}  # Enable native tokenizer usage accounting
-                        )
-                        message = completion.choices[0].message
-
-                    # Success - break out of retry loop
-                    break
-
-                except json.JSONDecodeError as e:
-                    # API returned malformed JSON - this is not retryable
-                    api_name = "Anthropic" if use_anthropic_direct else "OpenRouter"
-                    error_msg = f"{api_name} API returned malformed JSON: {str(e)}"
-                    print(f"❌ API Error: {error_msg}")
-                    logger.set_final_answer(error_msg, success=False)
-
-                    # Create logs directory structure: logs/{question_id}/
-                    log_dir = os.path.join("logs", question_id)
-                    os.makedirs(log_dir, exist_ok=True)
-
-                    # Save error log with raw error details
-                    timestamp = time.strftime("%Y%m%d_%H%M%S")
-                    clean_model_name = model_name.replace("/", "_")
-                    log_filename = os.path.join(log_dir, f"{clean_model_name}_api_error_{timestamp}.json")
-                    log_entry = logger.save_to_file(log_filename, format="json")
-
-                    return log_entry
-
-                except Exception as e:
-                    # Potentially retryable errors (SSL, timeouts, rate limits)
-                    last_error = e
-                    retry_count += 1
-
-                    api_name = "Anthropic" if use_anthropic_direct else "OpenRouter"
-
-                    if retry_count < max_retries:
-                        # Detect rate limit errors (429) - need longer wait time
-                        error_str = str(e).lower()
-                        is_rate_limit = '429' in str(e) or 'rate_limit' in error_str or 'rate limit' in error_str
-
-                        if is_rate_limit:
-                            # Rate limits are per-minute, so wait for window to reset
-                            # Add exponential backoff for repeated rate limits
-                            base_wait = 60
-                            wait_time = base_wait + (retry_count * 15)  # 60, 75, 90 seconds
-                            print(f"⚠️  {api_name} rate limit hit (attempt {retry_count}/{max_retries})")
-                            print(f"   Waiting {wait_time} seconds for rate limit window to reset...")
-
-                            # Reset the rate limiter to start fresh
-                            if use_anthropic_direct:
-                                anthropic_rate_limiter.reset()
+                    for msg in messages:
+                        if msg["role"] == "system":
+                            system_message = msg["content"]
                         else:
-                            # Other transient errors - exponential backoff: 2, 4, 8 seconds
-                            wait_time = 2 ** retry_count
-                            print(f"⚠️  {api_name} API error (attempt {retry_count}/{max_retries}): {str(e)}")
-                            print(f"   Retrying in {wait_time} seconds...")
+                            anthropic_messages.append(msg)
 
-                        time.sleep(wait_time)
-                    else:
-                        # Max retries exceeded
-                        error_msg = f"{api_name} API error after {max_retries} attempts: {str(e)}"
-                        print(f"❌ API Error: {error_msg}")
+                    response = anthropic_client.messages.create(
+                        model=actual_model_name,
+                        max_tokens=4096,
+                        system=system_message,
+                        messages=anthropic_messages,
+                        tools=anthropic_tools if anthropic_tools else None
+                    )
 
-                        # Add more debugging info for Anthropic API errors
-                        if use_anthropic_direct:
-                            print(f"   Model: {actual_model_name}")
-                            print(f"   API Key exists: {bool(os.getenv('ANTHROPIC_API_KEY'))}")
-                            print(f"   Full error: {repr(e)}")
+                    # Convert back to OpenAI format for consistent logging
+                    message = anthropic_to_openai_message(response)
+                else:
+                    # Use OpenRouter API
+                    completion = client.chat.completions.create(
+                        model=actual_model_name,
+                        messages=messages,
+                        tools=tools,
+                        tool_choice="auto",
+                        extra_body={"usage": {"include": True}}  # Enable native tokenizer usage accounting
+                    )
+                    message = completion.choices[0].message
+            except json.JSONDecodeError as e:
+                # API returned malformed JSON - log raw error and move on
+                api_name = "Anthropic" if use_anthropic_direct else "OpenRouter"
+                error_msg = f"{api_name} API returned malformed JSON: {str(e)}"
+                print(f"❌ API Error: {error_msg}")
+                logger.set_final_answer(error_msg, success=False)
 
-                        logger.set_final_answer(error_msg, success=False)
+                # Create logs directory structure: logs/{question_id}/
+                log_dir = os.path.join("logs", question_id)
+                os.makedirs(log_dir, exist_ok=True)
 
-                        # Create logs directory structure: logs/{question_id}/
-                        log_dir = os.path.join("logs", question_id)
-                        os.makedirs(log_dir, exist_ok=True)
+                # Save error log with raw error details
+                timestamp = time.strftime("%Y%m%d_%H%M%S")
+                clean_model_name = model_name.replace("/", "_")
+                log_filename = os.path.join(log_dir, f"{clean_model_name}_api_error_{timestamp}.json")
+                log_entry = logger.save_to_file(log_filename, format="json")
 
-                        # Save error log with raw error details
-                        timestamp = time.strftime("%Y%m%d_%H%M%S")
-                        clean_model_name = model_name.replace("/", "_")
-                        log_filename = os.path.join(log_dir, f"{clean_model_name}_api_error_{timestamp}.json")
-                        log_entry = logger.save_to_file(log_filename, format="json")
+                return log_entry
+            except Exception as e:
+                # Other API errors (rate limits, timeouts, etc)
+                error_msg = f"OpenRouter API error: {str(e)}"
+                print(f"❌ API Error: {error_msg}")
+                logger.set_final_answer(error_msg, success=False)
 
-                        return log_entry
+                # Create logs directory structure: logs/{question_id}/
+                log_dir = os.path.join("logs", question_id)
+                os.makedirs(log_dir, exist_ok=True)
 
-            # If we got here after retry loop without success, handle it
-            if retry_count >= max_retries and last_error:
-                continue  # This return was already handled in the except block above
+                # Save error log with raw error details
+                timestamp = time.strftime("%Y%m%d_%H%M%S")
+                clean_model_name = model_name.replace("/", "_")
+                log_filename = os.path.join(log_dir, f"{clean_model_name}_api_error_{timestamp}.json")
+                log_entry = logger.save_to_file(log_filename, format="json")
+
+                return log_entry
 
             # Log API call with comprehensive usage info from response
-            if use_anthropic_direct:
-                # Anthropic API response structure
-                generation_id = response.id
-                usage = response.usage if hasattr(response, 'usage') else None
+            generation_id = completion.id
+            usage = completion.usage
 
-                if usage:
-                    prompt_tokens = usage.input_tokens
-                    completion_tokens = usage.output_tokens
-                    total_tokens = usage.input_tokens + usage.output_tokens
-                else:
-                    prompt_tokens = completion_tokens = total_tokens = 0
-            else:
-                # OpenRouter API response structure
-                generation_id = completion.id
-                usage = completion.usage
+            # Extract detailed usage information
+            prompt_tokens = usage.prompt_tokens
+            completion_tokens = usage.completion_tokens
+            total_tokens = usage.total_tokens
 
-                prompt_tokens = usage.prompt_tokens
-                completion_tokens = usage.completion_tokens
-                total_tokens = usage.total_tokens
+            # Get native tokenizer counts and costs (available when usage={"include": True})
+            native_prompt_tokens = getattr(usage, 'prompt_tokens', prompt_tokens)
+            native_completion_tokens = getattr(usage, 'completion_tokens', completion_tokens)
+            cost = getattr(usage, 'cost', 0.0)
 
-            # Get native tokenizer counts and costs
-            if use_anthropic_direct:
-                # Anthropic doesn't provide native tokenizer details the same way
-                native_prompt_tokens = prompt_tokens
-                native_completion_tokens = completion_tokens
-                cost = 0.0  # Cost calculation not available from direct API
-                reasoning_tokens = 0
-                cached_tokens = 0
-            else:
-                # OpenRouter provides detailed usage (available when usage={"include": True})
-                native_prompt_tokens = getattr(usage, 'prompt_tokens', prompt_tokens)
-                native_completion_tokens = getattr(usage, 'completion_tokens', completion_tokens)
-                cost = getattr(usage, 'cost', 0.0)
+            # Check for additional detailed usage information
+            reasoning_tokens = 0
+            cached_tokens = 0
 
-                # Check for additional detailed usage information
-                reasoning_tokens = 0
-                cached_tokens = 0
+            if hasattr(usage, 'completion_tokens_details'):
+                reasoning_tokens = getattr(usage.completion_tokens_details, 'reasoning_tokens', 0)
 
-                if hasattr(usage, 'completion_tokens_details'):
-                    reasoning_tokens = getattr(usage.completion_tokens_details, 'reasoning_tokens', 0)
-
-                if hasattr(usage, 'prompt_tokens_details'):
-                    cached_tokens = getattr(usage.prompt_tokens_details, 'cached_tokens', 0)
+            if hasattr(usage, 'prompt_tokens_details'):
+                cached_tokens = getattr(usage.prompt_tokens_details, 'cached_tokens', 0)
 
             # Log API call with all available information
             logger.log_api_call(
@@ -720,49 +473,7 @@ async def test_with_simple_logging(main_question: str, question_id: str, model_n
                 return log_entry
 
             # Add AI's message to conversation
-            # Convert MessageWrapper back to dict for message list
-            if hasattr(message, 'role'):
-                if use_anthropic_direct:
-                    # Anthropic API format: content is array with text and tool_use blocks
-                    content_blocks = []
-                    if message.content:
-                        content_blocks.append({
-                            "type": "text",
-                            "text": message.content
-                        })
-                    if message.tool_calls:
-                        for tc in message.tool_calls:
-                            content_blocks.append({
-                                "type": "tool_use",
-                                "id": tc.id,
-                                "name": tc.function.name,
-                                "input": json.loads(tc.function.arguments) if tc.function.arguments else {}
-                            })
-
-                    message_dict = {
-                        "role": message.role,
-                        "content": content_blocks
-                    }
-                else:
-                    # OpenRouter/OpenAI format: separate content and tool_calls fields
-                    message_dict = {
-                        "role": message.role,
-                        "content": message.content
-                    }
-                    if message.tool_calls:
-                        message_dict["tool_calls"] = [
-                            {
-                                "id": tc.id,
-                                "type": tc.type,
-                                "function": {
-                                    "name": tc.function.name,
-                                    "arguments": tc.function.arguments
-                                }
-                            } for tc in message.tool_calls
-                        ]
-                messages.append(message_dict)
-            else:
-                messages.append(message)
+            messages.append(message)
 
             # Execute all tool calls
             for tool_call in message.tool_calls:
@@ -798,25 +509,11 @@ async def test_with_simple_logging(main_question: str, question_id: str, model_n
                     print(f"Tool {tool_name} completed successfully")
 
                     # Add tool result to conversation
-                    if use_anthropic_direct:
-                        # Anthropic API format: tool results go in user message with tool_result content blocks
-                        messages.append({
-                            "role": "user",
-                            "content": [
-                                {
-                                    "type": "tool_result",
-                                    "tool_use_id": tool_call.id,
-                                    "content": tool_result
-                                }
-                            ]
-                        })
-                    else:
-                        # OpenRouter/OpenAI format: use "tool" role
-                        messages.append({
-                            "role": "tool",
-                            "tool_call_id": tool_call.id,
-                            "content": tool_result
-                        })
+                    messages.append({
+                        "role": "tool",
+                        "tool_call_id": tool_call.id,
+                        "content": tool_result
+                    })
 
                     print(f"Tool result: {tool_result[:200]}...")
 
@@ -828,25 +525,11 @@ async def test_with_simple_logging(main_question: str, question_id: str, model_n
                     print(f"Tool {tool_name} failed with error: {error_msg}")
 
                     # Add error to conversation
-                    if use_anthropic_direct:
-                        # Anthropic API format: tool results go in user message with tool_result content blocks
-                        messages.append({
-                            "role": "user",
-                            "content": [
-                                {
-                                    "type": "tool_result",
-                                    "tool_use_id": tool_call.id,
-                                    "content": f"Error: {error_msg}"
-                                }
-                            ]
-                        })
-                    else:
-                        # OpenRouter/OpenAI format: use "tool" role
-                        messages.append({
-                            "role": "tool",
-                            "tool_call_id": tool_call.id,
-                            "content": f"Error: {error_msg}"
-                        })
+                    messages.append({
+                        "role": "tool",
+                        "tool_call_id": tool_call.id,
+                        "content": f"Error: {error_msg}"
+                    })
 
         # This point should never be reached with proper system prompts
         # If we get here, something went wrong with the conversation flow

@@ -76,8 +76,6 @@ def prune_conversation_history(messages, max_recent_exchanges=3, always_keep_fir
     """
     Prune conversation history to reduce token usage while maintaining context.
 
-    Preserves tool_use/tool_result pairs to avoid breaking Anthropic API requirements.
-
     Args:
         messages: List of message dictionaries
         max_recent_exchanges: Keep only the last N exchanges (user+assistant pairs)
@@ -89,32 +87,6 @@ def prune_conversation_history(messages, max_recent_exchanges=3, always_keep_fir
     if len(messages) <= 2:  # Too short to prune
         return messages
 
-    # Build a map of tool_use_id -> message_index for tool_use blocks
-    tool_use_map = {}
-    for i, msg in enumerate(messages):
-        if msg["role"] == "assistant":
-            content = msg.get("content", [])
-            if isinstance(content, list):
-                for block in content:
-                    if isinstance(block, dict) and block.get("type") == "tool_use":
-                        tool_use_map[block.get("id")] = i
-
-    # Build a set of message indices we MUST keep (tool dependencies)
-    must_keep_indices = set()
-
-    # For each tool_result, find its corresponding tool_use
-    for i, msg in enumerate(messages):
-        if msg["role"] == "user":
-            content = msg.get("content", [])
-            if isinstance(content, list):
-                for block in content:
-                    if isinstance(block, dict) and block.get("type") == "tool_result":
-                        tool_use_id = block.get("tool_use_id")
-                        if tool_use_id and tool_use_id in tool_use_map:
-                            # Mark both the tool_use and tool_result messages as must-keep
-                            must_keep_indices.add(tool_use_map[tool_use_id])
-                            must_keep_indices.add(i)
-
     pruned = []
 
     # Keep first message if requested (original question)
@@ -125,22 +97,15 @@ def prune_conversation_history(messages, max_recent_exchanges=3, always_keep_fir
         start_index = 0
 
     # Keep only recent exchanges
+    # An "exchange" is a user message + assistant response + tool results
     recent_messages = messages[start_index:]
 
     # Count backwards to keep last N exchanges
     exchanges_to_keep = max_recent_exchanges * 3  # Rough estimate: user, assistant, tool result
     if len(recent_messages) > exchanges_to_keep:
-        # Calculate the cutoff index (absolute, not relative)
-        cutoff_index = len(messages) - exchanges_to_keep
+        recent_messages = recent_messages[-exchanges_to_keep:]
 
-        # Keep messages that are either:
-        # 1. After the cutoff (recent messages)
-        # 2. Required for tool dependencies
-        for i in range(start_index, len(messages)):
-            if i >= cutoff_index or i in must_keep_indices:
-                pruned.append(messages[i])
-    else:
-        pruned.extend(recent_messages)
+    pruned.extend(recent_messages)
 
     # Log pruning
     if len(pruned) < len(messages):
