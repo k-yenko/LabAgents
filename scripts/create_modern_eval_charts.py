@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Create modern evaluation charts with consistent styling
+create_modern_eval_charts.py - generates modern styled evaluation charts from results
 """
 
 import json

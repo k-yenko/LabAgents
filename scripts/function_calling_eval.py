@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
-Function Calling Evaluation Script - Tool Selection Assessment
-Evaluates how well models select appropriate tools for computational chemistry tasks
+function_calling_eval.py - evaluates whether agents selected the correct tools for each question
 """
 
 import json

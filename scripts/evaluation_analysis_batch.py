@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """
-Batch Analysis of Computational Chemistry Agent Evaluations
-Creates Phase 1 visualizations (A-G) with tier weighting: Tier 1: 1x, Tier 3: 4x
-Saves all plots without displaying them
+evaluation_analysis_batch.py - creates visualization plots from evaluation results with tier weighting
 """
 
 import json

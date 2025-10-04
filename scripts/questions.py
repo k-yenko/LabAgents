@@ -1,3 +1,9 @@
+"""
+questions.py - defines all tier1, tier2, tier3 chemistry benchmark questions
+
+use this when: imported by agent_runner.py to get question text by id (e.g., tier1_007)
+"""
+
 # Tier 1 Questions - Basic tool selection
 TIER1_QUESTIONS = {
     "tier1_001": "What is the predicted aqueous solubility of remdesivir at physiological temperature?",

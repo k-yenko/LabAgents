@@ -1,12 +1,12 @@
 """
-Enhanced LLM-as-a-Judge evaluator that penalizes web search cheating
+web_search_evaluator.py - detects when agents cheat by using web search instead of computing results
 """
 
 import json
 import re
 from typing import List, Dict, Tuple
 from structured_log_schema import StructuredLogEntry
-from simple_structured_logger import SimpleLogEntry
+from execution_logger import SimpleLogEntry
 
 class WebSearchCheatingDetector:
     """Detects when agents use web search to cheat instead of computing results"""

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Simple LLM-as-a-Judge Evaluation Script
+correctness_eval.py - simple llm judge evaluation for correctness scoring
 """
 
 import json

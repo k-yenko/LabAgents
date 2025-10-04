@@ -1,6 +1,17 @@
 """
-LLM-as-a-Judge evaluator for computational chemistry agent logs
-Following Anthropic's evaluation framework principles
+llm_judge_evaluator.py - automatically grades agent performance using an llm as judge
+
+what this does:
+- reads log files created by agent_runner.py (via execution_logger.py)
+- extracts: question, final answer, tools used, execution metrics
+- sends to a judge llm (default: claude sonnet 4 via openrouter) with a detailed rubric
+- scores on 3 dimensions (0-2 each, total 0-6): completion, correctness, tool use
+- pass = 4+ points, fail = 3 or fewer
+- saves evaluations to: evaluations/{question_id}/json/{model_name}_evaluation.json
+- generates markdown reports: evaluations/{question_id}/md/{model_name}_evaluation.md
+
+use this when: after running agent_runner.py, run this to grade how well the agent answered
+example: python llm_judge_evaluator.py tier1_007
 """
 
 import json
