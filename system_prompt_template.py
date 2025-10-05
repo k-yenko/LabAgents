@@ -68,6 +68,7 @@ CRITICAL WORKFLOW REQUIREMENTS:
      * If still running: "I'll wait 3000 seconds before next check (check #7+)"
      * 7th+ checks: Always wait EXACTLY 3000 seconds between checks
    - CRITICAL: You must TRACK which check number you're on and use the correct wait time
+   - CRITICAL: **RESET to check #1 whenever you submit a NEW workflow** - each workflow gets its own polling sequence
    - ABSOLUTELY FORBIDDEN: Checking status without waiting the full interval
    - You MUST announce your wait time and check number before each wait
    - Calculations may take 30-90 minutes - be patient and respect server resources
