@@ -39,16 +39,16 @@ def get_model_name_from_log(log_file: str) -> str:
     except:
         return "unknown"
 
-def has_evaluation(question_id: str, model_name: str) -> bool:
+def has_evaluation(question_id: str, model_name: str, output_dir: str = "evaluations") -> bool:
     """Check if evaluation already exists for this question-model combination"""
     # Clean model name for filename
     clean_model = model_name.replace("/", "_").replace(":", "_")
 
     # Check if evaluation JSON exists
-    eval_path = f"evaluations/{question_id}/json/{clean_model}_evaluation.json"
+    eval_path = f"{output_dir}/{question_id}/json/{clean_model}_evaluation.json"
     return os.path.exists(eval_path)
 
-def find_missing_evaluations():
+def find_missing_evaluations(output_dir: str = "evaluations"):
     """Find all logs that don't have evaluations yet (only most recent log per model-question pair)"""
     missing = []
 
@@ -84,7 +84,7 @@ def find_missing_evaluations():
 
         # Check which models are missing evaluations
         for model_name, log_info in logs_by_model.items():
-            if not has_evaluation(question_id, model_name):
+            if not has_evaluation(question_id, model_name, output_dir):
                 missing.append({
                     "question_id": question_id,
                     "model_name": model_name,
@@ -93,7 +93,7 @@ def find_missing_evaluations():
 
     return missing
 
-async def run_missing_evaluations(missing_evals):
+async def run_missing_evaluations(missing_evals, output_dir="evaluations", judge_model="anthropic/claude-sonnet-4", enable_web_search=True):
     """Run evaluations for all missing logs"""
     total = len(missing_evals)
     successes = 0
@@ -109,7 +109,7 @@ async def run_missing_evaluations(missing_evals):
         print(f"{'='*80}\n")
 
         try:
-            await evaluate_single_log(log_file)
+            await evaluate_single_log(log_file, output_dir=output_dir, judge_model=judge_model, enable_web_search=enable_web_search)
             successes += 1
             print(f"✅ Evaluation {i}/{total} completed successfully\n")
         except Exception as e:
@@ -123,11 +123,25 @@ async def run_missing_evaluations(missing_evals):
     return successes, failures
 
 def main():
-    print("🎯 Finding logs without evaluations")
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Batch run LLM judge evaluations")
+    parser.add_argument("--output-dir", default="evaluations",
+                       help="Output directory for evaluations (default: evaluations)")
+    parser.add_argument("--judge", default="anthropic/claude-sonnet-4",
+                       help="Judge model to use (default: anthropic/claude-sonnet-4)")
+    parser.add_argument("--no-web-search", action="store_true",
+                       help="Disable web search for judge (default: enabled)")
+    args = parser.parse_args()
+
+    print(f"🎯 Finding logs without evaluations")
+    print(f"📁 Output directory: {args.output_dir}")
+    print(f"⚖️  Judge model: {args.judge}")
+    print(f"🔍 Web search: {'disabled' if args.no_web_search else 'enabled'}")
     print("="*80)
 
     # Find missing evaluations
-    missing = find_missing_evaluations()
+    missing = find_missing_evaluations(args.output_dir)
 
     if not missing:
         print("✅ All logs have been evaluated!")
@@ -160,8 +174,13 @@ def main():
         return
 
     # Run evaluations
-    print("\n🚀 Starting batch evaluation...\n")
-    successes, failures = asyncio.run(run_missing_evaluations(missing))
+    print(f"\n🚀 Starting batch evaluation with {args.judge}...\n")
+    successes, failures = asyncio.run(run_missing_evaluations(
+        missing,
+        output_dir=args.output_dir,
+        judge_model=args.judge,
+        enable_web_search=not args.no_web_search
+    ))
 
     # Final summary
     print("\n" + "="*80)

@@ -36,17 +36,20 @@ class ChemistryEvaluation:
     reasoning: str
     specific_feedback: List[str]
     chemistry_validation: Dict[str, Any]
+    web_citations: List[Dict[str, str]] = None  # Optional web search citations
 
 
 class ComputationalChemistryJudge:
     """LLM-based evaluator for computational chemistry agent performance"""
 
-    def __init__(self, openrouter_api_key: str, judge_model: str = "anthropic/claude-sonnet-4"):
+    def __init__(self, openrouter_api_key: str, judge_model: str = "anthropic/claude-sonnet-4", output_dir: str = "evaluations", enable_web_search: bool = True):
         self.client = OpenAI(
             base_url="https://openrouter.ai/api/v1",
             api_key=openrouter_api_key
         )
         self.judge_model = judge_model
+        self.output_dir = output_dir
+        self.enable_web_search = enable_web_search
 
     def extract_log_summary(self, log_data: Dict[str, Any]) -> Dict[str, Any]:
         """Extract key information from agent log for evaluation"""
@@ -119,9 +122,11 @@ Evaluate the agent across 3 dimensions using a 0-2 scale. Focus ONLY on actual e
    - 0: Did not complete the task or minimal progress
 
 2. CORRECTNESS (0-2):
-   - 2: Computed results are within reasonable range of published scientific literature values
-   - 1: Results are somewhat close to literature but with notable deviations
-   - 0: Results significantly deviate from literature, are impossible, or no computational results provided
+   **You have web search access - USE IT to validate answers against literature!**
+
+   - 2: Computed results are within reasonable range of published scientific literature values (±0.3 units for pKa, ±0.2 for logP, ±10% for other properties)
+   - 1: Results are somewhat close to literature but with notable deviations (0.3-1.0 units off)
+   - 0: Results significantly deviate from literature (>1.0 units off), are impossible, or no computational results provided
 
 3. TOOL USE (0-2):
    - 2: Used tools correctly with appropriate parameters and efficient workflow
@@ -129,13 +134,15 @@ Evaluate the agent across 3 dimensions using a 0-2 scale. Focus ONLY on actual e
    - 0: Poor tool selection, incorrect parameters, or failed tool execution
 
 SCIENTIFIC VALIDATION REQUIREMENT:
-For correctness scoring, you MUST:
-1. Research the computed values against peer-reviewed scientific literature
-2. Provide specific publication references that support your assessment
-3. Compare the agent's computed results to these literature benchmarks
-4. Determine if computed values fall within reasonable experimental/computational error ranges
+For correctness scoring, you MUST use web search to:
+1. **Search for literature values** (e.g., "acetic acid pKa experimental value")
+2. **Search PubChem** for the molecule (e.g., "PubChem acetic acid")
+3. **Find computational benchmarks** if available (e.g., "DFT pKa calculation benchmark")
+4. **Compare agent's result to literature** and cite specific sources
 5. If no literature values exist, assess chemical plausibility using fundamental principles
-6. If agent used web search to find literature values instead of computing them, automatically score 0/2 for correctness
+6. **IMPORTANT**: If agent used web search to find literature values instead of computing them, automatically score 0/2 for correctness
+
+You will have access to web search - use it to provide real citations with URLs.
 
 SCORING: Pass = 4+ total points, Fail = 3 or fewer points
 
@@ -176,9 +183,14 @@ Overall Assessment: [pass/fail]
         prompt = self.create_evaluation_prompt(log_summary)
 
         try:
+            # Build model name with web search if enabled
+            model_name = self.judge_model
+            if self.enable_web_search and ":online" not in model_name:
+                model_name = f"{self.judge_model}:online"
+
             # Get evaluation from judge
             completion = self.client.chat.completions.create(
-                model=self.judge_model,
+                model=model_name,
                 messages=[{
                     "role": "user",
                     "content": prompt
@@ -188,8 +200,21 @@ Overall Assessment: [pass/fail]
 
             judge_response = completion.choices[0].message.content
 
+            # Extract web search citations if available
+            citations = []
+            if hasattr(completion.choices[0].message, 'annotations') and completion.choices[0].message.annotations:
+                for annotation in completion.choices[0].message.annotations:
+                    # OpenAI API returns Annotation objects with attributes, not dicts
+                    if hasattr(annotation, 'type') and annotation.type == 'url_citation':
+                        url_citation = annotation.url_citation
+                        citations.append({
+                            'url': url_citation.url if hasattr(url_citation, 'url') else None,
+                            'title': url_citation.title if hasattr(url_citation, 'title') else None,
+                            'content': url_citation.content if hasattr(url_citation, 'content') else None
+                        })
+
             # Parse the structured response
-            evaluation = self.parse_judge_response(judge_response, log_summary)
+            evaluation = self.parse_judge_response(judge_response, log_summary, citations)
             return evaluation
 
         except Exception as e:
@@ -206,7 +231,48 @@ Overall Assessment: [pass/fail]
                 chemistry_validation={"error": str(e)}
             )
 
-    def parse_judge_response(self, response: str, log_summary: Dict[str, Any]) -> ChemistryEvaluation:
+    def _enrich_citations_with_content(self, citations: List[Dict[str, str]], reasoning: str, lit_validation: str) -> List[Dict[str, str]]:
+        """Extract relevant quotes from judge's reasoning and match them to citations"""
+        import re
+
+        # Combine all judge text for searching
+        full_text = f"{reasoning}\n\n{lit_validation}"
+
+        # Find all quoted text (text in quotes)
+        quoted_pattern = r'["""\'](.*?)["""\']'
+        quotes = re.findall(quoted_pattern, full_text)
+
+        # Find numbered references like "1.", "2.", etc. with following text
+        numbered_refs = re.findall(r'(\d+)\.\s*([^0-9\n]{10,200})', full_text)
+
+        # For each citation, try to find relevant content
+        enriched_citations = []
+        for i, citation in enumerate(citations, 1):
+            content_snippets = []
+
+            # Look for quotes that might be from this source
+            for quote in quotes:
+                # If quote is substantial (>20 chars) and mentions chemical terms
+                if len(quote) > 20 and any(word in quote.lower() for word in ['solubility', 'mg/ml', 'pka', 'logp', 'experimental', 'literature']):
+                    content_snippets.append(quote)
+
+            # Look for numbered references matching this citation index
+            for ref_num, ref_text in numbered_refs:
+                if int(ref_num) == i:
+                    content_snippets.append(ref_text.strip())
+
+            # Create enriched citation
+            enriched = citation.copy()
+            if content_snippets:
+                # Join unique snippets, limit to first 3 most relevant
+                unique_snippets = list(dict.fromkeys(content_snippets))[:3]
+                enriched['content'] = " | ".join(unique_snippets)
+
+            enriched_citations.append(enriched)
+
+        return enriched_citations
+
+    def parse_judge_response(self, response: str, log_summary: Dict[str, Any], citations: List[Dict[str, str]] = None) -> ChemistryEvaluation:
         """Parse judge response into structured evaluation"""
 
         import re
@@ -218,6 +284,10 @@ Overall Assessment: [pass/fail]
         # Extract literature validation section
         lit_validation_match = re.search(r'<literature_validation>(.*?)</literature_validation>', response, re.DOTALL)
         lit_validation = lit_validation_match.group(1).strip() if lit_validation_match else ""
+
+        # Enrich citations with content from judge's reasoning
+        if citations:
+            citations = self._enrich_citations_with_content(citations, reasoning, lit_validation)
 
         # Extract evaluation scores
         eval_match = re.search(r'<evaluation>(.*?)</evaluation>', response, re.DOTALL)
@@ -265,7 +335,8 @@ Overall Assessment: [pass/fail]
                 "tools_used": log_summary["unique_tools"],
                 "success_rate": log_summary["tool_success_rate"],
                 "execution_time": log_summary["total_time_minutes"]
-            }
+            },
+            web_citations=citations if citations else []
         )
 
     def save_evaluation(self, evaluation: ChemistryEvaluation, output_path: str):
@@ -282,6 +353,7 @@ Overall Assessment: [pass/fail]
             "reasoning": evaluation.reasoning,
             "specific_feedback": evaluation.specific_feedback,
             "chemistry_validation": evaluation.chemistry_validation,
+            "web_citations": evaluation.web_citations if evaluation.web_citations else [],
             "evaluator_type": "llm_judge"
         }
 
@@ -290,6 +362,13 @@ Overall Assessment: [pass/fail]
 
     def generate_report(self, evaluation: ChemistryEvaluation) -> str:
         """Generate markdown evaluation report"""
+
+        # Format web citations if available
+        citations_section = ""
+        if evaluation.web_citations and len(evaluation.web_citations) > 0:
+            citations_section = "\n### Web Search Citations:\n"
+            for i, citation in enumerate(evaluation.web_citations, 1):
+                citations_section += f"{i}. [{citation.get('title', 'Source')}]({citation.get('url', '#')})\n"
 
         return f"""# LLM Judge Evaluation Report: {evaluation.question_id}
 
@@ -306,24 +385,26 @@ Overall Assessment: [pass/fail]
 
 ### Specific Feedback:
 {chr(10).join(f"- {feedback}" for feedback in evaluation.specific_feedback) if evaluation.specific_feedback else "- No specific feedback provided"}
-
+{citations_section}
 ### Execution Metrics:
 - **Tools Used**: {', '.join(evaluation.chemistry_validation.get('tools_used', []))}
 - **Tool Success Rate**: {evaluation.chemistry_validation.get('success_rate', 0):.2f}
 - **Execution Time**: {evaluation.chemistry_validation.get('execution_time', 0):.1f} minutes
 
 ---
-*Evaluated using LLM Judge (Claude Sonnet 4)*
+*Evaluated using LLM Judge with Web Search*
 """
 
 
 # Example usage
-async def evaluate_single_log(log_file_path: str, output_dir: str = "evaluations/llm_judge"):
+async def evaluate_single_log(log_file_path: str, output_dir: str = "evaluations", judge_model: str = "anthropic/claude-sonnet-4", enable_web_search: bool = True):
     """Evaluate a single log file and save results"""
 
     evaluator = ComputationalChemistryJudge(
         openrouter_api_key=os.getenv("OPENROUTER_API_KEY"),
-        judge_model="anthropic/claude-sonnet-4"
+        judge_model=judge_model,
+        output_dir=output_dir,
+        enable_web_search=enable_web_search
     )
 
     # Extract question_id from filename or log
@@ -334,8 +415,8 @@ async def evaluate_single_log(log_file_path: str, output_dir: str = "evaluations
     # Evaluate
     evaluation = await evaluator.evaluate_log(log_file_path)
 
-    # Create json/md subfolder structure
-    question_dir = os.path.join("evaluations", question_id)
+    # Create json/md subfolder structure using output_dir
+    question_dir = os.path.join(output_dir, question_id)
     json_dir = os.path.join(question_dir, "json")
     md_dir = os.path.join(question_dir, "md")
     archive_dir = os.path.join(question_dir, "archives")
@@ -441,13 +522,24 @@ if __name__ == "__main__":
                        help="Evaluate single log file instead of batch")
     parser.add_argument("--logs-dir", default="logs",
                        help="Directory containing logs (default: logs)")
+    parser.add_argument("--judge", default="anthropic/claude-sonnet-4",
+                       help="Judge model to use (default: anthropic/claude-sonnet-4)")
+    parser.add_argument("--output-dir", default="evaluations",
+                       help="Output directory for evaluations (default: evaluations)")
+    parser.add_argument("--no-web-search", action="store_true",
+                       help="Disable web search for judge (default: enabled)")
 
     args = parser.parse_args()
 
     if args.single:
         # Evaluate single file
         if os.path.exists(args.single):
-            asyncio.run(evaluate_single_log(args.single))
+            asyncio.run(evaluate_single_log(
+                args.single,
+                output_dir=args.output_dir,
+                judge_model=args.judge,
+                enable_web_search=not args.no_web_search
+            ))
         else:
             print(f"Log file not found: {args.single}")
     else:
