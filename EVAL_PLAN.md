@@ -33,9 +33,9 @@
 
 ---
 
-## 🏗️ 7-Phase Implementation Plan
+## Implementation Plan
 
-### **Phase 1: Web Search Validation** ✅ COMPLETED
+### **Phase 1: Web Search Validation** ✅
 *Enable real literature validation for correctness scoring*
 
 **What We Did:**
@@ -67,12 +67,10 @@
 
 ---
 
-### **Phase 2: Judge Prompt Improvements** ⏱️ 3-4 hours
+### **Phase 2: Judge Prompt Improvements** 🚧
 *Fix basic issues before adding complexity*
 
-**Quick Wins (2-3 hours):**
-
-#### **2.1 Add Concrete Scoring Examples** ⏱️ 45 min
+#### **2.1 Add Concrete Scoring Examples** 
 **Problem:** Rubric too vague - "reasonable range" means different things
 
 **Implementation:**
@@ -107,7 +105,7 @@
 
 ---
 
-#### **2.2 Provide Full Execution Context** ⏱️ 1 hour
+#### **2.2 Provide Full Execution Context** 
 **Problem:** Judge only sees summary, can't evaluate methodology
 
 **Implementation:**
@@ -173,7 +171,7 @@ FINAL ANSWER:
 
 ---
 
-#### **2.3 Clarify Completion Criteria** ⏱️ 30 min
+#### **2.3 Clarify Completion Criteria** 
 **Problem:** Ambiguous - does completion mean claimed or actual?
 
 **Implementation:**
@@ -205,7 +203,7 @@ FINAL ANSWER:
 
 ---
 
-#### **2.4 Add Error Category Detection** ⏱️ 1 hour
+#### **2.4 Add Error Category Detection** 
 **Problem:** Failures not categorized, can't identify patterns
 
 **Implementation:**
@@ -267,10 +265,10 @@ class ChemistryEvaluation:
 
 ---
 
-### **Phase 3: Ground Truth Database** ⏱️ 1-2 days
+### **Phase 3: Ground Truth Database** 
 *Build reference values for objective validation*
 
-#### **3.1 Create Reference Database** ⏱️ 4-6 hours
+#### **3.1 Create Reference Database** 
 
 **Implementation:**
 ```python
@@ -390,7 +388,7 @@ TASK: {log_summary['user_question']}
 
 ---
 
-#### **3.2 Automated Validation** ⏱️ 2-3 hours
+#### **3.2 Automated Validation** 
 
 **Implementation:**
 ```python
@@ -482,7 +480,7 @@ def extract_numerical_value(text: str) -> float:
 
 ---
 
-#### **3.3 Hybrid Scoring** ⏱️ 1-2 hours
+#### **3.3 Hybrid Scoring** 
 
 **Implementation:**
 ```python
@@ -533,10 +531,10 @@ async def evaluate_with_hybrid_scoring(log_file_path: str, output_dir: str = "ev
 
 ---
 
-### **Phase 4: Multi-Judge Ensemble** ⏱️ 1 day
+### **Phase 4: Multi-Judge Ensemble** 
 *Reduce same-family bias with diverse perspectives*
 
-#### **4.1 Ensemble Implementation** ⏱️ 4-6 hours
+#### **4.1 Ensemble Implementation**
 
 **Problem:** Claude judge favors Claude models (95-100% vs 13-82% for others)
 

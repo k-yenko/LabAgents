@@ -128,8 +128,8 @@ def main():
     parser = argparse.ArgumentParser(description="Batch run LLM judge evaluations")
     parser.add_argument("--output-dir", default="evaluations",
                        help="Output directory for evaluations (default: evaluations)")
-    parser.add_argument("--judge", default="anthropic/claude-sonnet-4",
-                       help="Judge model to use (default: anthropic/claude-sonnet-4)")
+    parser.add_argument("--judge", default="qwen/qwen3-max",
+                       help="Judge model to use (default: qwen/qwen3-max)")
     parser.add_argument("--no-web-search", action="store_true",
                        help="Disable web search for judge (default: enabled)")
     args = parser.parse_args()
