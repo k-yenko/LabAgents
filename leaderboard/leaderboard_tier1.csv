@@ -1,9 +1,0 @@
-rank,model,avg_score,total_evaluations,pass_rate,question_ids,last_evaluation
-1,anthropic/claude-opus-4.1,91.7,4,100.0,"tier1_001, tier1_002, tier1_003, tier1_004",2025-09-25T18:43:45.341735
-2,anthropic/claude-sonnet-4,89.6,8,100.0,"tier1_001, tier1_002, tier1_003, tier1_004, tier1_005, tier1_006, tier1_007, tier1_008",2025-09-25T19:05:22.680693
-3,google/gemini-2.5-pro,79.2,8,87.5,"tier1_001, tier1_002, tier1_003, tier1_004, tier1_005, tier1_006, tier1_007, tier1_008",2025-09-25T19:03:37.619128
-4,openai/gpt-5,43.8,8,25.0,"tier1_001, tier1_002, tier1_003, tier1_004, tier1_005, tier1_006, tier1_007, tier1_008",2025-09-25T19:04:45.002481
-5,x-ai/grok-code-fast-1,27.1,8,12.5,"tier1_001, tier1_002, tier1_003, tier1_004, tier1_005, tier1_006, tier1_007, tier1_008",2025-09-25T19:04:24.921140
-6,openai/o3,22.9,8,0.0,"tier1_001, tier1_002, tier1_003, tier1_004, tier1_005, tier1_006, tier1_007, tier1_008",2025-09-25T19:03:53.127224
-7,x-ai/grok-4-fast,16.7,8,0.0,"tier1_001, tier1_002, tier1_003, tier1_004, tier1_005, tier1_006, tier1_007, tier1_008",2025-09-25T19:04:07.923038
-8,deepseek/deepseek-chat-v3.1,16.7,8,0.0,"tier1_001, tier1_002, tier1_003, tier1_004, tier1_005, tier1_006, tier1_007, tier1_008",2025-09-25T19:05:01.179692
