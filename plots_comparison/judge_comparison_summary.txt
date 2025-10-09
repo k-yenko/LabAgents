@@ -1,0 +1,26 @@
+================================================================================
+JUDGE COMPARISON SUMMARY: Claude Sonnet 4 vs Qwen
+================================================================================
+
+Total Comparisons: 186
+
+PASS/FAIL AGREEMENT:
+--------------------------------------------------------------------------------
+  Agreements: 173 (93.0%)
+  Disagreements: 13 (7.0%)
+
+DISAGREEMENT BREAKDOWN:
+--------------------------------------------------------------------------------
+  Claude passed but Qwen failed: 6 (Qwen more strict)
+  Qwen passed but Claude failed: 7 (Claude more strict)
+
+SCORE DIFFERENCES:
+--------------------------------------------------------------------------------
+  Average absolute difference: 0.89 points
+  Max absolute difference: 6.00 points
+  Min absolute difference: 0.00 points
+
+CORRELATION:
+--------------------------------------------------------------------------------
+  Pearson correlation coefficient: 0.798
+  Interpretation: Strong correlation

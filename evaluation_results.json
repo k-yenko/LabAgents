@@ -1,0 +1,137 @@
+{
+  "evaluation_timestamp": "2025-09-16T22:08:15.985689",
+  "question_id": "tier3_001",
+  "overall_score": 0.7177777777777778,
+  "detailed_breakdown": {
+    "tool_usage": {
+      "tools_called": [
+        "molecule_lookup",
+        "submit_tautomer_search_workflow",
+        "workflow_get_status",
+        "workflow_get_status",
+        "workflow_get_status",
+        "workflow_get_status",
+        "workflow_get_status",
+        "workflow_get_status",
+        "retrieve_workflow",
+        "retrieve_calculation_molecules",
+        "retrieve_calculation_molecules",
+        "submit_pka_workflow",
+        "submit_pka_workflow",
+        "workflow_get_status",
+        "workflow_get_status",
+        "workflow_get_status",
+        "workflow_get_status",
+        "workflow_get_status",
+        "retrieve_workflow",
+        "workflow_get_status",
+        "retrieve_workflow",
+        "submit_descriptors_workflow",
+        "workflow_get_status",
+        "workflow_get_status",
+        "retrieve_workflow"
+      ],
+      "successful_tools": [
+        "molecule_lookup",
+        "submit_tautomer_search_workflow",
+        "workflow_get_status",
+        "workflow_get_status",
+        "workflow_get_status",
+        "workflow_get_status",
+        "workflow_get_status",
+        "workflow_get_status",
+        "retrieve_workflow",
+        "retrieve_calculation_molecules",
+        "retrieve_calculation_molecules",
+        "submit_pka_workflow",
+        "submit_pka_workflow",
+        "workflow_get_status",
+        "workflow_get_status",
+        "workflow_get_status",
+        "workflow_get_status",
+        "workflow_get_status",
+        "retrieve_workflow",
+        "workflow_get_status",
+        "retrieve_workflow",
+        "submit_descriptors_workflow",
+        "workflow_get_status",
+        "workflow_get_status",
+        "retrieve_workflow"
+      ],
+      "failed_tools": [],
+      "missing_tools": [
+        "create_protein_from_pdb_id",
+        "submit_macropka_workflow",
+        "submit_docking_workflow"
+      ],
+      "extra_tools": [
+        "retrieve_workflow",
+        "submit_descriptors_workflow",
+        "retrieve_calculation_molecules",
+        "workflow_get_status"
+      ],
+      "coverage_score": 0.5,
+      "success_rate": 1.0
+    },
+    "correctness": {
+      "keyword_matches": [
+        "tautomer",
+        "pKa",
+        "pH 7.4",
+        "dominant",
+        "protein binding",
+        "warfarin",
+        "enol",
+        "keto",
+        "deprotonated",
+        "affinity"
+      ],
+      "concept_matches": [
+        "tautomeric forms",
+        "physiological pH",
+        "protein binding affinity",
+        "equilibrium"
+      ],
+      "keyword_score": 1.0,
+      "concept_score": 0.6666666666666666,
+      "completion_bonus": 1.0,
+      "answer_length": 3521
+    },
+    "efficiency": {
+      "total_time_minutes": 19.791913600762687,
+      "total_api_calls": 26,
+      "total_cost_usd": 2.764765,
+      "time_score": 0.20832345596949253,
+      "api_efficiency": 0.48,
+      "cost_efficiency": 0.44704699999999997
+    },
+    "scientific_accuracy": {
+      "numerical_matches": [
+        "1035.064701 Hartree",
+        "1035.06162 Hartree",
+        "1.93 kcal/mol",
+        "1035.052182 Hartree",
+        "7.86 kcal/mol",
+        "2. pKa"
+      ],
+      "methodology_score": 0.5555555555555556,
+      "web_cheating_detected": false
+    },
+    "execution_stats": {
+      "total_time_ms": 1187514.816045761,
+      "total_thinking_steps": 63,
+      "total_tool_calls": 25,
+      "successful_tool_calls": 25,
+      "total_web_searches": 26,
+      "total_api_calls": 26,
+      "total_cost_usd": 2.764765,
+      "total_tokens": 730335,
+      "completed_successfully": true
+    }
+  },
+  "feedback": [
+    "Missing expected tools: create_protein_from_pdb_id, submit_macropka_workflow, submit_docking_workflow",
+    "Missing key concepts: pKa, pH 7.4...",
+    "High API cost: $2.76"
+  ]
+}

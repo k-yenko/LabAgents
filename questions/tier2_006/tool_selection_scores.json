@@ -1,0 +1,150 @@
+{
+  "tier2_006_tool_selection": {
+    "claude-4.1-opus": {
+      "tool_selection_score": 1,
+      "missing_critical_tools": [],
+      "extra_tools": [],
+      "has_all_required": true,
+      "normalized_expected": [],
+      "normalized_actual": [],
+      "notes": "Simple binary evaluation: PASS - All required tools present (normalized tool names)",
+      "expected_tools": [],
+      "actual_tools": [],
+      "tools_overlap": []
+    },
+    "claude-4-sonnet": {
+      "tool_selection_score": 1,
+      "missing_critical_tools": [],
+      "extra_tools": [],
+      "has_all_required": true,
+      "normalized_expected": [],
+      "normalized_actual": [],
+      "notes": "Simple binary evaluation: PASS - All required tools present (normalized tool names)",
+      "expected_tools": [],
+      "actual_tools": [],
+      "tools_overlap": []
+    },
+    "gpt-5": {
+      "tool_selection_score": 1,
+      "missing_critical_tools": [],
+      "extra_tools": [],
+      "has_all_required": true,
+      "normalized_expected": [],
+      "normalized_actual": [],
+      "notes": "Simple binary evaluation: PASS - All required tools present (normalized tool names)",
+      "expected_tools": [],
+      "actual_tools": [],
+      "tools_overlap": []
+    },
+    "o3": {
+      "tool_selection_score": 1,
+      "missing_critical_tools": [],
+      "extra_tools": [
+        "submit_redox_potential_workflow",
+        "workflow_wait_for_result",
+        "molecule_lookup"
+      ],
+      "has_all_required": true,
+      "normalized_expected": [],
+      "normalized_actual": [
+        "submit_redox_potential_workflow",
+        "workflow_wait_for_result",
+        "molecule_lookup"
+      ],
+      "notes": "Simple binary evaluation: PASS - All required tools present (normalized tool names)",
+      "expected_tools": [],
+      "actual_tools": [
+        "mcp_rowan_molecule_lookup",
+        "mcp_rowan_submit_redox_potential_workflow",
+        "mcp_rowan_workflow_wait_for_result"
+      ],
+      "tools_overlap": []
+    },
+    "grok-4": {
+      "tool_selection_score": 1,
+      "missing_critical_tools": [],
+      "extra_tools": [],
+      "has_all_required": true,
+      "normalized_expected": [],
+      "normalized_actual": [],
+      "notes": "Simple binary evaluation: PASS - All required tools present (normalized tool names)",
+      "expected_tools": [],
+      "actual_tools": [],
+      "tools_overlap": []
+    },
+    "gemini-2.5-pro": {
+      "tool_selection_score": 1,
+      "missing_critical_tools": [],
+      "extra_tools": [],
+      "has_all_required": true,
+      "normalized_expected": [],
+      "normalized_actual": [],
+      "notes": "Simple binary evaluation: PASS - All required tools present (normalized tool names)",
+      "expected_tools": [],
+      "actual_tools": [],
+      "tools_overlap": []
+    },
+    "deepseek-v3.1": {
+      "tool_selection_score": 1,
+      "missing_critical_tools": [],
+      "extra_tools": [
+        "submit_redox_potential_workflow",
+        "workflow_wait_for_result"
+      ],
+      "has_all_required": true,
+      "normalized_expected": [],
+      "normalized_actual": [
+        "submit_redox_potential_workflow",
+        "workflow_wait_for_result"
+      ],
+      "notes": "Simple binary evaluation: PASS - All required tools present (normalized tool names)",
+      "expected_tools": [],
+      "actual_tools": [
+        "submit_redox_potential_workflow",
+        "submit_redox_potential_workflow",
+        "workflow_wait_for_result"
+      ],
+      "tools_overlap": []
+    },
+    "grok-code-fast-1": {
+      "tool_selection_score": 1,
+      "missing_critical_tools": [],
+      "extra_tools": [
+        "submit_redox_potential_workflow",
+        "workflow_wait_for_result",
+        "workflow_fetch_latest",
+        "workflow_get_status"
+      ],
+      "has_all_required": true,
+      "normalized_expected": [],
+      "normalized_actual": [
+        "submit_redox_potential_workflow",
+        "workflow_wait_for_result",
+        "workflow_fetch_latest",
+        "workflow_get_status"
+      ],
+      "notes": "Simple binary evaluation: PASS - All required tools present (normalized tool names)",
+      "expected_tools": [],
+      "actual_tools": [
+        "submit_redox_potential_workflow",
+        "workflow_wait_for_result",
+        "workflow_get_status",
+        "workflow_fetch_latest"
+      ],
+      "tools_overlap": []
+    }
+  },
+  "evaluation_criteria": {
+    "evaluation_type": "simple_binary_tool_selection",
+    "scoring": "1 if all expected tools present (any order), 0 otherwise",
+    "allows_extra_tools": true,
+    "focus": "required_tool_completeness"
+  },
+  "summary": {
+    "total_models": 8,
+    "average_tool_selection_score": 1.0,
+    "passing_models": 8,
+    "failing_models": 0,
+    "expected_tools_count": 0
+  }
+}

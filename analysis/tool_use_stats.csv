@@ -1,0 +1,10 @@
+model,avg_tool_calls,avg_successful_tools,tool_success_rate,completion_rate,num_runs
+anthropic/claude-opus-4.1,11.227,11.227,1.0,1.0,22.0
+anthropic/claude-sonnet-4,11.682,11.682,1.0,1.0,22.0
+anthropic/claude-sonnet-4.5,12.0,12.0,1.0,1.0,22.0
+deepseek/deepseek-chat-v3.1,12.955,12.955,1.0,0.909,22.0
+google/gemini-2.5-pro,12.545,12.545,1.0,1.0,22.0
+openai/gpt-5,22.045,22.045,1.0,1.0,22.0
+openai/o3,4.636,4.636,1.0,1.0,22.0
+x-ai/grok-4-fast,8.7,8.7,1.0,1.0,20.0
+x-ai/grok-code-fast-1,11.682,11.682,1.0,1.0,22.0

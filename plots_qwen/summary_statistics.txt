@@ -1,0 +1,94 @@
+================================================================================
+EVALUATION SUMMARY STATISTICS
+================================================================================
+
+
+anthropic/claude-opus-4.1
+--------------------------------------------------------------------------------
+  Total Questions: 22
+  Passed: 22 (100.0%)
+  Failed: 0 (0.0%)
+  Avg Total Score: 5.05/6
+  Avg Completion: 2.00/2
+  Avg Correctness: 1.05/2
+  Avg Tool Use: 2.00/2
+
+anthropic/claude-sonnet-4
+--------------------------------------------------------------------------------
+  Total Questions: 22
+  Passed: 21 (95.5%)
+  Failed: 1 (4.5%)
+  Avg Total Score: 5.00/6
+  Avg Completion: 2.00/2
+  Avg Correctness: 1.14/2
+  Avg Tool Use: 1.86/2
+
+anthropic/claude-sonnet-4.5
+--------------------------------------------------------------------------------
+  Total Questions: 22
+  Passed: 22 (100.0%)
+  Failed: 0 (0.0%)
+  Avg Total Score: 5.18/6
+  Avg Completion: 2.00/2
+  Avg Correctness: 1.18/2
+  Avg Tool Use: 2.00/2
+
+deepseek/deepseek-chat-v3.1:free
+--------------------------------------------------------------------------------
+  Total Questions: 22
+  Passed: 12 (54.5%)
+  Failed: 10 (45.5%)
+  Avg Total Score: 3.23/6
+  Avg Completion: 1.41/2
+  Avg Correctness: 0.55/2
+  Avg Tool Use: 1.27/2
+
+google/gemini-2.5-pro
+--------------------------------------------------------------------------------
+  Total Questions: 22
+  Passed: 16 (72.7%)
+  Failed: 6 (27.3%)
+  Avg Total Score: 4.18/6
+  Avg Completion: 1.68/2
+  Avg Correctness: 0.77/2
+  Avg Tool Use: 1.73/2
+
+openai/gpt-5
+--------------------------------------------------------------------------------
+  Total Questions: 22
+  Passed: 14 (63.6%)
+  Failed: 8 (36.4%)
+  Avg Total Score: 4.00/6
+  Avg Completion: 1.50/2
+  Avg Correctness: 0.77/2
+  Avg Tool Use: 1.73/2
+
+openai/o3
+--------------------------------------------------------------------------------
+  Total Questions: 22
+  Passed: 4 (18.2%)
+  Failed: 18 (81.8%)
+  Avg Total Score: 2.82/6
+  Avg Completion: 1.00/2
+  Avg Correctness: 0.18/2
+  Avg Tool Use: 1.64/2
+
+x-ai/grok-4-fast:free
+--------------------------------------------------------------------------------
+  Total Questions: 20
+  Passed: 6 (30.0%)
+  Failed: 14 (70.0%)
+  Avg Total Score: 3.40/6
+  Avg Completion: 1.15/2
+  Avg Correctness: 0.40/2
+  Avg Tool Use: 1.85/2
+
+x-ai/grok-code-fast-1
+--------------------------------------------------------------------------------
+  Total Questions: 22
+  Passed: 10 (45.5%)
+  Failed: 12 (54.5%)
+  Avg Total Score: 3.86/6
+  Avg Completion: 1.41/2
+  Avg Correctness: 0.59/2
+  Avg Tool Use: 1.86/2

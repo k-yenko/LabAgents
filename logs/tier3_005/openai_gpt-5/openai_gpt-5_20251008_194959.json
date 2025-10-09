@@ -1,0 +1,635 @@
+{
+  "question_id": "tier3_005",
+  "model_name": "openai/gpt-5",
+  "timestamp_start": "2025-10-08T18:46:46.037625",
+  "timestamp_end": "2025-10-08T19:49:59.155312",
+  "total_time_ms": 3793116.9879436493,
+  "user_question": "Generate conformers of paclitaxel (taxol), select the lowest energy conformer, then predict its ADMET properties focusing on blood-brain barrier permeability",
+  "execution_timeline": [
+    {
+      "timestamp": "2025-10-08T18:47:24.300008",
+      "event_type": "api_call",
+      "api_model": "openai/gpt-5",
+      "generation_id": "gen-1759974407-6cMP3dKj9b2ca8I4oca3",
+      "prompt_tokens": 11566,
+      "completion_tokens": 2144,
+      "total_tokens": 13710,
+      "native_tokens_prompt": 11566,
+      "native_tokens_completion": 2144,
+      "reasoning_tokens": 2112,
+      "cached_tokens": 11520,
+      "total_cost": 0.0229375
+    },
+    {
+      "timestamp": "2025-10-08T18:47:24.300186",
+      "event_type": "thinking",
+      "content": "Agent decided to call molecule_lookup with parameters: {'molecule_name': 'paclitaxel', 'fallback_to_input': True}",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T18:47:24.300209",
+      "event_type": "tool_call",
+      "tool_name": "molecule_lookup",
+      "parameters": {
+        "molecule_name": "paclitaxel",
+        "fallback_to_input": true
+      },
+      "execution_time_ms": 1241.3458824157715,
+      "result": "CC(=O)O[C@H]1C(=O)[C@]2(C)[C@@H](O)C[C@H]3OC[C@@]3(OC(C)=O)C2[C@H](OC(=O)c4ccccc4)[C@]5(O)C[C@H](OC(=O)[C@H](O)[C@@H](NC(=O)c6ccccc6)c7ccccc7)C(=C1C5(C)C)C",
+      "success": true
+    },
+    {
+      "timestamp": "2025-10-08T18:47:53.680895",
+      "event_type": "api_call",
+      "api_model": "openai/gpt-5",
+      "generation_id": "gen-1759974445-sdNJGcPovupFvsfyRl6D",
+      "prompt_tokens": 11719,
+      "completion_tokens": 1570,
+      "total_tokens": 13289,
+      "native_tokens_prompt": 11719,
+      "native_tokens_completion": 1570,
+      "reasoning_tokens": 1344,
+      "cached_tokens": 11648,
+      "total_cost": 0.01724475
+    },
+    {
+      "timestamp": "2025-10-08T18:47:53.681113",
+      "event_type": "thinking",
+      "content": "Agent reasoning: Submitting a rapid conformer search for paclitaxel and will monitor until completion with smart polling.\n\nI'll check status in 60 seconds (check #1).",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T18:47:53.681820",
+      "event_type": "thinking",
+      "content": "System: Actually waiting 60 seconds as requested by agent",
+      "reasoning_type": "analysis"
+    },
+    {
+      "timestamp": "2025-10-08T18:48:53.684360",
+      "event_type": "thinking",
+      "content": "Agent decided to call submit_conformer_search_workflow with parameters: {'initial_molecule': 'CC(=O)O[C@H]1C(=O)[C@]2(C)[C@@H](O)C[C@H]3OC[C@@]3(OC(C)=O)C2[C@H](OC(=O)c4ccccc4)[C@]5(O)C[C@H](OC(=O)[C@H](O)[C@@H](NC(=O)c6ccccc6)c7ccccc7)C(=C1C5(C)C)C', 'conf_gen_mode': 'rapid', 'final_method': 'aimnet2_wb97md3', 'solvent': '', 'transition_state': False, 'name': 'Paclitaxel conformer search (rapid)', 'folder_uuid': '', 'max_credits': 0}",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T18:48:53.685058",
+      "event_type": "tool_call",
+      "tool_name": "submit_conformer_search_workflow",
+      "parameters": {
+        "initial_molecule": "CC(=O)O[C@H]1C(=O)[C@]2(C)[C@@H](O)C[C@H]3OC[C@@]3(OC(C)=O)C2[C@H](OC(=O)c4ccccc4)[C@]5(O)C[C@H](OC(=O)[C@H](O)[C@@H](NC(=O)c6ccccc6)c7ccccc7)C(=C1C5(C)C)C",
+        "conf_gen_mode": "rapid",
+        "final_method": "aimnet2_wb97md3",
+        "solvent": "",
+        "transition_state": false,
+        "name": "Paclitaxel conformer search (rapid)",
+        "folder_uuid": "",
+        "max_credits": 0
+      },
+      "execution_time_ms": 2936.5317821502686,
+      "result": "{\"name\":\"Paclitaxel conformer search (rapid)\",\"uuid\":\"cd590549-27cb-490b-83a9-a250ad00cc1f\",\"created_at\":\"2025-10-09T01:48:56.340079Z\",\"updated_at\":null,\"started_at\":null,\"completed_at\":null,\"object_status\":0,\"parent_uuid\":\"e5c3ce65-43df-4ab3-90e0-a56f42584cc0\",\"notes\":\"\",\"starred\":false,\"public\":false,\"object_type\":\"conformer_search\",\"object_data\":{\"multistage_opt_settings\":{\"mode\":\"manual\",\"optimization_settings\":[{\"mode\":\"rapid\",\"method\":\"aimnet2_wb97md3\",\"basis_set\":null,\"tasks\":[\"optimize\"],\"corrections\":[],\"solvent_settings\":null,\"scf_settings\":{\"max_iters\":250,\"soscf\":\"upon_failure\"},\"opt_settings\":{\"max_steps\":250,\"transition_state\":false,\"recalc_hess_every\":0,\"max_gradient_threshold\":0.005,\"rms_gradient_threshold\":0.0035,\"energy_threshold\":0.00005,\"optimize_cell\":false,\"constraints\":[]},\"thermochem_settings\":{\"cutoff_frequency\":100,\"temperature\":298,\"scaling_factor\":1.0,\"concentration\":0.0408740470708},\"compute_settings\":{\"requested_compute_type\":\"cpu\",\"compute_type_used\":null},\"level_of_theory\":\"aimnet2_wb97md3\"}],\"singlepoint_settings\":null,\"solvent\":null,\"xtb_preopt\":true,\"constraints\":[],\"transition_state\":false,\"frequencies\":false},\"conf_gen_mode\":\"rapid\",\"mso_mode\":\"manual\",\"solvent\":null,\"transition_state\":false,\"initial_molecule\":{\"charge\":0,\"multiplicity\":1,\"atoms\":[{\"atomic_number\":6,\"position\":[-3.02424558,6.22559732,-1.94463017],\"mass\":null},{\"atomic_number\":6,\"position\":[-1.9937103,5.49888778,-1.13991718],\"mass\":null},{\"atomic_number\":8,\"position\":[-1.39948727,5.97364229,-0.17970889],\"mass\":null},{\"atomic_number\":8,\"position\":[-1.84946279,4.2262541,-1.59260577],\"mass\":null},{\"atomic_number\":6,\"position\":[-0.88948491,3.46009693,-0.89379797],\"mass\":null},{\"atomic_number\":6,\"position\":[-1.2384549,2.99350419,0.54041691],\"mass\":null},{\"atomic_number\":8,\"position\":[-0.32994914,3.00264745,1.39682841],\"mass\":null},{\"atomic_number\":6,\"position\":[-2.61553259,2.35541795,0.92909608],\"mass\":null},{\"atomic_number\":6,\"position\":[-3.80111661,3.12491702,0.35460176],\"mass\":null},{\"atomic_number\":6,\"position\":[-2.60911417,2.58784152,2.50074053],\"mass\":null},{\"atomic_number\":8,\"position\":[-2.4532894,3.97593282,2.8101885],\"mass\":null},{\"atomic_number\":6,\"position\":[-3.86659456,2.1683112,3.21517811],\"mass\":null},{\"atomic_number\":6,\"position\":[-4.15867992,0.7189809,2.9360112],\"mass\":null},{\"atomic_number\":8,\"position\":[-5.53338393,0.60697925,2.48990284],\"mass\":null},{\"atomic_number\":6,\"position\":[-5.13331822,0.00223513,1.25370113],\"mass\":null},{\"atomic_number\":6,\"position\":[-3.62045446,0.01605487,1.63791848],\"mass\":null},{\"atomic_number\":8,\"position\":[-2.92530161,-1.24730448,1.89253793],\"mass\":null},{\"atomic_number\":6,\"position\":[-3.54377867,-2.26529723,2.54192496],\"mass\":null},{\"atomic_number\":6,\"position\":[-2.57158961,-3.38181852,2.77621649],\"mass\":null},{\"atomic_number\":8,\"position\":[-4.7001937,-2.30084026,2.92176889],\"mass\":null},{\"atomic_number\":6,\"position\":[-2.65739441,0.7890716,0.61756234],\"mass\":null},{\"atomic_number\":6,\"position\":[-2.93570225,0.22621472,-0.87281476],\"mass\":null},{\"atomic_number\":8,\"position\":[-3.33337424,-1.19916547,-0.74292301],\"mass\":null},{\"atomic_number\":6,\"position\":[-4.51040048,-1.60924432,-1.28391247],\"mass\":null},{\"atomic_number\":8,\"position\":[-5.34852722,-0.88236553,-1.78206115],\"mass\":null},{\"atomic_number\":6,\"position\":[-4.63910629,-3.08326903,-1.1517405],\"mass\":null},{\"atomic_number\":6,\"position\":[-5.92270381,-3.64066697,-1.2416721],\"mass\":null},{\"atomic_number\":6,\"position\":[-6.08195765,-5.02845113,-1.16526656],\"mass\":null},{\"atomic_number\":6,\"position\":[-4.97598306,-5.8573835,-1.00174473],\"mass\":null},{\"atomic_number\":6,\"position\":[-3.69403713,-5.30723764,-0.91927864],\"mass\":null},{\"atomic_number\":6,\"position\":[-3.52877264,-3.92010458,-0.9841671],\"mass\":null},{\"atomic_number\":6,\"position\":[-1.78386469,0.12947347,-1.9768009],\"mass\":null},{\"atomic_number\":8,\"position\":[-2.34214876,-0.63317616,-3.08665694],\"mass\":null},{\"atomic_number\":6,\"position\":[-0.57689379,-0.72305382,-1.47675675],\"mass\":null},{\"atomic_number\":6,\"position\":[0.78032555,-0.00550862,-1.36562113],\"mass\":null},{\"atomic_number\":8,\"position\":[1.48155192,-0.53873233,-0.2197697],\"mass\":null},{\"atomic_number\":6,\"position\":[2.08267636,-1.74659251,-0.41587569],\"mass\":null},{\"atomic_number\":8,\"position\":[1.85231958,-2.50669615,-1.3448345],\"mass\":null},{\"atomic_number\":6,\"position\":[3.1258736,-2.00414145,0.66776794],\"mass\":null},{\"atomic_number\":8,\"position\":[2.5584198,-1.7986054,1.96580092],\"mass\":null},{\"atomic_number\":6,\"position\":[4.34266782,-1.06978449,0.44935025],\"mass\":null},{\"atomic_number\":7,\"position\":[5.41905854,-1.36644326,1.39743567],\"mass\":null},{\"atomic_number\":6,\"position\":[5.98312476,-0.39590033,2.19012629],\"mass\":null},{\"atomic_number\":8,\"position\":[5.51933172,0.73372934,2.29412751],\"mass\":null},{\"atomic_number\":6,\"position\":[7.19059923,-0.7909827,2.96228299],\"mass\":null},{\"atomic_number\":6,\"position\":[7.50465589,-0.06348517,4.11798085],\"mass\":null},{\"atomic_number\":6,\"position\":[8.63069132,-0.39784708,4.87981067],\"mass\":null},{\"atomic_number\":6,\"position\":[9.46802668,-1.43631118,4.4764235],\"mass\":null},{\"atomic_number\":6,\"position\":[9.17774791,-2.14545695,3.31192596],\"mass\":null},{\"atomic_number\":6,\"position\":[8.04741052,-1.822374,2.54840174],\"mass\":null},{\"atomic_number\":6,\"position\":[4.94101299,-1.06790303,-0.94421544],\"mass\":null},{\"atomic_number\":6,\"position\":[5.45591238,0.13210491,-1.46312955],\"mass\":null},{\"atomic_number\":6,\"position\":[6.0228648,0.18242173,-2.73974747],\"mass\":null},{\"atomic_number\":6,\"position\":[6.10060342,-0.97561944,-3.50741742],\"mass\":null},{\"atomic_number\":6,\"position\":[5.61755696,-2.17688227,-3.00078887],\"mass\":null},{\"atomic_number\":6,\"position\":[5.05644661,-2.22875177,-1.7193124],\"mass\":null},{\"atomic_number\":6,\"position\":[0.64413184,1.50012529,-1.16188091],\"mass\":null},{\"atomic_number\":6,\"position\":[-0.46691594,2.17255022,-1.59359306],\"mass\":null},{\"atomic_number\":6,\"position\":[-1.35385037,1.47553113,-2.62315744],\"mass\":null},{\"atomic_number\":6,\"position\":[-0.48622374,1.24692523,-3.92137146],\"mass\":null},{\"atomic_number\":6,\"position\":[-2.57307036,2.23143196,-3.21787912],\"mass\":null},{\"atomic_number\":6,\"position\":[1.80034552,2.13027382,-0.40267163],\"mass\":null},{\"atomic_number\":1,\"position\":[-2.89605359,6.01174956,-3.00878039],\"mass\":null},{\"atomic_number\":1,\"position\":[-2.90248045,7.30698963,-1.80323865],\"mass\":null},{\"atomic_number\":1,\"position\":[-4.02437083,5.92688902,-1.6132678],\"mass\":null},{\"atomic_number\":1,\"position\":[-0.00031195,4.09548276,-0.81153964],\"mass\":null},{\"atomic_number\":1,\"position\":[-3.71374325,4.20561083,0.54427868],\"mass\":null},{\"atomic_number\":1,\"position\":[-4.76667634,2.81710348,0.77319336],\"mass\":null},{\"atomic_number\":1,\"position\":[-3.90124628,3.00558254,-0.72449127],\"mass\":null},{\"atomic_number\":1,\"position\":[-1.77360489,2.0451467,2.95683578],\"mass\":null},{\"atomic_number\":1,\"position\":[-1.50353456,4.2003449,2.67988662],\"mass\":null},{\"atomic_number\":1,\"position\":[-4.70889188,2.81795045,2.94915869],\"mass\":null},{\"atomic_number\":1,\"position\":[-3.74435757,2.32724509,4.29384682],\"mass\":null},{\"atomic_number\":1,\"position\":[-4.01864015,0.12517843,3.84652866],\"mass\":null},{\"atomic_number\":1,\"position\":[-5.42175169,0.63969608,0.41345187],\"mass\":null},{\"atomic_number\":1,\"position\":[-5.60825623,-0.97252162,1.11082942],\"mass\":null},{\"atomic_number\":1,\"position\":[-2.37850951,-3.4556463,3.84986015],\"mass\":null},{\"atomic_number\":1,\"position\":[-1.62539267,-3.20316966,2.26040544],\"mass\":null},{\"atomic_number\":1,\"position\":[-3.00195325,-4.31126195,2.40133783],\"mass\":null},{\"atomic_number\":1,\"position\":[-1.64421756,0.44305811,0.87003424],\"mass\":null},{\"atomic_number\":1,\"position\":[-3.78896508,0.76231416,-1.29002844],\"mass\":null},{\"atomic_number\":1,\"position\":[-6.79565068,-3.00302449,-1.36382573],\"mass\":null},{\"atomic_number\":1,\"position\":[-7.08396751,-5.45837802,-1.22074314],\"mass\":null},{\"atomic_number\":1,\"position\":[-5.11064167,-6.93839054,-0.95575634],\"mass\":null},{\"atomic_number\":1,\"position\":[-2.83519757,-5.9583647,-0.81143822],\"mass\":null},{\"atomic_number\":1,\"position\":[-2.52149682,-3.51525566,-0.92944937],\"mass\":null},{\"atomic_number\":1,\"position\":[-2.57332293,-1.52304219,-2.77475868],\"mass\":null},{\"atomic_number\":1,\"position\":[-0.43729973,-1.58771406,-2.13922091],\"mass\":null},{\"atomic_number\":1,\"position\":[-0.82469296,-1.17380814,-0.51337712],\"mass\":null},{\"atomic_number\":1,\"position\":[1.40461866,-0.1665222,-2.25425262],\"mass\":null},{\"atomic_number\":1,\"position\":[3.41278088,-3.06168623,0.63049478],\"mass\":null},{\"atomic_number\":1,\"position\":[2.2506539,-0.86774439,2.01376961],\"mass\":null},{\"atomic_number\":1,\"position\":[3.99077326,-0.04907179,0.65230596],\"mass\":null},{\"atomic_number\":1,\"position\":[5.77180031,-2.3113448,1.42199363],\"mass\":null},{\"atomic_number\":1,\"position\":[6.86823647,0.75883609,4.44064421],\"mass\":null},{\"atomic_number\":1,\"position\":[8.8690723,0.16509953,5.7808202],\"mass\":null},{\"atomic_number\":1,\"position\":[10.34744852,-1.6922965,5.06534876],\"mass\":null},{\"atomic_number\":1,\"position\":[9.84154078,-2.94464458,2.99230743],\"mass\":null},{\"atomic_number\":1,\"position\":[7.8848537,-2.37096723,1.62523439],\"mass\":null},{\"atomic_number\":1,\"position\":[5.4056998,1.0418383,-0.87396415],\"mass\":null},{\"atomic_number\":1,\"position\":[6.41403242,1.1200936,-3.12216071],\"mass\":null},{\"atomic_number\":1,\"position\":[6.55179999,-0.94324658,-4.49629011],\"mass\":null},{\"atomic_number\":1,\"position\":[5.68953294,-3.08569893,-3.59854465],\"mass\":null},{\"atomic_number\":1,\"position\":[4.70840518,-3.19415143,-1.3542377],\"mass\":null},{\"atomic_number\":1,\"position\":[-1.10481756,0.93193683,-4.77492189],\"mass\":null},{\"atomic_number\":1,\"position\":[0.0193446,2.1793846,-4.20961463],\"mass\":null},{\"atomic_number\":1,\"position\":[0.27172463,0.46556756,-3.82626538],\"mass\":null},{\"atomic_number\":1,\"position\":[-3.10871952,1.62595377,-3.95973995],\"mass\":null},{\"atomic_number\":1,\"position\":[-2.25191524,3.13642365,-3.74469198],\"mass\":null},{\"atomic_number\":1,\"position\":[-3.31425956,2.5149076,-2.48150908],\"mass\":null},{\"atomic_number\":1,\"position\":[1.80687073,3.22283543,-0.45133808],\"mass\":null},{\"atomic_number\":1,\"position\":[2.74440949,1.80371307,-0.85453828],\"mass\":null},{\"atomic_number\":1,\"position\":[1.79605437,1.82126287,0.64811845],\"mass\":null}],\"cell\":null,\"energy\":null,\"scf_iterations\":null,\"scf_completed\":null,\"elapsed\":null,\"homo_lumo_gap\":null,\"gradient\":null,\"stress\":null,\"velocities\":null,\"mulliken_charges\":null,\"mulliken_spin_densities\":null,\"dipole\":null,\"vibrational_modes\":null,\"zero_point_energy\":null,\"thermal_energy_corr\":null,\"thermal_enthalpy_corr\":null,\"thermal_free_energy_corr\":null,\"smiles\":null,\"calculation_index\":null}},\"email_when_complete\":false,\"max_credits\":null,\"elapsed\":0.0,\"credits_charged\":0.0}",
+      "success": true
+    },
+    {
+      "timestamp": "2025-10-08T18:49:01.688006",
+      "event_type": "api_call",
+      "api_model": "openai/gpt-5",
+      "generation_id": "gen-1759974536-9t4aOOtu6xn7DkIqDj4t",
+      "prompt_tokens": 15788,
+      "completion_tokens": 39,
+      "total_tokens": 15827,
+      "native_tokens_prompt": 15788,
+      "native_tokens_completion": 39,
+      "reasoning_tokens": 0,
+      "cached_tokens": 0,
+      "total_cost": 0.020125
+    },
+    {
+      "timestamp": "2025-10-08T18:49:01.688493",
+      "event_type": "thinking",
+      "content": "Agent decided to call workflow_get_status with parameters: {'workflow_uuid': 'cd590549-27cb-490b-83a9-a250ad00cc1f'}",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T18:49:01.688580",
+      "event_type": "tool_call",
+      "tool_name": "workflow_get_status",
+      "parameters": {
+        "workflow_uuid": "cd590549-27cb-490b-83a9-a250ad00cc1f"
+      },
+      "execution_time_ms": 2013.0620002746582,
+      "result": "{\"uuid\":\"cd590549-27cb-490b-83a9-a250ad00cc1f\",\"name\":\"Paclitaxel conformer search (rapid)\",\"is_finished\":false,\"status_code\":0,\"status_description\":\"QUEUED\",\"is_successful\":false,\"is_failed\":false,\"is_running\":false}",
+      "success": true
+    },
+    {
+      "timestamp": "2025-10-08T18:49:43.562356",
+      "event_type": "api_call",
+      "api_model": "openai/gpt-5",
+      "generation_id": "gen-1759974543-rjtpCTSgYUA0RIVxzJNu",
+      "prompt_tokens": 15906,
+      "completion_tokens": 1350,
+      "total_tokens": 17256,
+      "native_tokens_prompt": 15906,
+      "native_tokens_completion": 1350,
+      "reasoning_tokens": 1280,
+      "cached_tokens": 10112,
+      "total_cost": 0.0220065
+    },
+    {
+      "timestamp": "2025-10-08T18:49:43.562665",
+      "event_type": "thinking",
+      "content": "Agent reasoning: Submitted conformer search for paclitaxel. I'll check status in 60 seconds (check #1).",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T18:49:43.562772",
+      "event_type": "thinking",
+      "content": "System: Actually waiting 60 seconds as requested by agent",
+      "reasoning_type": "analysis"
+    },
+    {
+      "timestamp": "2025-10-08T18:50:43.566404",
+      "event_type": "thinking",
+      "content": "Agent decided to call workflow_get_status with parameters: {'workflow_uuid': 'cd590549-27cb-490b-83a9-a250ad00cc1f'}",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T18:50:43.566614",
+      "event_type": "tool_call",
+      "tool_name": "workflow_get_status",
+      "parameters": {
+        "workflow_uuid": "cd590549-27cb-490b-83a9-a250ad00cc1f"
+      },
+      "execution_time_ms": 2034.0180397033691,
+      "result": "{\"uuid\":\"cd590549-27cb-490b-83a9-a250ad00cc1f\",\"name\":\"Paclitaxel conformer search (rapid)\",\"is_finished\":false,\"status_code\":1,\"status_description\":\"RUNNING\",\"is_successful\":false,\"is_failed\":false,\"is_running\":true}",
+      "success": true
+    },
+    {
+      "timestamp": "2025-10-08T18:51:26.223207",
+      "event_type": "api_call",
+      "api_model": "openai/gpt-5",
+      "generation_id": "gen-1759974645-mRjiYPzEB2qRBYBBjNaW",
+      "prompt_tokens": 16023,
+      "completion_tokens": 1347,
+      "total_tokens": 17370,
+      "native_tokens_prompt": 16023,
+      "native_tokens_completion": 1347,
+      "reasoning_tokens": 1280,
+      "cached_tokens": 15744,
+      "total_cost": 0.01578675
+    },
+    {
+      "timestamp": "2025-10-08T18:51:26.223578",
+      "event_type": "thinking",
+      "content": "Agent reasoning: I submitted the conformer search. I'll check status in 60 seconds (check #1).",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T18:51:26.223776",
+      "event_type": "thinking",
+      "content": "System: Actually waiting 60 seconds as requested by agent",
+      "reasoning_type": "analysis"
+    },
+    {
+      "timestamp": "2025-10-08T18:52:26.229170",
+      "event_type": "thinking",
+      "content": "Agent decided to call workflow_get_status with parameters: {'workflow_uuid': 'cd590549-27cb-490b-83a9-a250ad00cc1f'}",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T18:52:26.229829",
+      "event_type": "tool_call",
+      "tool_name": "workflow_get_status",
+      "parameters": {
+        "workflow_uuid": "cd590549-27cb-490b-83a9-a250ad00cc1f"
+      },
+      "execution_time_ms": 2642.0059204101562,
+      "result": "{\"uuid\":\"cd590549-27cb-490b-83a9-a250ad00cc1f\",\"name\":\"Paclitaxel conformer search (rapid)\",\"is_finished\":false,\"status_code\":1,\"status_description\":\"RUNNING\",\"is_successful\":false,\"is_failed\":false,\"is_running\":true}",
+      "success": true
+    },
+    {
+      "timestamp": "2025-10-08T18:53:02.018674",
+      "event_type": "api_call",
+      "api_model": "openai/gpt-5",
+      "generation_id": "gen-1759974749-gPHhZqSARrhm7UXlh3Sy",
+      "prompt_tokens": 16140,
+      "completion_tokens": 1536,
+      "total_tokens": 17676,
+      "native_tokens_prompt": 16140,
+      "native_tokens_completion": 1536,
+      "reasoning_tokens": 1472,
+      "cached_tokens": 15872,
+      "total_cost": 0.017679
+    },
+    {
+      "timestamp": "2025-10-08T18:53:02.018909",
+      "event_type": "thinking",
+      "content": "Agent reasoning: I'll check the conformer search status in 60 seconds (check #1).",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T18:53:02.019047",
+      "event_type": "thinking",
+      "content": "System: Actually waiting 60 seconds as requested by agent",
+      "reasoning_type": "analysis"
+    },
+    {
+      "timestamp": "2025-10-08T18:54:02.024696",
+      "event_type": "thinking",
+      "content": "Agent decided to call workflow_get_status with parameters: {'workflow_uuid': 'cd590549-27cb-490b-83a9-a250ad00cc1f'}",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T18:54:02.024914",
+      "event_type": "tool_call",
+      "tool_name": "workflow_get_status",
+      "parameters": {
+        "workflow_uuid": "cd590549-27cb-490b-83a9-a250ad00cc1f"
+      },
+      "execution_time_ms": 2792.3779487609863,
+      "result": "{\"uuid\":\"cd590549-27cb-490b-83a9-a250ad00cc1f\",\"name\":\"Paclitaxel conformer search (rapid)\",\"is_finished\":false,\"status_code\":1,\"status_description\":\"RUNNING\",\"is_successful\":false,\"is_failed\":false,\"is_running\":true}",
+      "success": true
+    },
+    {
+      "timestamp": "2025-10-08T18:54:35.317113",
+      "event_type": "api_call",
+      "api_model": "openai/gpt-5",
+      "generation_id": "gen-1759974845-q3gSzFrf3v8iQ6qDuhaN",
+      "prompt_tokens": 16257,
+      "completion_tokens": 1281,
+      "total_tokens": 17538,
+      "native_tokens_prompt": 16257,
+      "native_tokens_completion": 1281,
+      "reasoning_tokens": 1216,
+      "cached_tokens": 16128,
+      "total_cost": 0.01498725
+    },
+    {
+      "timestamp": "2025-10-08T18:54:35.317293",
+      "event_type": "thinking",
+      "content": "Agent reasoning: Conformer search submitted. I'll check status in 60 seconds (check #1).",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T18:54:35.317378",
+      "event_type": "thinking",
+      "content": "System: Actually waiting 60 seconds as requested by agent",
+      "reasoning_type": "analysis"
+    },
+    {
+      "timestamp": "2025-10-08T18:55:35.325505",
+      "event_type": "thinking",
+      "content": "Agent decided to call workflow_get_status with parameters: {'workflow_uuid': 'cd590549-27cb-490b-83a9-a250ad00cc1f'}",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T18:55:35.325861",
+      "event_type": "tool_call",
+      "tool_name": "workflow_get_status",
+      "parameters": {
+        "workflow_uuid": "cd590549-27cb-490b-83a9-a250ad00cc1f"
+      },
+      "execution_time_ms": 2623.9030361175537,
+      "result": "{\"uuid\":\"cd590549-27cb-490b-83a9-a250ad00cc1f\",\"name\":\"Paclitaxel conformer search (rapid)\",\"is_finished\":false,\"status_code\":1,\"status_description\":\"RUNNING\",\"is_successful\":false,\"is_failed\":false,\"is_running\":true}",
+      "success": true
+    },
+    {
+      "timestamp": "2025-10-08T18:56:10.228040",
+      "event_type": "api_call",
+      "api_model": "openai/gpt-5",
+      "generation_id": "gen-1759974938-9edJL2OlcFp4JS2tTwG8",
+      "prompt_tokens": 16374,
+      "completion_tokens": 1222,
+      "total_tokens": 17596,
+      "native_tokens_prompt": 16374,
+      "native_tokens_completion": 1222,
+      "reasoning_tokens": 1152,
+      "cached_tokens": 16128,
+      "total_cost": 0.0145435
+    },
+    {
+      "timestamp": "2025-10-08T18:56:10.228283",
+      "event_type": "thinking",
+      "content": "Agent reasoning: Submitted conformer search for paclitaxel. I'll check status in 60 seconds (check #1).",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T18:56:10.228369",
+      "event_type": "thinking",
+      "content": "System: Actually waiting 60 seconds as requested by agent",
+      "reasoning_type": "analysis"
+    },
+    {
+      "timestamp": "2025-10-08T18:57:23.135311",
+      "event_type": "thinking",
+      "content": "Agent decided to call workflow_get_status with parameters: {'workflow_uuid': 'cd590549-27cb-490b-83a9-a250ad00cc1f'}",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T18:57:23.136295",
+      "event_type": "tool_call",
+      "tool_name": "workflow_get_status",
+      "parameters": {
+        "workflow_uuid": "cd590549-27cb-490b-83a9-a250ad00cc1f"
+      },
+      "execution_time_ms": 2831.347703933716,
+      "result": "{\"uuid\":\"cd590549-27cb-490b-83a9-a250ad00cc1f\",\"name\":\"Paclitaxel conformer search (rapid)\",\"is_finished\":false,\"status_code\":1,\"status_description\":\"RUNNING\",\"is_successful\":false,\"is_failed\":false,\"is_running\":true}",
+      "success": true
+    },
+    {
+      "timestamp": "2025-10-08T18:57:53.532351",
+      "event_type": "api_call",
+      "api_model": "openai/gpt-5",
+      "generation_id": "gen-1759975046-ueJo88ArUjKTDSRqZ92t",
+      "prompt_tokens": 16491,
+      "completion_tokens": 1404,
+      "total_tokens": 17895,
+      "native_tokens_prompt": 16491,
+      "native_tokens_completion": 1404,
+      "reasoning_tokens": 1344,
+      "cached_tokens": 16256,
+      "total_cost": 0.01636575
+    },
+    {
+      "timestamp": "2025-10-08T18:57:53.532467",
+      "event_type": "thinking",
+      "content": "Agent reasoning: I'll check status in 60 seconds (check #1).",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T18:57:53.532498",
+      "event_type": "thinking",
+      "content": "System: Actually waiting 60 seconds as requested by agent",
+      "reasoning_type": "analysis"
+    },
+    {
+      "timestamp": "2025-10-08T19:00:27.358947",
+      "event_type": "thinking",
+      "content": "Agent decided to call workflow_get_status with parameters: {'workflow_uuid': 'cd590549-27cb-490b-83a9-a250ad00cc1f'}",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T19:00:27.359831",
+      "event_type": "tool_call",
+      "tool_name": "workflow_get_status",
+      "parameters": {
+        "workflow_uuid": "cd590549-27cb-490b-83a9-a250ad00cc1f"
+      },
+      "execution_time_ms": 2704.432725906372,
+      "result": "{\"uuid\":\"cd590549-27cb-490b-83a9-a250ad00cc1f\",\"name\":\"Paclitaxel conformer search (rapid)\",\"is_finished\":true,\"status_code\":2,\"status_description\":\"COMPLETED_OK\",\"is_successful\":true,\"is_failed\":false,\"is_running\":false}",
+      "success": true
+    },
+    {
+      "timestamp": "2025-10-08T19:00:33.551757",
+      "event_type": "api_call",
+      "api_model": "openai/gpt-5",
+      "generation_id": "gen-1759975230-CwdeUAkGuhSk4lhySili",
+      "prompt_tokens": 16610,
+      "completion_tokens": 38,
+      "total_tokens": 16648,
+      "native_tokens_prompt": 16610,
+      "native_tokens_completion": 38,
+      "reasoning_tokens": 0,
+      "cached_tokens": 16384,
+      "total_cost": 0.0027105
+    },
+    {
+      "timestamp": "2025-10-08T19:00:33.551901",
+      "event_type": "thinking",
+      "content": "Agent decided to call retrieve_workflow with parameters: {'uuid': 'cd590549-27cb-490b-83a9-a250ad00cc1f'}",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T19:00:33.551939",
+      "event_type": "tool_call",
+      "tool_name": "retrieve_workflow",
+      "parameters": {
+        "uuid": "cd590549-27cb-490b-83a9-a250ad00cc1f"
+      },
+      "execution_time_ms": 1977.6079654693604,
+      "result": "{\"uuid\":\"cd590549-27cb-490b-83a9-a250ad00cc1f\",\"name\":\"Paclitaxel conformer search (rapid)\",\"created_at\":\"2025-10-09T01:48:56.340079Z\",\"updated_at\":\"2025-10-09T01:58:32.948051Z\",\"started_at\":\"2025-10-09T01:49:05.837798Z\",\"completed_at\":\"2025-10-09T01:58:32.863855Z\",\"parent_uuid\":\"e5c3ce65-43df-4ab3-90e0-a56f42584cc0\",\"workflow_type\":\"conformer_search\",\"data\":{\"nci\":false,\"mode\":\"auto\",\"solvent\":null,\"energies\":[-2931.690711,-2931.695574,-2931.697302,-2931.682825,-2931.696992,-2931.683332,-2931.697014,-2931.680741],\"messages\":[],\"mso_mode\":\"manual\",\"max_confs\":null,\"xtb_preopt\":false,\"constraints\":[],\"frequencies\":false,\"conf_gen_mode\":\"rapid\",\"conformer_uuids\":[[\"633b597c-721c-4df9-b45f-f600a989f466\"],[\"3a9a164f-5611-4fc4-853e-e6e0e3be994e\"],[\"7bb6443c-e026-429b-a58c-12b70ee02070\"],[\"03464cd1-0e0c-48e9-908a-382270aaac5c\"],[\"555125e1-50a4-4a61-a1b7-ca262bad96a4\"],[\"eb89ced3-ef01-4662-afc3-35cd538fbe71\"],[\"54f3c6d2-53c9-491b-941f-0a6aa65fe559\"],[\"12b3534a-f53f-42d4-952f-64135eca1a05\"]],\"initial_molecule\":{\"cell\":null,\"atoms\":[{\"mass\":null,\"position\":[-3.02424558,6.22559732,-1.94463017],\"atomic_number\":6},{\"mass\":null,\"position\":[-1.9937103,5.49888778,-1.13991718],\"atomic_number\":6},{\"mass\":null,\"position\":[-1.39948727,5.97364229,-0.17970889],\"atomic_number\":8},{\"mass\":null,\"position\":[-1.84946279,4.2262541,-1.59260577],\"atomic_number\":8},{\"mass\":null,\"position\":[-0.88948491,3.46009693,-0.89379797],\"atomic_number\":6},{\"mass\":null,\"position\":[-1.2384549,2.99350419,0.54041691],\"atomic_number\":6},{\"mass\":null,\"position\":[-0.32994914,3.00264745,1.39682841],\"atomic_number\":8},{\"mass\":null,\"position\":[-2.61553259,2.35541795,0.92909608],\"atomic_number\":6},{\"mass\":null,\"position\":[-3.80111661,3.12491702,0.35460176],\"atomic_number\":6},{\"mass\":null,\"position\":[-2.60911417,2.58784152,2.50074053],\"atomic_number\":6},{\"mass\":null,\"position\":[-2.4532894,3.97593282,2.8101885],\"atomic_number\":8},{\"mass\":null,\"position\":[-3.86659456,2.1683112,3.21517811],\"atomic_number\":6},{\"mass\":null,\"position\":[-4.15867992,0.7189809,2.9360112],\"atomic_number\":6},{\"mass\":null,\"position\":[-5.53338393,0.60697925,2.48990284],\"atomic_number\":8},{\"mass\":null,\"position\":[-5.13331822,0.00223513,1.25370113],\"atomic_number\":6},{\"mass\":null,\"position\":[-3.62045446,0.01605487,1.63791848],\"atomic_number\":6},{\"mass\":null,\"position\":[-2.92530161,-1.24730448,1.89253793],\"atomic_number\":8},{\"mass\":null,\"position\":[-3.54377867,-2.26529723,2.54192496],\"atomic_number\":6},{\"mass\":null,\"position\":[-2.57158961,-3.38181852,2.77621649],\"atomic_number\":6},{\"mass\":null,\"position\":[-4.7001937,-2.30084026,2.92176889],\"atomic_number\":8},{\"mass\":null,\"position\":[-2.65739441,0.7890716,0.61756234],\"atomic_number\":6},{\"mass\":null,\"position\":[-2.93570225,0.22621472,-0.87281476],\"atomic_number\":6},{\"mass\":null,\"position\":[-3.33337424,-1.19916547,-0.74292301],\"atomic_number\":8},{\"mass\":null,\"position\":[-4.51040048,-1.60924432,-1.28391247],\"atomic_number\":6},{\"mass\":null,\"position\":[-5.34852722,-0.88236553,-1.78206115],\"atomic_number\":8},{\"mass\":null,\"position\":[-4.63910629,-3.08326903,-1.1517405],\"atomic_number\":6},{\"mass\":null,\"position\":[-5.92270381,-3.64066697,-1.2416721],\"atomic_number\":6},{\"mass\":null,\"position\":[-6.08195765,-5.02845113,-1.16526656],\"atomic_number\":6},{\"mass\":null,\"position\":[-4.97598306,-5.8573835,-1.00174473],\"atomic_number\":6},{\"mass\":null,\"position\":[-3.69403713,-5.30723764,-0.91927864],\"atomic_number\":6},{\"mass\":null,\"position\":[-3.52877264,-3.92010458,-0.9841671],\"atomic_number\":6},{\"mass\":null,\"position\":[-1.78386469,0.12947347,-1.9768009],\"atomic_number\":6},{\"mass\":null,\"position\":[-2.34214876,-0.63317616,-3.08665694],\"atomic_number\":8},{\"mass\":null,\"position\":[-0.57689379,-0.72305382,-1.47675675],\"atomic_number\":6},{\"mass\":null,\"position\":[0.78032555,-0.00550862,-1.36562113],\"atomic_number\":6},{\"mass\":null,\"position\":[1.48155192,-0.53873233,-0.2197697],\"atomic_number\":8},{\"mass\":null,\"position\":[2.08267636,-1.74659251,-0.41587569],\"atomic_number\":6},{\"mass\":null,\"position\":[1.85231958,-2.50669615,-1.3448345],\"atomic_number\":8},{\"mass\":null,\"position\":[3.1258736,-2.00414145,0.66776794],\"atomic_number\":6},{\"mass\":null,\"position\":[2.5584198,-1.7986054,1.96580092],\"atomic_number\":8},{\"mass\":null,\"position\":[4.34266782,-1.06978449,0.44935025],\"atomic_number\":6},{\"mass\":null,\"position\":[5.41905854,-1.36644326,1.39743567],\"atomic_number\":7},{\"mass\":null,\"position\":[5.98312476,-0.39590033,2.19012629],\"atomic_number\":6},{\"mass\":null,\"position\":[5.51933172,0.73372934,2.29412751],\"atomic_number\":8},{\"mass\":null,\"position\":[7.19059923,-0.7909827,2.96228299],\"atomic_number\":6},{\"mass\":null,\"position\":[7.50465589,-0.06348517,4.11798085],\"atomic_number\":6},{\"mass\":null,\"position\":[8.63069132,-0.39784708,4.87981067],\"atomic_number\":6},{\"mass\":null,\"position\":[9.46802668,-1.43631118,4.4764235],\"atomic_number\":6},{\"mass\":null,\"position\":[9.17774791,-2.14545695,3.31192596],\"atomic_number\":6},{\"mass\":null,\"position\":[8.04741052,-1.822374,2.54840174],\"atomic_number\":6},{\"mass\":null,\"position\":[4.94101299,-1.06790303,-0.94421544],\"atomic_number\":6},{\"mass\":null,\"position\":[5.45591238,0.13210491,-1.46312955],\"atomic_number\":6},{\"mass\":null,\"position\":[6.0228648,0.18242173,-2.73974747],\"atomic_number\":6},{\"mass\":null,\"position\":[6.10060342,-0.97561944,-3.50741742],\"atomic_number\":6},{\"mass\":null,\"position\":[5.61755696,-2.17688227,-3.00078887],\"atomic_number\":6},{\"mass\":null,\"position\":[5.05644661,-2.22875177,-1.7193124],\"atomic_number\":6},{\"mass\":null,\"position\":[0.64413184,1.50012529,-1.16188091],\"atomic_number\":6},{\"mass\":null,\"position\":[-0.46691594,2.17255022,-1.59359306],\"atomic_number\":6},{\"mass\":null,\"position\":[-1.35385037,1.47553113,-2.62315744],\"atomic_number\":6},{\"mass\":null,\"position\":[-0.48622374,1.24692523,-3.92137146],\"atomic_number\":6},{\"mass\":null,\"position\":[-2.57307036,2.23143196,-3.21787912],\"atomic_number\":6},{\"mass\":null,\"position\":[1.80034552,2.13027382,-0.40267163],\"atomic_number\":6},{\"mass\":null,\"position\":[-2.89605359,6.01174956,-3.00878039],\"atomic_number\":1},{\"mass\":null,\"position\":[-2.90248045,7.30698963,-1.80323865],\"atomic_number\":1},{\"mass\":null,\"position\":[-4.02437083,5.92688902,-1.6132678],\"atomic_number\":1},{\"mass\":null,\"position\":[-0.00031195,4.09548276,-0.81153964],\"atomic_number\":1},{\"mass\":null,\"position\":[-3.71374325,4.20561083,0.54427868],\"atomic_number\":1},{\"mass\":null,\"position\":[-4.76667634,2.81710348,0.77319336],\"atomic_number\":1},{\"mass\":null,\"position\":[-3.90124628,3.00558254,-0.72449127],\"atomic_number\":1},{\"mass\":null,\"position\":[-1.77360489,2.0451467,2.95683578],\"atomic_number\":1},{\"mass\":null,\"position\":[-1.50353456,4.2003449,2.67988662],\"atomic_number\":1},{\"mass\":null,\"position\":[-4.70889188,2.81795045,2.94915869],\"atomic_number\":1},{\"mass\":null,\"position\":[-3.74435757,2.32724509,4.29384682],\"atomic_number\":1},{\"mass\":null,\"position\":[-4.01864015,0.12517843,3.84652866],\"atomic_number\":1},{\"mass\":null,\"position\":[-5.42175169,0.63969608,0.41345187],\"atomic_number\":1},{\"mass\":null,\"position\":[-5.60825623,-0.97252162,1.11082942],\"atomic_number\":1},{\"mass\":null,\"position\":[-2.37850951,-3.4556463,3.84986015],\"atomic_number\":1},{\"mass\":null,\"position\":[-1.62539267,-3.20316966,2.26040544],\"atomic_number\":1},{\"mass\":null,\"position\":[-3.00195325,-4.31126195,2.40133783],\"atomic_number\":1},{\"mass\":null,\"position\":[-1.64421756,0.44305811,0.87003424],\"atomic_number\":1},{\"mass\":null,\"position\":[-3.78896508,0.76231416,-1.29002844],\"atomic_number\":1},{\"mass\":null,\"position\":[-6.79565068,-3.00302449,-1.36382573],\"atomic_number\":1},{\"mass\":null,\"position\":[-7.08396751,-5.45837802,-1.22074314],\"atomic_number\":1},{\"mass\":null,\"position\":[-5.11064167,-6.93839054,-0.95575634],\"atomic_number\":1},{\"mass\":null,\"position\":[-2.83519757,-5.9583647,-0.81143822],\"atomic_number\":1},{\"mass\":null,\"position\":[-2.52149682,-3.51525566,-0.92944937],\"atomic_number\":1},{\"mass\":null,\"position\":[-2.57332293,-1.52304219,-2.77475868],\"atomic_number\":1},{\"mass\":null,\"position\":[-0.43729973,-1.58771406,-2.13922091],\"atomic_number\":1},{\"mass\":null,\"position\":[-0.82469296,-1.17380814,-0.51337712],\"atomic_number\":1},{\"mass\":null,\"position\":[1.40461866,-0.1665222,-2.25425262],\"atomic_number\":1},{\"mass\":null,\"position\":[3.41278088,-3.06168623,0.63049478],\"atomic_number\":1},{\"mass\":null,\"position\":[2.2506539,-0.86774439,2.01376961],\"atomic_number\":1},{\"mass\":null,\"position\":[3.99077326,-0.04907179,0.65230596],\"atomic_number\":1},{\"mass\":null,\"position\":[5.77180031,-2.3113448,1.42199363],\"atomic_number\":1},{\"mass\":null,\"position\":[6.86823647,0.75883609,4.44064421],\"atomic_number\":1},{\"mass\":null,\"position\":[8.8690723,0.16509953,5.7808202],\"atomic_number\":1},{\"mass\":null,\"position\":[10.34744852,-1.6922965,5.06534876],\"atomic_number\":1},{\"mass\":null,\"position\":[9.84154078,-2.94464458,2.99230743],\"atomic_number\":1},{\"mass\":null,\"position\":[7.8848537,-2.37096723,1.62523439],\"atomic_number\":1},{\"mass\":null,\"position\":[5.4056998,1.0418383,-0.87396415],\"atomic_number\":1},{\"mass\":null,\"position\":[6.41403242,1.1200936,-3.12216071],\"atomic_number\":1},{\"mass\":null,\"position\":[6.55179999,-0.94324658,-4.49629011],\"atomic_number\":1},{\"mass\":null,\"position\":[5.68953294,-3.08569893,-3.59854465],\"atomic_number\":1},{\"mass\":null,\"position\":[4.70840518,-3.19415143,-1.3542377],\"atomic_number\":1},{\"mass\":null,\"position\":[-1.10481756,0.93193683,-4.77492189],\"atomic_number\":1},{\"mass\":null,\"position\":[0.0193446,2.1793846,-4.20961463],\"atomic_number\":1},{\"mass\":null,\"position\":[0.27172463,0.46556756,-3.82626538],\"atomic_number\":1},{\"mass\":null,\"position\":[-3.10871952,1.62595377,-3.95973995],\"atomic_number\":1},{\"mass\":null,\"position\":[-2.25191524,3.13642365,-3.74469198],\"atomic_number\":1},{\"mass\":null,\"position\":[-3.31425956,2.5149076,-2.48150908],\"atomic_number\":1},{\"mass\":null,\"position\":[1.80687073,3.22283543,-0.45133808],\"atomic_number\":1},{\"mass\":null,\"position\":[2.74440949,1.80371307,-0.85453828],\"atomic_number\":1},{\"mass\":null,\"position\":[1.79605437,1.82126287,0.64811845],\"atomic_number\":1}],\"charge\":0,\"dipole\":null,\"energy\":null,\"smiles\":null,\"stress\":null,\"elapsed\":null,\"gradient\":null,\"velocities\":null,\"multiplicity\":1,\"homo_lumo_gap\":null,\"scf_completed\":null,\"scf_iterations\":null,\"mulliken_charges\":null,\"calculation_index\":null,\"vibrational_modes\":null,\"zero_point_energy\":null,\"thermal_energy_corr\":null,\"thermal_enthalpy_corr\":null,\"mulliken_spin_densities\":null,\"thermal_free_energy_corr\":null},\"transition_state\":false,\"conf_gen_settings\":{\"nci\":false,\"mode\":\"rapid\",\"max_confs\":50,\"screening\":null,\"constraints\":[],\"settings_type\":\"etkdg\",\"conf_opt_method\":\"gfn0_xtb\",\"max_mmff_energy\":30,\"num_initial_confs\":300,\"max_mmff_iterations\":500,\"num_confs_considered\":100},\"multistage_opt_settings\":{\"mode\":\"manual\",\"solvent\":null,\"xtb_preopt\":true,\"constraints\":[],\"frequencies\":false,\"transition_state\":false,\"singlepoint_settings\":null,\"optimization_settings\":[{\"mode\":\"rapid\",\"tasks\":[\"optimize\"],\"method\":\"aimnet2_wb97md3\",\"basis_set\":null,\"corrections\":[],\"opt_settings\":{\"max_steps\":250,\"constraints\":[],\"optimize_cell\":false,\"energy_threshold\":0.00005,\"transition_state\":false,\"recalc_hess_every\":0,\"max_gradient_threshold\":0.005,\"rms_gradient_threshold\":0.0035},\"scf_settings\":{\"soscf\":\"upon_failure\",\"max_iters\":250},\"level_of_theory\":\"aimnet2_wb97md3\",\"compute_settings\":{\"compute_type_used\":null,\"requested_compute_type\":\"cpu\"},\"solvent_settings\":null,\"thermochem_settings\":{\"temperature\":298.0,\"concentration\":0.0408740470708,\"scaling_factor\":1.0,\"cutoff_frequency\":100.0}}]}},\"notes\":\"\",\"starred\":false,\"public\":false,\"email_when_complete\":false,\"max_credits\":null,\"elapsed\":567.08478,\"credits_charged\":9.45,\"is_finished\":true,\"status_code\":2,\"status_description\":\"COMPLETED_OK\",\"is_successful\":true,\"is_failed\":false,\"is_running\":false}",
+      "success": true
+    },
+    {
+      "timestamp": "2025-10-08T19:01:17.323935",
+      "event_type": "api_call",
+      "api_model": "openai/gpt-5",
+      "generation_id": "gen-1759975235-06mliIIuugUrWBvjnwFn",
+      "prompt_tokens": 20966,
+      "completion_tokens": 1569,
+      "total_tokens": 22535,
+      "native_tokens_prompt": 20966,
+      "native_tokens_completion": 1569,
+      "reasoning_tokens": 1408,
+      "cached_tokens": 10112,
+      "total_cost": 0.0305215
+    },
+    {
+      "timestamp": "2025-10-08T19:01:17.324269",
+      "event_type": "thinking",
+      "content": "Agent decided to call submit_descriptors_workflow with parameters: {'initial_molecule': 'CC(=O)O[C@H]1C(=O)[C@]2(C)[C@@H](O)C[C@H]3OC[C@@]3(OC(C)=O)C2[C@H](OC(=O)c4ccccc4)[C@]5(O)C[C@H](OC(=O)[C@H](O)[C@@H](NC(=O)c6ccccc6)c7ccccc7)C(=C1C5(C)C)C', 'name': 'Paclitaxel descriptors (lowest-energy conformer)', 'folder_uuid': '', 'max_credits': 0}",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T19:01:17.324332",
+      "event_type": "tool_call",
+      "tool_name": "submit_descriptors_workflow",
+      "parameters": {
+        "initial_molecule": "CC(=O)O[C@H]1C(=O)[C@]2(C)[C@@H](O)C[C@H]3OC[C@@]3(OC(C)=O)C2[C@H](OC(=O)c4ccccc4)[C@]5(O)C[C@H](OC(=O)[C@H](O)[C@@H](NC(=O)c6ccccc6)c7ccccc7)C(=C1C5(C)C)C",
+        "name": "Paclitaxel descriptors (lowest-energy conformer)",
+        "folder_uuid": "",
+        "max_credits": 0
+      },
+      "execution_time_ms": 4085.1149559020996,
+      "result": "{\"name\":\"Paclitaxel descriptors (lowest-energy conformer)\",\"uuid\":\"798e3c41-4606-494d-9f3b-dfa0cdbeadaf\",\"created_at\":\"2025-10-09T02:01:21.026076Z\",\"updated_at\":null,\"started_at\":null,\"completed_at\":null,\"object_status\":0,\"parent_uuid\":\"e5c3ce65-43df-4ab3-90e0-a56f42584cc0\",\"notes\":\"\",\"starred\":false,\"public\":false,\"object_type\":\"descriptors\",\"object_data\":{\"initial_molecule\":{\"charge\":0,\"multiplicity\":1,\"atoms\":[{\"atomic_number\":6,\"position\":[-3.02424558,6.22559732,-1.94463017],\"mass\":null},{\"atomic_number\":6,\"position\":[-1.9937103,5.49888778,-1.13991718],\"mass\":null},{\"atomic_number\":8,\"position\":[-1.39948727,5.97364229,-0.17970889],\"mass\":null},{\"atomic_number\":8,\"position\":[-1.84946279,4.2262541,-1.59260577],\"mass\":null},{\"atomic_number\":6,\"position\":[-0.88948491,3.46009693,-0.89379797],\"mass\":null},{\"atomic_number\":6,\"position\":[-1.2384549,2.99350419,0.54041691],\"mass\":null},{\"atomic_number\":8,\"position\":[-0.32994914,3.00264745,1.39682841],\"mass\":null},{\"atomic_number\":6,\"position\":[-2.61553259,2.35541795,0.92909608],\"mass\":null},{\"atomic_number\":6,\"position\":[-3.80111661,3.12491702,0.35460176],\"mass\":null},{\"atomic_number\":6,\"position\":[-2.60911417,2.58784152,2.50074053],\"mass\":null},{\"atomic_number\":8,\"position\":[-2.4532894,3.97593282,2.8101885],\"mass\":null},{\"atomic_number\":6,\"position\":[-3.86659456,2.1683112,3.21517811],\"mass\":null},{\"atomic_number\":6,\"position\":[-4.15867992,0.7189809,2.9360112],\"mass\":null},{\"atomic_number\":8,\"position\":[-5.53338393,0.60697925,2.48990284],\"mass\":null},{\"atomic_number\":6,\"position\":[-5.13331822,0.00223513,1.25370113],\"mass\":null},{\"atomic_number\":6,\"position\":[-3.62045446,0.01605487,1.63791848],\"mass\":null},{\"atomic_number\":8,\"position\":[-2.92530161,-1.24730448,1.89253793],\"mass\":null},{\"atomic_number\":6,\"position\":[-3.54377867,-2.26529723,2.54192496],\"mass\":null},{\"atomic_number\":6,\"position\":[-2.57158961,-3.38181852,2.77621649],\"mass\":null},{\"atomic_number\":8,\"position\":[-4.7001937,-2.30084026,2.92176889],\"mass\":null},{\"atomic_number\":6,\"position\":[-2.65739441,0.7890716,0.61756234],\"mass\":null},{\"atomic_number\":6,\"position\":[-2.93570225,0.22621472,-0.87281476],\"mass\":null},{\"atomic_number\":8,\"position\":[-3.33337424,-1.19916547,-0.74292301],\"mass\":null},{\"atomic_number\":6,\"position\":[-4.51040048,-1.60924432,-1.28391247],\"mass\":null},{\"atomic_number\":8,\"position\":[-5.34852722,-0.88236553,-1.78206115],\"mass\":null},{\"atomic_number\":6,\"position\":[-4.63910629,-3.08326903,-1.1517405],\"mass\":null},{\"atomic_number\":6,\"position\":[-5.92270381,-3.64066697,-1.2416721],\"mass\":null},{\"atomic_number\":6,\"position\":[-6.08195765,-5.02845113,-1.16526656],\"mass\":null},{\"atomic_number\":6,\"position\":[-4.97598306,-5.8573835,-1.00174473],\"mass\":null},{\"atomic_number\":6,\"position\":[-3.69403713,-5.30723764,-0.91927864],\"mass\":null},{\"atomic_number\":6,\"position\":[-3.52877264,-3.92010458,-0.9841671],\"mass\":null},{\"atomic_number\":6,\"position\":[-1.78386469,0.12947347,-1.9768009],\"mass\":null},{\"atomic_number\":8,\"position\":[-2.34214876,-0.63317616,-3.08665694],\"mass\":null},{\"atomic_number\":6,\"position\":[-0.57689379,-0.72305382,-1.47675675],\"mass\":null},{\"atomic_number\":6,\"position\":[0.78032555,-0.00550862,-1.36562113],\"mass\":null},{\"atomic_number\":8,\"position\":[1.48155192,-0.53873233,-0.2197697],\"mass\":null},{\"atomic_number\":6,\"position\":[2.08267636,-1.74659251,-0.41587569],\"mass\":null},{\"atomic_number\":8,\"position\":[1.85231958,-2.50669615,-1.3448345],\"mass\":null},{\"atomic_number\":6,\"position\":[3.1258736,-2.00414145,0.66776794],\"mass\":null},{\"atomic_number\":8,\"position\":[2.5584198,-1.7986054,1.96580092],\"mass\":null},{\"atomic_number\":6,\"position\":[4.34266782,-1.06978449,0.44935025],\"mass\":null},{\"atomic_number\":7,\"position\":[5.41905854,-1.36644326,1.39743567],\"mass\":null},{\"atomic_number\":6,\"position\":[5.98312476,-0.39590033,2.19012629],\"mass\":null},{\"atomic_number\":8,\"position\":[5.51933172,0.73372934,2.29412751],\"mass\":null},{\"atomic_number\":6,\"position\":[7.19059923,-0.7909827,2.96228299],\"mass\":null},{\"atomic_number\":6,\"position\":[7.50465589,-0.06348517,4.11798085],\"mass\":null},{\"atomic_number\":6,\"position\":[8.63069132,-0.39784708,4.87981067],\"mass\":null},{\"atomic_number\":6,\"position\":[9.46802668,-1.43631118,4.4764235],\"mass\":null},{\"atomic_number\":6,\"position\":[9.17774791,-2.14545695,3.31192596],\"mass\":null},{\"atomic_number\":6,\"position\":[8.04741052,-1.822374,2.54840174],\"mass\":null},{\"atomic_number\":6,\"position\":[4.94101299,-1.06790303,-0.94421544],\"mass\":null},{\"atomic_number\":6,\"position\":[5.45591238,0.13210491,-1.46312955],\"mass\":null},{\"atomic_number\":6,\"position\":[6.0228648,0.18242173,-2.73974747],\"mass\":null},{\"atomic_number\":6,\"position\":[6.10060342,-0.97561944,-3.50741742],\"mass\":null},{\"atomic_number\":6,\"position\":[5.61755696,-2.17688227,-3.00078887],\"mass\":null},{\"atomic_number\":6,\"position\":[5.05644661,-2.22875177,-1.7193124],\"mass\":null},{\"atomic_number\":6,\"position\":[0.64413184,1.50012529,-1.16188091],\"mass\":null},{\"atomic_number\":6,\"position\":[-0.46691594,2.17255022,-1.59359306],\"mass\":null},{\"atomic_number\":6,\"position\":[-1.35385037,1.47553113,-2.62315744],\"mass\":null},{\"atomic_number\":6,\"position\":[-0.48622374,1.24692523,-3.92137146],\"mass\":null},{\"atomic_number\":6,\"position\":[-2.57307036,2.23143196,-3.21787912],\"mass\":null},{\"atomic_number\":6,\"position\":[1.80034552,2.13027382,-0.40267163],\"mass\":null},{\"atomic_number\":1,\"position\":[-2.89605359,6.01174956,-3.00878039],\"mass\":null},{\"atomic_number\":1,\"position\":[-2.90248045,7.30698963,-1.80323865],\"mass\":null},{\"atomic_number\":1,\"position\":[-4.02437083,5.92688902,-1.6132678],\"mass\":null},{\"atomic_number\":1,\"position\":[-0.00031195,4.09548276,-0.81153964],\"mass\":null},{\"atomic_number\":1,\"position\":[-3.71374325,4.20561083,0.54427868],\"mass\":null},{\"atomic_number\":1,\"position\":[-4.76667634,2.81710348,0.77319336],\"mass\":null},{\"atomic_number\":1,\"position\":[-3.90124628,3.00558254,-0.72449127],\"mass\":null},{\"atomic_number\":1,\"position\":[-1.77360489,2.0451467,2.95683578],\"mass\":null},{\"atomic_number\":1,\"position\":[-1.50353456,4.2003449,2.67988662],\"mass\":null},{\"atomic_number\":1,\"position\":[-4.70889188,2.81795045,2.94915869],\"mass\":null},{\"atomic_number\":1,\"position\":[-3.74435757,2.32724509,4.29384682],\"mass\":null},{\"atomic_number\":1,\"position\":[-4.01864015,0.12517843,3.84652866],\"mass\":null},{\"atomic_number\":1,\"position\":[-5.42175169,0.63969608,0.41345187],\"mass\":null},{\"atomic_number\":1,\"position\":[-5.60825623,-0.97252162,1.11082942],\"mass\":null},{\"atomic_number\":1,\"position\":[-2.37850951,-3.4556463,3.84986015],\"mass\":null},{\"atomic_number\":1,\"position\":[-1.62539267,-3.20316966,2.26040544],\"mass\":null},{\"atomic_number\":1,\"position\":[-3.00195325,-4.31126195,2.40133783],\"mass\":null},{\"atomic_number\":1,\"position\":[-1.64421756,0.44305811,0.87003424],\"mass\":null},{\"atomic_number\":1,\"position\":[-3.78896508,0.76231416,-1.29002844],\"mass\":null},{\"atomic_number\":1,\"position\":[-6.79565068,-3.00302449,-1.36382573],\"mass\":null},{\"atomic_number\":1,\"position\":[-7.08396751,-5.45837802,-1.22074314],\"mass\":null},{\"atomic_number\":1,\"position\":[-5.11064167,-6.93839054,-0.95575634],\"mass\":null},{\"atomic_number\":1,\"position\":[-2.83519757,-5.9583647,-0.81143822],\"mass\":null},{\"atomic_number\":1,\"position\":[-2.52149682,-3.51525566,-0.92944937],\"mass\":null},{\"atomic_number\":1,\"position\":[-2.57332293,-1.52304219,-2.77475868],\"mass\":null},{\"atomic_number\":1,\"position\":[-0.43729973,-1.58771406,-2.13922091],\"mass\":null},{\"atomic_number\":1,\"position\":[-0.82469296,-1.17380814,-0.51337712],\"mass\":null},{\"atomic_number\":1,\"position\":[1.40461866,-0.1665222,-2.25425262],\"mass\":null},{\"atomic_number\":1,\"position\":[3.41278088,-3.06168623,0.63049478],\"mass\":null},{\"atomic_number\":1,\"position\":[2.2506539,-0.86774439,2.01376961],\"mass\":null},{\"atomic_number\":1,\"position\":[3.99077326,-0.04907179,0.65230596],\"mass\":null},{\"atomic_number\":1,\"position\":[5.77180031,-2.3113448,1.42199363],\"mass\":null},{\"atomic_number\":1,\"position\":[6.86823647,0.75883609,4.44064421],\"mass\":null},{\"atomic_number\":1,\"position\":[8.8690723,0.16509953,5.7808202],\"mass\":null},{\"atomic_number\":1,\"position\":[10.34744852,-1.6922965,5.06534876],\"mass\":null},{\"atomic_number\":1,\"position\":[9.84154078,-2.94464458,2.99230743],\"mass\":null},{\"atomic_number\":1,\"position\":[7.8848537,-2.37096723,1.62523439],\"mass\":null},{\"atomic_number\":1,\"position\":[5.4056998,1.0418383,-0.87396415],\"mass\":null},{\"atomic_number\":1,\"position\":[6.41403242,1.1200936,-3.12216071],\"mass\":null},{\"atomic_number\":1,\"position\":[6.55179999,-0.94324658,-4.49629011],\"mass\":null},{\"atomic_number\":1,\"position\":[5.68953294,-3.08569893,-3.59854465],\"mass\":null},{\"atomic_number\":1,\"position\":[4.70840518,-3.19415143,-1.3542377],\"mass\":null},{\"atomic_number\":1,\"position\":[-1.10481756,0.93193683,-4.77492189],\"mass\":null},{\"atomic_number\":1,\"position\":[0.0193446,2.1793846,-4.20961463],\"mass\":null},{\"atomic_number\":1,\"position\":[0.27172463,0.46556756,-3.82626538],\"mass\":null},{\"atomic_number\":1,\"position\":[-3.10871952,1.62595377,-3.95973995],\"mass\":null},{\"atomic_number\":1,\"position\":[-2.25191524,3.13642365,-3.74469198],\"mass\":null},{\"atomic_number\":1,\"position\":[-3.31425956,2.5149076,-2.48150908],\"mass\":null},{\"atomic_number\":1,\"position\":[1.80687073,3.22283543,-0.45133808],\"mass\":null},{\"atomic_number\":1,\"position\":[2.74440949,1.80371307,-0.85453828],\"mass\":null},{\"atomic_number\":1,\"position\":[1.79605437,1.82126287,0.64811845],\"mass\":null}],\"cell\":null,\"energy\":null,\"scf_iterations\":null,\"scf_completed\":null,\"elapsed\":null,\"homo_lumo_gap\":null,\"gradient\":null,\"stress\":null,\"velocities\":null,\"mulliken_charges\":null,\"mulliken_spin_densities\":null,\"dipole\":null,\"vibrational_modes\":null,\"zero_point_energy\":null,\"thermal_energy_corr\":null,\"thermal_enthalpy_corr\":null,\"thermal_free_energy_corr\":null,\"smiles\":null,\"calculation_index\":null}},\"email_when_complete\":false,\"max_credits\":null,\"elapsed\":0.0,\"credits_charged\":0.0}",
+      "success": true
+    },
+    {
+      "timestamp": "2025-10-08T19:01:27.968175",
+      "event_type": "api_call",
+      "api_model": "openai/gpt-5",
+      "generation_id": "gen-1759975281-lwgRcTrqKbWq5oGmmTot",
+      "prompt_tokens": 24768,
+      "completion_tokens": 42,
+      "total_tokens": 24810,
+      "native_tokens_prompt": 24768,
+      "native_tokens_completion": 42,
+      "reasoning_tokens": 0,
+      "cached_tokens": 20864,
+      "total_cost": 0.007908
+    },
+    {
+      "timestamp": "2025-10-08T19:01:27.968421",
+      "event_type": "thinking",
+      "content": "Agent decided to call workflow_get_status with parameters: {'workflow_uuid': '798e3c41-4606-494d-9f3b-dfa0cdbeadaf'}",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T19:01:27.968512",
+      "event_type": "tool_call",
+      "tool_name": "workflow_get_status",
+      "parameters": {
+        "workflow_uuid": "798e3c41-4606-494d-9f3b-dfa0cdbeadaf"
+      },
+      "execution_time_ms": 3099.824905395508,
+      "result": "{\"uuid\":\"798e3c41-4606-494d-9f3b-dfa0cdbeadaf\",\"name\":\"Paclitaxel descriptors (lowest-energy conformer)\",\"is_finished\":false,\"status_code\":0,\"status_description\":\"QUEUED\",\"is_successful\":false,\"is_failed\":false,\"is_running\":false}",
+      "success": true
+    },
+    {
+      "timestamp": "2025-10-08T19:08:28.449368",
+      "event_type": "api_call",
+      "api_model": "openai/gpt-5",
+      "generation_id": "gen-1759975291-w6ALyO1cCKcWEVUXJWLv",
+      "prompt_tokens": 24893,
+      "completion_tokens": 2242,
+      "total_tokens": 27135,
+      "native_tokens_prompt": 24893,
+      "native_tokens_completion": 2242,
+      "reasoning_tokens": 2176,
+      "cached_tokens": 24704,
+      "total_cost": 0.02574425
+    },
+    {
+      "timestamp": "2025-10-08T19:08:28.449579",
+      "event_type": "thinking",
+      "content": "Agent reasoning: I'll check the descriptors workflow status in 60 seconds (check #1).",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T19:08:28.449643",
+      "event_type": "thinking",
+      "content": "System: Actually waiting 60 seconds as requested by agent",
+      "reasoning_type": "analysis"
+    },
+    {
+      "timestamp": "2025-10-08T19:09:39.388875",
+      "event_type": "thinking",
+      "content": "Agent decided to call workflow_get_status with parameters: {'workflow_uuid': '798e3c41-4606-494d-9f3b-dfa0cdbeadaf'}",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T19:09:39.389112",
+      "event_type": "tool_call",
+      "tool_name": "workflow_get_status",
+      "parameters": {
+        "workflow_uuid": "798e3c41-4606-494d-9f3b-dfa0cdbeadaf"
+      },
+      "execution_time_ms": 2015.1419639587402,
+      "result": "{\"uuid\":\"798e3c41-4606-494d-9f3b-dfa0cdbeadaf\",\"name\":\"Paclitaxel descriptors (lowest-energy conformer)\",\"is_finished\":false,\"status_code\":1,\"status_description\":\"RUNNING\",\"is_successful\":false,\"is_failed\":false,\"is_running\":true}",
+      "success": true
+    },
+    {
+      "timestamp": "2025-10-08T19:44:05.620019",
+      "event_type": "api_call",
+      "api_model": "openai/gpt-5",
+      "generation_id": "gen-1759977768-jGXfsWKspeeynTTgL1eR",
+      "prompt_tokens": 25017,
+      "completion_tokens": 2754,
+      "total_tokens": 27771,
+      "native_tokens_prompt": 25017,
+      "native_tokens_completion": 2754,
+      "reasoning_tokens": 2560,
+      "cached_tokens": 10112,
+      "total_cost": 0.04743525
+    },
+    {
+      "timestamp": "2025-10-08T19:44:05.620457",
+      "event_type": "thinking",
+      "content": "Agent reasoning: Submitting conformer search for paclitaxel (rapid). I will monitor it with SMART polling.\n\nConformer search:\n- I'll check status in 60 seconds (check #1). Then continue per schedule until completion.\n\nNext, after it completes, I will:\n- Identify the lowest-energy conformer\n- Run descriptors to get MW, TPSA, HBD/HBA, cLogP\n- Run macroscopic pKa to estimate ionization at pH 7.4\n- Compute BBB metrics (logBB via PSA/logP model, CNS MPO approximation)\n- Provide final numerical results\n\nNow starting SMART polling for the Descriptors workflow.\n\nI'll check status in 60 seconds (check #1).",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T19:44:05.620564",
+      "event_type": "thinking",
+      "content": "System: Actually waiting 60 seconds as requested by agent",
+      "reasoning_type": "analysis"
+    },
+    {
+      "timestamp": "2025-10-08T19:45:05.627489",
+      "event_type": "thinking",
+      "content": "Agent decided to call workflow_get_status with parameters: {'workflow_uuid': '798e3c41-4606-494d-9f3b-dfa0cdbeadaf'}",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T19:45:05.627806",
+      "event_type": "tool_call",
+      "tool_name": "workflow_get_status",
+      "parameters": {
+        "workflow_uuid": "798e3c41-4606-494d-9f3b-dfa0cdbeadaf"
+      },
+      "execution_time_ms": 2593.4369564056396,
+      "result": "{\"uuid\":\"798e3c41-4606-494d-9f3b-dfa0cdbeadaf\",\"name\":\"Paclitaxel descriptors (lowest-energy conformer)\",\"is_finished\":true,\"status_code\":2,\"status_description\":\"COMPLETED_OK\",\"is_successful\":true,\"is_failed\":false,\"is_running\":false}",
+      "success": true
+    },
+    {
+      "timestamp": "2025-10-08T19:45:12.890570",
+      "event_type": "api_call",
+      "api_model": "openai/gpt-5",
+      "generation_id": "gen-1759977908-sa903vwaNcxedhYrZDSE",
+      "prompt_tokens": 25143,
+      "completion_tokens": 41,
+      "total_tokens": 25184,
+      "native_tokens_prompt": 25143,
+      "native_tokens_completion": 41,
+      "reasoning_tokens": 0,
+      "cached_tokens": 24960,
+      "total_cost": 0.00375875
+    },
+    {
+      "timestamp": "2025-10-08T19:45:12.890743",
+      "event_type": "thinking",
+      "content": "Agent decided to call retrieve_workflow with parameters: {'uuid': '798e3c41-4606-494d-9f3b-dfa0cdbeadaf'}",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T19:45:12.890783",
+      "event_type": "tool_call",
+      "tool_name": "retrieve_workflow",
+      "parameters": {
+        "uuid": "798e3c41-4606-494d-9f3b-dfa0cdbeadaf"
+      },
+      "execution_time_ms": 2284.284830093384,
+      "result": "{\"uuid\":\"798e3c41-4606-494d-9f3b-dfa0cdbeadaf\",\"name\":\"Paclitaxel descriptors (lowest-energy conformer)\",\"created_at\":\"2025-10-09T02:01:21.026076Z\",\"updated_at\":\"2025-10-09T02:10:24.449178Z\",\"started_at\":\"2025-10-09T02:05:09.930582Z\",\"completed_at\":\"2025-10-09T02:10:24.341548Z\",\"parent_uuid\":\"e5c3ce65-43df-4ab3-90e0-a56f42584cc0\",\"workflow_type\":\"descriptors\",\"data\":{\"mode\":\"auto\",\"messages\":[],\"descriptors\":{\"MW\":853.331,\"MZ\":0.667,\"Mi\":1.122,\"Mm\":0.629,\"Mp\":0.661,\"Mv\":0.633,\"Rg\":0.182,\"SZ\":75.333,\"Si\":126.812,\"Sm\":71.095,\"Sp\":74.745,\"Sv\":71.582,\"nB\":0.0,\"nC\":47.0,\"nF\":0.0,\"nH\":51.0,\"nI\":0.0,\"nN\":1.0,\"nO\":14.0,\"nP\":0.0,\"nS\":0.0,\"nX\":0.0,\"ABC\":48.992,\"AMW\":7.552,\"IC0\":1.478,\"IC1\":3.8,\"IC2\":5.199,\"IC3\":5.917,\"IC4\":6.296,\"IC5\":6.426,\"MID\":125.64,\"Mpe\":0.983,\"Mse\":1.017,\"NdO\":6.0,\"NdS\":0.0,\"NsF\":0.0,\"NsI\":0.0,\"NtN\":0.0,\"PBF\":1.707,\"SMR\":217.69,\"SdO\":83.453,\"SdS\":0.0,\"Spe\":111.078,\"SsF\":0.0,\"SsI\":0.0,\"Sse\":114.932,\"StN\":0.0,\"fMF\":0.381,\"nBr\":0.0,\"nCl\":0.0,\"AMID\":2.026,\"BIC0\":0.209,\"BIC1\":0.537,\"BIC2\":0.735,\"BIC3\":0.836,\"BIC4\":0.89,\"BIC5\":0.908,\"CIC0\":5.342,\"CIC1\":3.02,\"CIC2\":1.621,\"CIC3\":0.903,\"CIC4\":0.525,\"CIC5\":0.394,\"GGI1\":16.5,\"GGI2\":11.0,\"GGI3\":8.312,\"GGI4\":7.649,\"GGI5\":6.292,\"GGI6\":4.194,\"GGI7\":2.734,\"GGI8\":1.861,\"GGI9\":1.444,\"GRAV\":17270.646,\"JGI1\":0.243,\"JGI2\":0.107,\"JGI3\":0.064,\"JGI4\":0.051,\"JGI5\":0.037,\"JGI6\":0.023,\"JGI7\":0.016,\"JGI8\":0.012,\"JGI9\":0.011,\"MIC0\":13.662,\"MIC1\":36.018,\"MIC2\":45.254,\"MIC3\":49.121,\"MIC4\":50.62,\"MIC5\":50.947,\"MOMI\":28.307,\"MPC2\":105.0,\"MPC3\":151.0,\"MPC4\":210.0,\"MPC5\":298.0,\"MPC6\":375.0,\"MPC7\":465.0,\"MPC8\":563.0,\"MPC9\":700.0,\"Mare\":0.997,\"NaaN\":0.0,\"NaaO\":0.0,\"NaaS\":0.0,\"NdNH\":0.0,\"NdSe\":0.0,\"NddC\":0.0,\"NdsN\":0.0,\"NsBr\":0.0,\"NsCl\":0.0,\"NsLi\":0.0,\"NsOH\":3.0,\"NsSH\":0.0,\"NssO\":5.0,\"NssS\":0.0,\"NtCH\":0.0,\"NtsC\":0.0,\"RASA\":0.774,\"RNCG\":0.072,\"RNCS\":0.0,\"RPCG\":0.053,\"RPCS\":3.56,\"RPSA\":0.226,\"SIC0\":0.217,\"SIC1\":0.557,\"SIC2\":0.762,\"SIC3\":0.868,\"SIC4\":0.923,\"SIC5\":0.942,\"SaaN\":0.0,\"SaaO\":0.0,\"SaaS\":0.0,\"Sare\":112.708,\"SdNH\":0.0,\"SdSe\":0.0,\"SddC\":0.0,\"SdsN\":0.0,\"SsBr\":0.0,\"SsCl\":0.0,\"SsLi\":0.0,\"SsOH\":37.511,\"SsSH\":0.0,\"SssO\":30.272,\"SssS\":0.0,\"StCH\":0.0,\"StsC\":0.0,\"TASA\":774.608,\"TIC0\":167.018,\"TIC1\":429.434,\"TIC2\":587.469,\"TIC3\":668.602,\"TIC4\":711.396,\"TIC5\":726.151,\"TPSA\":226.71,\"Vabc\":794.149,\"WPol\":129.0,\"apol\":124.824,\"bpol\":65.622,\"nRot\":10.0,\"ABCGG\":38.319,\"ATS0Z\":2688.0,\"ATS0d\":397.0,\"ATS0i\":18197.693,\"ATS0m\":10611.981,\"ATS0p\":163.968,\"ATS0s\":662.278,\"ATS0v\":24763.35,\"ATS1Z\":3001.0,\"ATS1d\":518.0,\"ATS1i\":17150.128,\"ATS1m\":11399.539,\"ATS1p\":214.874,\"ATS1s\":391.104,\"ATS1v\":32024.804,\"ATS2Z\":4778.0,\"ATS2d\":876.0,\"ATS2i\":32058.28,\"ATS2m\":17979.911,\"ATS2p\":335.306,\"ATS2s\":711.438,\"ATS2v\":49364.086,\"ATS3Z\":6360.0,\"ATS3d\":1157.0,\"ATS3i\":47198.921,\"ATS3m\":23418.793,\"ATS3p\":447.109,\"ATS3s\":1081.097,\"ATS3v\":65390.043,\"ATS4Z\":7697.0,\"ATS4d\":1351.0,\"ATS4i\":63474.687,\"ATS4m\":28017.306,\"ATS4p\":532.163,\"ATS4s\":1402.694,\"ATS4v\":77525.549,\"ATS5Z\":8975.0,\"ATS5d\":1489.0,\"ATS5i\":78478.565,\"ATS5m\":32706.049,\"ATS5p\":598.435,\"ATS5s\":1854.958,\"ATS5v\":87495.685,\"ATS6Z\":9556.0,\"ATS6d\":1551.0,\"ATS6i\":82948.151,\"ATS6m\":34626.813,\"ATS6p\":651.425,\"ATS6s\":2080.25,\"ATS6v\":95111.537,\"ATS7Z\":9560.0,\"ATS7d\":1503.0,\"ATS7i\":88075.662,\"ATS7m\":33925.702,\"ATS7p\":692.056,\"ATS7s\":2296.903,\"ATS7v\":98013.842,\"ATS8Z\":8527.0,\"ATS8d\":1465.0,\"ATS8i\":99873.076,\"ATS8m\":29764.096,\"ATS8p\":676.714,\"ATS8s\":2059.375,\"ATS8v\":91971.162,\"C1SP1\":0.0,\"C1SP2\":5.0,\"C1SP3\":7.0,\"C2SP1\":0.0,\"C2SP2\":16.0,\"C2SP3\":9.0,\"C3SP2\":5.0,\"C3SP3\":3.0,\"C4SP3\":2.0,\"DPSA1\":162.387,\"DPSA2\":6376.508,\"DPSA3\":106.297,\"DPSA4\":56.429,\"DPSA5\":120.949,\"FCSP3\":0.447,\"FNSA1\":0.419,\"FNSA2\":-2.668,\"FNSA3\":-0.071,\"FNSA4\":-0.024,\"FNSA5\":-0.072,\"FPSA1\":0.581,\"FPSA2\":3.7,\"FPSA3\":0.035,\"FPSA4\":0.033,\"FPSA5\":0.049,\"GGI10\":0.958,\"GRAVH\":19419.069,\"GRAVp\":5403.704,\"JGI10\":0.008,\"JGT10\":0.572,\"Kier1\":49.892,\"Kier2\":19.918,\"Kier3\":9.315,\"MAXdO\":15.484,\"MID_C\":97.58,\"MID_N\":2.04,\"MID_O\":26.02,\"MID_X\":0.0,\"MID_h\":28.06,\"MINdO\":12.978,\"MPC10\":838.0,\"MWC01\":68.0,\"MWC02\":5.849,\"MWC03\":6.756,\"MWC04\":7.705,\"MWC05\":8.648,\"MWC06\":9.611,\"MWC07\":10.573,\"MWC08\":11.547,\"MWC09\":12.52,\"MWC10\":13.503,\"Mor01\":6328.0,\"Mor02\":41.563,\"Mor03\":-8.419,\"Mor04\":12.291,\"Mor05\":-18.91,\"Mor06\":-6.632,\"Mor07\":10.646,\"Mor08\":2.863,\"Mor09\":0.335,\"Mor10\":-0.919,\"Mor11\":-0.534,\"Mor12\":-4.726,\"Mor13\":0.761,\"Mor14\":3.797,\"Mor15\":-0.198,\"Mor16\":2.011,\"Mor17\":-3.815,\"Mor18\":-2.988,\"Mor19\":2.506,\"Mor20\":4.803,\"Mor21\":-2.615,\"Mor22\":0.426,\"Mor23\":-1.63,\"Mor24\":-0.521,\"Mor25\":1.756,\"Mor26\":0.973,\"Mor27\":-0.578,\"Mor28\":-0.649,\"Mor29\":-0.943,\"Mor30\":-0.332,\"Mor31\":2.594,\"Mor32\":-0.07,\"NaaCH\":15.0,\"NaaNH\":0.0,\"NaaSe\":0.0,\"NaaaC\":0.0,\"NaasC\":3.0,\"NaasN\":0.0,\"NdCH2\":0.0,\"NddsN\":0.0,\"NdsCH\":0.0,\"NdssC\":8.0,\"NdssS\":0.0,\"NsCH3\":6.0,\"NsNH2\":0.0,\"NsNH3\":0.0,\"NsPH2\":0.0,\"NsSeH\":0.0,\"NssBH\":0.0,\"NssBe\":0.0,\"NssNH\":1.0,\"NssPH\":0.0,\"NssSe\":0.0,\"NsssB\":0.0,\"NsssN\":0.0,\"NsssP\":0.0,\"PNSA1\":419.465,\"PNSA2\":-2671.206,\"PNSA3\":-71.568,\"PNSA4\":-23.639,\"PNSA5\":-72.195,\"PPSA1\":581.852,\"PPSA2\":3705.302,\"PPSA3\":34.73,\"PPSA4\":32.79,\"PPSA5\":48.754,\"SLogP\":3.736,\"SRW02\":4.92,\"SRW03\":0.0,\"SRW04\":6.337,\"SRW05\":0.0,\"SRW06\":7.961,\"SRW07\":0.0,\"SRW08\":9.693,\"SRW09\":0.0,\"SRW10\":11.493,\"SaaCH\":24.274,\"SaaNH\":0.0,\"SaaSe\":0.0,\"SaaaC\":0.0,\"SaasC\":0.69,\"SaasN\":0.0,\"SdCH2\":0.0,\"SddsN\":0.0,\"SdsCH\":0.0,\"SdssC\":-5.119,\"SdssS\":0.0,\"SsCH3\":8.286,\"SsNH2\":0.0,\"SsNH3\":0.0,\"SsPH2\":0.0,\"SsSeH\":0.0,\"SssBH\":0.0,\"SssBe\":0.0,\"SssNH\":2.723,\"SssPH\":0.0,\"SssSe\":0.0,\"SsssB\":0.0,\"SsssN\":0.0,\"SsssP\":0.0,\"VE1_A\":5.22,\"VE1_D\":7.743,\"VE2_A\":0.084,\"VE2_D\":0.125,\"VE3_A\":3.477,\"VE3_D\":3.871,\"VR1_A\":19325.313,\"VR1_D\":580.486,\"VR2_A\":311.699,\"VR2_D\":9.363,\"VR3_A\":11.694,\"VR3_D\":8.188,\"WNSA1\":420.018,\"WNSA2\":-2674.725,\"WNSA3\":-71.662,\"WNSA4\":-23.67,\"WNSA5\":-72.29,\"WPSA1\":582.619,\"WPSA2\":3710.184,\"WPSA3\":34.775,\"WPSA4\":32.833,\"WPSA5\":48.818,\"WPath\":14767.0,\"Xc-3d\":6.235,\"Xc-4d\":0.426,\"Xc-5d\":3.071,\"Xc-6d\":0.771,\"Xp-0d\":44.94,\"Xp-1d\":29.272,\"Xp-2d\":28.58,\"Xp-3d\":24.581,\"Xp-4d\":20.408,\"Xp-5d\":17.776,\"Xp-6d\":13.096,\"Xp-7d\":9.595,\"ZMIC0\":217.091,\"ZMIC1\":98.394,\"ZMIC2\":55.197,\"ZMIC3\":37.222,\"ZMIC4\":31.413,\"ZMIC5\":30.065,\"nAcid\":0.0,\"nAtom\":113.0,\"nBase\":0.0,\"nRing\":7.0,\"piPC1\":4.443,\"piPC2\":4.994,\"piPC3\":5.469,\"piPC4\":5.915,\"piPC5\":6.376,\"piPC6\":6.5,\"piPC7\":6.787,\"piPC8\":7.0,\"piPC9\":7.321,\"AATS0Z\":23.788,\"AATS0d\":3.513,\"AATS0i\":161.042,\"AATS0m\":93.911,\"AATS0p\":1.451,\"AATS0s\":5.861,\"AATS0v\":219.145,\"AATS1Z\":25.218,\"AATS1d\":4.353,\"AATS1i\":144.119,\"AATS1m\":95.794,\"AATS1p\":1.806,\"AATS1s\":3.287,\"AATS1v\":269.116,\"AATS2Z\":22.432,\"AATS2d\":4.113,\"AATS2i\":150.508,\"AATS2m\":84.413,\"AATS2p\":1.574,\"AATS2s\":3.34,\"AATS2v\":231.756,\"AATS3Z\":20.649,\"AATS3d\":3.756,\"AATS3i\":153.243,\"AATS3m\":76.035,\"AATS3p\":1.452,\"AATS3s\":3.51,\"AATS3v\":212.305,\"AATS4Z\":19.005,\"AATS4d\":3.336,\"AATS4i\":156.728,\"AATS4m\":69.179,\"AATS4p\":1.314,\"AATS4s\":3.463,\"AATS4v\":191.421,\"AATS5Z\":18.316,\"AATS5d\":3.039,\"AATS5i\":160.16,\"AATS5m\":66.747,\"AATS5p\":1.221,\"AATS5s\":3.786,\"AATS5v\":178.563,\"AATS6Z\":18.342,\"AATS6d\":2.977,\"AATS6i\":159.21,\"AATS6m\":66.462,\"AATS6p\":1.25,\"AATS6s\":3.993,\"AATS6v\":182.556,\"AATS7Z\":17.163,\"AATS7d\":2.698,\"AATS7i\":158.125,\"AATS7m\":60.908,\"AATS7p\":1.242,\"AATS7s\":4.124,\"AATS7v\":175.967,\"AATS8Z\":13.933,\"AATS8d\":2.394,\"AATS8i\":163.191,\"AATS8m\":48.634,\"AATS8p\":1.106,\"AATS8s\":3.365,\"AATS8v\":150.28,\"AMID_C\":1.574,\"AMID_N\":0.033,\"AMID_O\":0.42,\"AMID_X\":0.0,\"AMID_h\":0.453,\"ATS0dv\":952.0,\"ATS0pe\":727.37,\"ATS0se\":894.172,\"ATS1dv\":898.0,\"ATS1pe\":780.851,\"ATS1se\":933.811,\"ATS2dv\":1347.0,\"ATS2pe\":1382.273,\"ATS2se\":1674.593,\"ATS3dv\":1702.0,\"ATS3pe\":2019.256,\"ATS3se\":2455.782,\"ATS4dv\":2065.0,\"ATS4pe\":2639.095,\"ATS4se\":3231.854,\"ATS5dv\":2447.0,\"ATS5pe\":3194.511,\"ATS5se\":3935.191,\"ATS6dv\":2444.0,\"ATS6pe\":3412.625,\"ATS6se\":4196.402,\"ATS7dv\":2343.0,\"ATS7pe\":3618.299,\"ATS7se\":4453.548,\"ATS8dv\":2012.0,\"ATS8pe\":3792.621,\"ATS8se\":4754.586,\"ATSC0Z\":880.0,\"ATSC0c\":2.977,\"ATSC0d\":87.54,\"ATSC0i\":153.296,\"ATSC0m\":4159.096,\"ATSC0p\":26.082,\"ATSC0s\":266.417,\"ATSC0v\":5559.114,\"ATSC1Z\":25.0,\"ATSC1c\":-1.631,\"ATSC1d\":39.626,\"ATSC1i\":0.586,\"ATSC1m\":125.326,\"ATSC1p\":0.532,\"ATSC1s\":-25.226,\"ATSC1v\":250.993,\"ATSC2Z\":194.0,\"ATSC2c\":-0.061,\"ATSC2d\":3.036,\"ATSC2i\":6.636,\"ATSC2m\":908.176,\"ATSC2p\":1.778,\"ATSC2s\":28.744,\"ATSC2v\":742.492,\"ATSC3Z\":-156.0,\"ATSC3c\":0.528,\"ATSC3d\":-6.87,\"ATSC3i\":-30.926,\"ATSC3m\":-745.127,\"ATSC3p\":-4.624,\"ATSC3s\":-27.136,\"ATSC3v\":-1135.165,\"ATSC4Z\":-171.0,\"ATSC4c\":-0.622,\"ATSC4d\":-12.244,\"ATSC4i\":-62.662,\"ATSC4m\":-819.697,\"ATSC4p\":-10.936,\"ATSC4s\":-81.803,\"ATSC4v\":-1749.035,\"ATSC5Z\":219.0,\"ATSC5c\":0.653,\"ATSC5d\":-23.739,\"ATSC5i\":18.051,\"ATSC5m\":1037.376,\"ATSC5p\":3.843,\"ATSC5s\":31.081,\"ATSC5v\":1213.921,\"ATSC6Z\":-144.0,\"ATSC6c\":-0.641,\"ATSC6d\":-63.843,\"ATSC6i\":15.194,\"ATSC6m\":-655.711,\"ATSC6p\":2.275,\"ATSC6s\":-52.414,\"ATSC6v\":47.258,\"ATSC7Z\":-736.0,\"ATSC7c\":0.418,\"ATSC7d\":-29.802,\"ATSC7i\":-91.857,\"ATSC7m\":-3530.839,\"ATSC7p\":-17.984,\"ATSC7s\":-8.023,\"ATSC7v\":-5120.491,\"ATSC8Z\":91.0,\"ATSC8c\":0.082,\"ATSC8d\":23.244,\"ATSC8i\":59.42,\"ATSC8m\":467.042,\"ATSC8p\":10.714,\"ATSC8s\":-43.361,\"ATSC8v\":1808.789,\"AXp-0d\":0.725,\"AXp-1d\":0.43,\"AXp-2d\":0.272,\"AXp-3d\":0.163,\"AXp-4d\":0.097,\"AXp-5d\":0.06,\"AXp-6d\":0.035,\"AXp-7d\":0.021,\"GATS1Z\":0.768,\"GATS1c\":1.516,\"GATS1d\":0.925,\"GATS1i\":1.182,\"GATS1m\":0.774,\"GATS1p\":1.128,\"GATS1s\":0.701,\"GATS1v\":0.985,\"GATS2Z\":0.761,\"GATS2c\":1.031,\"GATS2d\":1.526,\"GATS2i\":1.085,\"GATS2m\":0.767,\"GATS2p\":1.046,\"GATS2s\":0.608,\"GATS2v\":0.939,\"GATS3Z\":0.998,\"GATS3c\":1.12,\"GATS3d\":1.464,\"GATS3i\":1.147,\"GATS3m\":0.998,\"GATS3p\":1.108,\"GATS3s\":0.93,\"GATS3v\":1.052,\"GATS4Z\":1.033,\"GATS4c\":1.326,\"GATS4d\":1.336,\"GATS4i\":1.149,\"GATS4m\":1.031,\"GATS4p\":1.121,\"GATS4s\":1.096,\"GATS4v\":1.051,\"GATS5Z\":0.975,\"GATS5c\":1.315,\"GATS5d\":1.281,\"GATS5i\":0.957,\"GATS5m\":0.97,\"GATS5p\":0.937,\"GATS5s\":1.034,\"GATS5v\":0.9,\"GATS6Z\":1.062,\"GATS6c\":1.361,\"GATS6d\":1.407,\"GATS6i\":0.968,\"GATS6m\":1.055,\"GATS6p\":0.96,\"GATS6s\":1.308,\"GATS6v\":0.946,\"GATS7Z\":1.174,\"GATS7c\":1.088,\"GATS7d\":1.112,\"GATS7i\":1.12,\"GATS7m\":1.173,\"GATS7p\":1.132,\"GATS7s\":1.265,\"GATS7v\":1.147,\"GATS8Z\":1.014,\"GATS8c\":0.971,\"GATS8d\":0.828,\"GATS8i\":0.873,\"GATS8m\":1.011,\"GATS8p\":0.884,\"GATS8s\":1.065,\"GATS8v\":0.928,\"GRAVHp\":5950.656,\"MATS1Z\":0.027,\"MATS1c\":-0.52,\"MATS1d\":0.43,\"MATS1i\":0.004,\"MATS1m\":0.029,\"MATS1p\":0.019,\"MATS1s\":-0.09,\"MATS1v\":0.043,\"MATS2Z\":0.117,\"MATS2c\":-0.011,\"MATS2d\":0.018,\"MATS2i\":0.023,\"MATS2m\":0.116,\"MATS2p\":0.036,\"MATS2s\":0.057,\"MATS2v\":0.071,\"MATS3Z\":-0.065,\"MATS3c\":0.065,\"MATS3d\":-0.029,\"MATS3i\":-0.074,\"MATS3m\":-0.066,\"MATS3p\":-0.065,\"MATS3s\":-0.037,\"MATS3v\":-0.075,\"MATS4Z\":-0.054,\"MATS4c\":-0.058,\"MATS4d\":-0.039,\"MATS4i\":-0.114,\"MATS4m\":-0.055,\"MATS4p\":-0.117,\"MATS4s\":-0.086,\"MATS4v\":-0.088,\"MATS5Z\":0.057,\"MATS5c\":0.051,\"MATS5d\":-0.063,\"MATS5i\":0.027,\"MATS5m\":0.058,\"MATS5p\":0.034,\"MATS5s\":0.027,\"MATS5v\":0.05,\"MATS6Z\":-0.035,\"MATS6c\":-0.047,\"MATS6d\":-0.158,\"MATS6i\":0.021,\"MATS6m\":-0.034,\"MATS6p\":0.019,\"MATS6s\":-0.043,\"MATS6v\":0.002,\"MATS7Z\":-0.17,\"MATS7c\":0.029,\"MATS7d\":-0.069,\"MATS7i\":-0.122,\"MATS7m\":-0.172,\"MATS7p\":-0.14,\"MATS7s\":-0.006,\"MATS7v\":-0.187,\"MATS8Z\":0.019,\"MATS8c\":0.005,\"MATS8d\":0.049,\"MATS8i\":0.072,\"MATS8m\":0.021,\"MATS8p\":0.076,\"MATS8s\":-0.03,\"MATS8v\":0.06,\"MAXsOH\":13.679,\"MAXssO\":6.395,\"MINsOH\":11.78,\"MINssO\":5.848,\"MOMI-X\":21079.429,\"MOMI-Y\":18066.362,\"MOMI-Z\":9199.039,\"Mor01m\":2490.446,\"Mor01p\":2764.024,\"Mor01v\":2532.739,\"Mor02m\":25.451,\"Mor02p\":32.452,\"Mor02v\":29.646,\"Mor03m\":-8.087,\"Mor03p\":-3.234,\"Mor03v\":-4.578,\"Mor04m\":3.447,\"Mor04p\":2.877,\"Mor04v\":2.544,\"Mor05m\":-14.569,\"Mor05p\":-12.637,\"Mor05v\":-12.891,\"Mor06m\":4.613,\"Mor06p\":0.803,\"Mor06v\":2.291,\"Mor07m\":9.652,\"Mor07p\":7.855,\"Mor07v\":8.186,\"Mor08m\":-3.641,\"Mor08p\":-1.152,\"Mor08v\":-2.149,\"Mor09m\":-2.945,\"Mor09p\":-1.268,\"Mor09v\":-1.783,\"Mor10m\":2.471,\"Mor10p\":1.234,\"Mor10v\":1.705,\"Mor11m\":0.372,\"Mor11p\":0.602,\"Mor11v\":0.619,\"Mor12m\":0.969,\"Mor12p\":-1.579,\"Mor12v\":-0.634,\"Mor13m\":-2.642,\"Mor13p\":-1.286,\"Mor13v\":-1.892,\"Mor14m\":-0.112,\"Mor14p\":2.32,\"Mor14v\":1.51,\"Mor15m\":1.283,\"Mor15p\":0.464,\"Mor15v\":0.724,\"Mor16m\":-0.234,\"Mor16p\":0.335,\"Mor16v\":0.089,\"Mor17m\":-0.563,\"Mor17p\":-1.722,\"Mor17v\":-1.209,\"Mor18m\":-0.51,\"Mor18p\":-1.169,\"Mor18v\":-0.872,\"Mor19m\":0.121,\"Mor19p\":1.063,\"Mor19v\":0.682,\"Mor20m\":2.003,\"Mor20p\":2.187,\"Mor20v\":1.97,\"Mor21m\":-1.49,\"Mor21p\":-1.655,\"Mor21v\":-1.555,\"Mor22m\":0.229,\"Mor22p\":0.366,\"Mor22v\":0.351,\"Mor23m\":-0.212,\"Mor23p\":-0.917,\"Mor23v\":-0.638,\"Mor24m\":0.3,\"Mor24p\":-0.248,\"Mor24v\":-0.082,\"Mor25m\":0.569,\"Mor25p\":1.0,\"Mor25v\":0.806,\"Mor26m\":-0.092,\"Mor26p\":0.577,\"Mor26v\":0.357,\"Mor27m\":-0.74,\"Mor27p\":-0.384,\"Mor27v\":-0.48,\"Mor28m\":0.186,\"Mor28p\":-0.261,\"Mor28v\":-0.082,\"Mor29m\":0.27,\"Mor29p\":-0.298,\"Mor29v\":-0.086,\"Mor30m\":0.063,\"Mor30p\":-0.054,\"Mor30v\":-0.001,\"Mor31m\":0.1,\"Mor31p\":1.275,\"Mor31v\":0.838,\"Mor32m\":-0.541,\"Mor32p\":-0.444,\"Mor32v\":-0.506,\"NddssS\":0.0,\"NdssSe\":0.0,\"NdsssP\":0.0,\"NsAsH2\":0.0,\"NsGeH3\":0.0,\"NsPbH3\":0.0,\"NsSiH3\":0.0,\"NsSnH3\":0.0,\"NssAsH\":0.0,\"NssCH2\":3.0,\"NssNH2\":0.0,\"NsssAs\":0.0,\"NsssCH\":8.0,\"NsssNH\":0.0,\"NssssB\":0.0,\"NssssC\":4.0,\"NssssN\":0.0,\"Radius\":10.0,\"SM1_Dt\":0.0,\"SddssS\":0.0,\"SdssSe\":0.0,\"SdsssP\":0.0,\"SpAD_A\":78.427,\"SpAD_D\":992.109,\"SsAsH2\":0.0,\"SsGeH3\":0.0,\"SsPbH3\":0.0,\"SsSiH3\":0.0,\"SsSnH3\":0.0,\"SssAsH\":0.0,\"SssCH2\":-1.064,\"SssNH2\":0.0,\"SsssAs\":0.0,\"SsssCH\":-12.65,\"SsssNH\":0.0,\"SssssB\":0.0,\"SssssC\":-7.877,\"SssssN\":0.0,\"TMPC10\":3835.0,\"TMWC10\":216.713,\"TSRW10\":102.404,\"VE1_Dt\":7.82,\"VE2_Dt\":0.126,\"VE3_Dt\":3.881,\"VR1_Dt\":555.214,\"VR2_Dt\":8.955,\"VR3_Dt\":8.144,\"Xc-3dv\":3.45,\"Xc-4dv\":0.302,\"Xc-5dv\":1.395,\"Xc-6dv\":0.359,\"Xch-3d\":0.0,\"Xch-4d\":0.144,\"Xch-5d\":0.287,\"Xch-6d\":0.772,\"Xch-7d\":1.254,\"Xp-0dv\":35.233,\"Xp-1dv\":20.473,\"Xp-2dv\":17.354,\"Xp-3dv\":13.48,\"Xp-4dv\":10.099,\"Xp-5dv\":7.646,\"Xp-6dv\":5.357,\"Xp-7dv\":3.438,\"Xpc-4d\":15.989,\"Xpc-5d\":26.55,\"Xpc-6d\":48.945,\"n3Ring\":0.0,\"n4Ring\":1.0,\"n5Ring\":0.0,\"n6Ring\":5.0,\"n7Ring\":0.0,\"n8Ring\":1.0,\"n9Ring\":0.0,\"nARing\":4.0,\"nBonds\":119.0,\"nFRing\":1.0,\"nHBAcc\":14.0,\"nHBDon\":4.0,\"nHRing\":1.0,\"nSpiro\":0.0,\"naRing\":3.0,\"piPC10\":7.573,\"AATS0dv\":8.425,\"AATS0pe\":6.437,\"AATS0se\":7.913,\"AATS1dv\":7.546,\"AATS1pe\":6.562,\"AATS1se\":7.847,\"AATS2dv\":6.324,\"AATS2pe\":6.49,\"AATS2se\":7.862,\"AATS3dv\":5.526,\"AATS3pe\":6.556,\"AATS3se\":7.973,\"AATS4dv\":5.099,\"AATS4pe\":6.516,\"AATS4se\":7.98,\"AATS5dv\":4.994,\"AATS5pe\":6.519,\"AATS5se\":8.031,\"AATS6dv\":4.691,\"AATS6pe\":6.55,\"AATS6se\":8.055,\"AATS7dv\":4.206,\"AATS7pe\":6.496,\"AATS7se\":7.996,\"AATS8dv\":3.288,\"AATS8pe\":6.197,\"AATS8se\":7.769,\"AATSC0Z\":7.788,\"AATSC0c\":0.026,\"AATSC0d\":0.775,\"AATSC0i\":1.357,\"AATSC0m\":36.806,\"AATSC0p\":0.231,\"AATSC0s\":2.358,\"AATSC0v\":49.196,\"AATSC1Z\":0.21,\"AATSC1c\":-0.014,\"AATSC1d\":0.333,\"AATSC1i\":0.005,\"AATSC1m\":1.053,\"AATSC1p\":0.004,\"AATSC1s\":-0.212,\"AATSC1v\":2.109,\"AATSC2Z\":0.911,\"AATSC2c\":0.0,\"AATSC2d\":0.014,\"AATSC2i\":0.031,\"AATSC2m\":4.264,\"AATSC2p\":0.008,\"AATSC2s\":0.135,\"AATSC2v\":3.486,\"AATSC3Z\":-0.506,\"AATSC3c\":0.002,\"AATSC3d\":-0.022,\"AATSC3i\":-0.1,\"AATSC3m\":-2.419,\"AATSC3p\":-0.015,\"AATSC3s\":-0.088,\"AATSC3v\":-3.686,\"AATSC4Z\":-0.422,\"AATSC4c\":-0.002,\"AATSC4d\":-0.03,\"AATSC4i\":-0.155,\"AATSC4m\":-2.024,\"AATSC4p\":-0.027,\"AATSC4s\":-0.202,\"AATSC4v\":-4.319,\"AATSC5Z\":0.447,\"AATSC5c\":0.001,\"AATSC5d\":-0.048,\"AATSC5i\":0.037,\"AATSC5m\":2.117,\"AATSC5p\":0.008,\"AATSC5s\":0.063,\"AATSC5v\":2.477,\"AATSC6Z\":-0.276,\"AATSC6c\":-0.001,\"AATSC6d\":-0.123,\"AATSC6i\":0.029,\"AATSC6m\":-1.259,\"AATSC6p\":0.004,\"AATSC6s\":-0.101,\"AATSC6v\":0.091,\"AATSC7Z\":-1.321,\"AATSC7c\":0.001,\"AATSC7d\":-0.054,\"AATSC7i\":-0.165,\"AATSC7m\":-6.339,\"AATSC7p\":-0.032,\"AATSC7s\":-0.014,\"AATSC7v\":-9.193,\"AATSC8Z\":0.149,\"AATSC8c\":0.0,\"AATSC8d\":0.038,\"AATSC8i\":0.097,\"AATSC8m\":0.763,\"AATSC8p\":0.018,\"AATSC8s\":-0.071,\"AATSC8v\":2.956,\"ATS0are\":721.515,\"ATS1are\":763.704,\"ATS2are\":1359.014,\"ATS3are\":1991.644,\"ATS4are\":2609.33,\"ATS5are\":3168.461,\"ATS6are\":3383.152,\"ATS7are\":3584.363,\"ATS8are\":3762.312,\"ATSC0dv\":500.0,\"ATSC0pe\":17.365,\"ATSC0se\":12.704,\"ATSC1dv\":148.0,\"ATSC1pe\":-0.743,\"ATSC1se\":-0.858,\"ATSC2dv\":49.0,\"ATSC2pe\":3.807,\"ATSC2se\":2.366,\"ATSC3dv\":-120.0,\"ATSC3pe\":-1.71,\"ATSC3se\":-0.918,\"ATSC4dv\":-33.0,\"ATSC4pe\":-3.707,\"ATSC4se\":-3.419,\"ATSC5dv\":45.0,\"ATSC5pe\":2.891,\"ATSC5se\":1.571,\"ATSC6dv\":-268.0,\"ATSC6pe\":-4.503,\"ATSC6se\":-3.002,\"ATSC7dv\":-227.0,\"ATSC7pe\":-4.702,\"ATSC7se\":-0.551,\"ATSC8dv\":56.0,\"ATSC8pe\":-1.144,\"ATSC8se\":-0.776,\"AXp-0dv\":0.568,\"AXp-1dv\":0.301,\"AXp-2dv\":0.165,\"AXp-3dv\":0.089,\"AXp-4dv\":0.048,\"AXp-5dv\":0.026,\"AXp-6dv\":0.014,\"AXp-7dv\":0.007,\"BertzCT\":2280.346,\"ECIndex\":2007.0,\"ETA_eta\":100.232,\"GATS1dv\":0.496,\"GATS1pe\":0.721,\"GATS1se\":0.775,\"GATS2dv\":0.868,\"GATS2pe\":0.706,\"GATS2se\":0.745,\"GATS3dv\":1.08,\"GATS3pe\":1.028,\"GATS3se\":1.061,\"GATS4dv\":1.042,\"GATS4pe\":1.136,\"GATS4se\":1.189,\"GATS5dv\":1.103,\"GATS5pe\":1.158,\"GATS5se\":1.213,\"GATS6dv\":1.241,\"GATS6pe\":1.263,\"GATS6se\":1.313,\"GATS7dv\":1.144,\"GATS7pe\":1.189,\"GATS7se\":1.187,\"GATS8dv\":0.989,\"GATS8pe\":1.06,\"GATS8se\":1.051,\"LogEE_A\":5.068,\"LogEE_D\":494.822,\"MATS1dv\":0.281,\"MATS1pe\":-0.041,\"MATS1se\":-0.064,\"MATS2dv\":0.052,\"MATS2pe\":0.116,\"MATS2se\":0.099,\"MATS3dv\":-0.088,\"MATS3pe\":-0.036,\"MATS3se\":-0.027,\"MATS4dv\":-0.018,\"MATS4pe\":-0.06,\"MATS4se\":-0.075,\"MATS5dv\":0.021,\"MATS5pe\":0.038,\"MATS5se\":0.029,\"MATS6dv\":-0.116,\"MATS6pe\":-0.056,\"MATS6se\":-0.051,\"MATS7dv\":-0.092,\"MATS7pe\":-0.055,\"MATS7se\":-0.009,\"MATS8dv\":0.021,\"MATS8pe\":-0.012,\"MATS8se\":-0.011,\"MAXaaCH\":1.728,\"MAXaasC\":0.362,\"MAXdssC\":0.171,\"MAXsCH3\":1.561,\"MAXssNH\":2.723,\"MDEC-11\":2.553,\"MDEC-12\":10.904,\"MDEC-13\":20.235,\"MDEC-14\":6.497,\"MDEC-22\":19.853,\"MDEC-23\":46.264,\"MDEC-24\":9.33,\"MDEC-33\":33.647,\"MDEC-34\":18.896,\"MDEC-44\":2.335,\"MDEO-11\":4.5,\"MDEO-12\":7.547,\"MDEO-22\":1.851,\"MINaaCH\":1.483,\"MINaasC\":0.069,\"MINdssC\":-1.231,\"MINsCH3\":1.086,\"MINssNH\":2.723,\"Mor01se\":6545.422,\"Mor02se\":40.017,\"Mor03se\":-11.327,\"Mor04se\":13.926,\"Mor05se\":-20.174,\"Mor06se\":-6.474,\"Mor07se\":11.434,\"Mor08se\":2.485,\"Mor09se\":-0.009,\"Mor10se\":-0.768,\"Mor11se\":-0.323,\"Mor12se\":-4.465,\"Mor13se\":0.257,\"Mor14se\":3.264,\"Mor15se\":-0.054,\"Mor16se\":1.955,\"Mor17se\":-3.554,\"Mor18se\":-2.68,\"Mor19se\":2.234,\"Mor20se\":4.907,\"Mor21se\":-2.494,\"Mor22se\":0.41,\"Mor23se\":-1.533,\"Mor24se\":-0.339,\"Mor25se\":1.648,\"Mor26se\":0.777,\"Mor27se\":-0.727,\"Mor28se\":-0.492,\"Mor29se\":-0.783,\"Mor30se\":-0.308,\"Mor31se\":2.213,\"Mor32se\":-0.021,\"NddssSe\":0.0,\"NssGeH2\":0.0,\"NssPbH2\":0.0,\"NssSiH2\":0.0,\"NssSnH2\":0.0,\"NsssGeH\":0.0,\"NsssPbH\":0.0,\"NsssSiH\":0.0,\"NsssSnH\":0.0,\"NsssdAs\":0.0,\"NssssBe\":0.0,\"NssssGe\":0.0,\"NssssPb\":0.0,\"NssssSi\":0.0,\"NssssSn\":0.0,\"NsssssP\":0.0,\"SM1_DzZ\":3.643,\"SM1_Dzi\":2.649,\"SM1_Dzm\":3.632,\"SM1_Dzp\":-15.67,\"SM1_Dzv\":-5.905,\"SddssSe\":0.0,\"SpAD_Dt\":2193.707,\"SpAbs_A\":78.427,\"SpAbs_D\":992.109,\"SpMAD_A\":1.265,\"SpMAD_D\":16.002,\"SpMax_A\":2.73,\"SpMax_D\":494.822,\"SssGeH2\":0.0,\"SssPbH2\":0.0,\"SssSiH2\":0.0,\"SssSnH2\":0.0,\"SsssGeH\":0.0,\"SsssPbH\":0.0,\"SsssSiH\":0.0,\"SsssSnH\":0.0,\"SsssdAs\":0.0,\"SssssBe\":0.0,\"SssssGe\":0.0,\"SssssPb\":0.0,\"SssssSi\":0.0,\"SssssSn\":0.0,\"SsssssP\":0.0,\"TopoPSA\":221.29,\"TpiPC10\":8.934,\"VAdjMat\":7.087,\"VE1_DzZ\":7.756,\"VE1_Dzi\":7.759,\"VE1_Dzm\":7.756,\"VE1_Dzp\":7.741,\"VE1_Dzv\":7.749,\"VE2_DzZ\":0.125,\"VE2_Dzi\":0.125,\"VE2_Dzm\":0.125,\"VE2_Dzp\":0.125,\"VE2_Dzv\":0.125,\"VE3_DzZ\":3.873,\"VE3_Dzi\":3.873,\"VE3_Dzm\":3.873,\"VE3_Dzp\":3.871,\"VE3_Dzv\":3.872,\"VR1_DzZ\":574.846,\"VR1_Dzi\":574.88,\"VR1_Dzm\":574.85,\"VR1_Dzp\":582.853,\"VR1_Dzv\":579.145,\"VR2_DzZ\":9.272,\"VR2_Dzi\":9.272,\"VR2_Dzm\":9.272,\"VR2_Dzp\":9.401,\"VR2_Dzv\":9.341,\"VR3_DzZ\":8.179,\"VR3_Dzi\":8.179,\"VR3_Dzm\":8.179,\"VR3_Dzp\":8.192,\"VR3_Dzv\":8.186,\"Xch-3dv\":0.0,\"Xch-4dv\":0.083,\"Xch-5dv\":0.141,\"Xch-6dv\":0.336,\"Xch-7dv\":0.589,\"Xpc-4dv\":8.033,\"Xpc-5dv\":12.308,\"Xpc-6dv\":19.891,\"Zagreb1\":346.0,\"Zagreb2\":429.0,\"charges\":[-0.25468,0.62538,-0.56595,-0.50363,0.18103,0.40538,-0.55421,-0.04929,-0.24152,0.17855,-0.7729,-0.17425,0.16122,-0.55209,0.11071,0.21883,-0.49286,0.63178,-0.25738,-0.57103,-0.10684,0.14588,-0.51719,0.62593,-0.58018,-0.03718,-0.05526,-0.07653,-0.06763,-0.08294,-0.06777,0.22527,-0.77108,-0.18849,0.18535,-0.50633,0.61668,-0.56697,0.15287,-0.74975,0.10565,-0.69614,0.56743,-0.60017,-0.03613,-0.05373,-0.08118,-0.07407,-0.08102,-0.08559,-0.02881,-0.08461,-0.08017,-0.08129,-0.07536,-0.08847,-0.0349,-0.0729,0.006,-0.22626,-0.23051,-0.21495,0.11728,0.12087,0.12539,0.15589,0.11528,0.10797,0.08966,0.10412,0.53545,0.13073,0.11266,0.12383,0.10352,0.13095,0.12365,0.11301,0.11677,0.126,0.13846,0.11626,0.09504,0.0929,0.09431,0.10253,0.53019,0.13116,0.12903,0.12236,0.12735,0.52674,0.14618,0.42055,0.11637,0.09185,0.09004,0.08885,0.08651,0.10259,0.09113,0.0891,0.09041,0.09032,0.10576,0.08215,0.08648,0.10892,0.09296,0.08936,0.09841,0.09234,0.12662],\"fragCpx\":842.15,\"n10Ring\":0.0,\"n11Ring\":0.0,\"n12Ring\":0.0,\"n3ARing\":0.0,\"n3HRing\":0.0,\"n3aRing\":0.0,\"n4ARing\":1.0,\"n4FRing\":0.0,\"n4HRing\":1.0,\"n4aRing\":0.0,\"n5ARing\":0.0,\"n5FRing\":0.0,\"n5HRing\":0.0,\"n5aRing\":0.0,\"n6ARing\":2.0,\"n6FRing\":0.0,\"n6HRing\":0.0,\"n6aRing\":3.0,\"n7ARing\":0.0,\"n7FRing\":0.0,\"n7HRing\":0.0,\"n7aRing\":0.0,\"n8ARing\":1.0,\"n8FRing\":0.0,\"n8HRing\":0.0,\"n8aRing\":0.0,\"n9ARing\":0.0,\"n9FRing\":0.0,\"n9HRing\":0.0,\"n9aRing\":0.0,\"nAHRing\":1.0,\"nBondsA\":18.0,\"nBondsD\":7.0,\"nBondsM\":25.0,\"nBondsO\":68.0,\"nBondsS\":94.0,\"nBondsT\":0.0,\"nFARing\":1.0,\"nFHRing\":1.0,\"nFaRing\":0.0,\"nHetero\":15.0,\"naHRing\":0.0,\"AATS0are\":6.385,\"AATS1are\":6.418,\"AATS2are\":6.38,\"AATS3are\":6.466,\"AATS4are\":6.443,\"AATS5are\":6.466,\"AATS6are\":6.494,\"AATS7are\":6.435,\"AATS8are\":6.148,\"AATSC0dv\":4.425,\"AATSC0pe\":0.154,\"AATSC0se\":0.112,\"AATSC1dv\":1.244,\"AATSC1pe\":-0.006,\"AATSC1se\":-0.007,\"AATSC2dv\":0.23,\"AATSC2pe\":0.018,\"AATSC2se\":0.011,\"AATSC3dv\":-0.39,\"AATSC3pe\":-0.006,\"AATSC3se\":-0.003,\"AATSC4dv\":-0.081,\"AATSC4pe\":-0.009,\"AATSC4se\":-0.008,\"AATSC5dv\":0.092,\"AATSC5pe\":0.006,\"AATSC5se\":0.003,\"AATSC6dv\":-0.514,\"AATSC6pe\":-0.009,\"AATSC6se\":-0.006,\"AATSC7dv\":-0.408,\"AATSC7pe\":-0.008,\"AATSC7se\":-0.001,\"AATSC8dv\":0.092,\"AATSC8pe\":-0.002,\"AATSC8se\":-0.001,\"AETA_eta\":1.617,\"ATSC0are\":18.91,\"ATSC1are\":-1.012,\"ATSC2are\":3.96,\"ATSC3are\":-1.641,\"ATSC4are\":-4.364,\"ATSC5are\":2.774,\"ATSC6are\":-4.86,\"ATSC7are\":-3.463,\"ATSC8are\":-1.296,\"BCUTZ-1h\":8.04,\"BCUTZ-1l\":5.694,\"BCUTc-1h\":0.481,\"BCUTc-1l\":-0.488,\"BCUTd-1h\":4.118,\"BCUTd-1l\":0.971,\"BCUTi-1h\":14.54,\"BCUTi-1l\":10.954,\"BCUTm-1h\":16.025,\"BCUTm-1l\":11.705,\"BCUTp-1h\":2.01,\"BCUTp-1l\":0.74,\"BCUTs-1h\":7.014,\"BCUTs-1l\":1.069,\"BCUTv-1h\":20.915,\"BCUTv-1l\":14.7,\"BalabanJ\":1.309,\"Diameter\":19.0,\"ETA_beta\":67.25,\"GATS1are\":0.739,\"GATS2are\":0.718,\"GATS3are\":1.04,\"GATS4are\":1.156,\"GATS5are\":1.181,\"GATS6are\":1.284,\"GATS7are\":1.188,\"GATS8are\":1.058,\"HybRatio\":0.447,\"Lipinski\":0.0,\"LogEE_Dt\":1091.588,\"MATS1are\":-0.051,\"MATS2are\":0.111,\"MATS3are\":-0.032,\"MATS4are\":-0.064,\"MATS5are\":0.034,\"MATS6are\":-0.056,\"MATS7are\":-0.037,\"MATS8are\":-0.013,\"MAXssCH2\":-0.209,\"MAXsssCH\":-1.02,\"MAXssssC\":-1.673,\"MINssCH2\":-0.543,\"MINsssCH\":-2.035,\"MINssssC\":-2.391,\"NsssssAs\":0.0,\"RotRatio\":0.147,\"SM1_Dzpe\":3.783,\"SM1_Dzse\":3.619,\"SMR_VSA1\":67.771,\"SMR_VSA2\":0.0,\"SMR_VSA3\":5.317,\"SMR_VSA4\":16.748,\"SMR_VSA5\":108.252,\"SMR_VSA6\":6.607,\"SMR_VSA7\":118.832,\"SMR_VSA8\":0.0,\"SMR_VSA9\":0.0,\"SpAD_DzZ\":851.498,\"SpAD_Dzi\":865.54,\"SpAD_Dzm\":851.709,\"SpAD_Dzp\":1245.292,\"SpAD_Dzv\":1050.992,\"SpAbs_Dt\":2193.707,\"SpDiam_A\":5.46,\"SpDiam_D\":691.016,\"SpMAD_Dt\":35.382,\"SpMax_Dt\":1091.588,\"SsssssAs\":0.0,\"VE1_Dzpe\":7.757,\"VE1_Dzse\":7.756,\"VE2_Dzpe\":0.125,\"VE2_Dzse\":0.125,\"VE3_Dzpe\":3.873,\"VE3_Dzse\":3.873,\"VMcGowan\":620.43,\"VR1_Dzpe\":574.75,\"VR1_Dzse\":574.861,\"VR2_Dzpe\":9.27,\"VR2_Dzse\":9.272,\"VR3_Dzpe\":8.178,\"VR3_Dzse\":8.179,\"mZagreb1\":23.361,\"mZagreb2\":13.215,\"n10ARing\":0.0,\"n10FRing\":0.0,\"n10HRing\":0.0,\"n10aRing\":0.0,\"n11ARing\":0.0,\"n11FRing\":0.0,\"n11HRing\":0.0,\"n11aRing\":0.0,\"n12ARing\":0.0,\"n12FRing\":0.0,\"n12HRing\":0.0,\"n12aRing\":0.0,\"n3AHRing\":0.0,\"n3aHRing\":0.0,\"n4AHRing\":1.0,\"n4FARing\":0.0,\"n4FHRing\":0.0,\"n4FaRing\":0.0,\"n4aHRing\":0.0,\"n5AHRing\":0.0,\"n5FARing\":0.0,\"n5FHRing\":0.0,\"n5FaRing\":0.0,\"n5aHRing\":0.0,\"n6AHRing\":0.0,\"n6FARing\":0.0,\"n6FHRing\":0.0,\"n6FaRing\":0.0,\"n6aHRing\":0.0,\"n7AHRing\":0.0,\"n7FARing\":0.0,\"n7FHRing\":0.0,\"n7FaRing\":0.0,\"n7aHRing\":0.0,\"n8AHRing\":0.0,\"n8FARing\":0.0,\"n8FHRing\":0.0,\"n8FaRing\":0.0,\"n8aHRing\":0.0,\"n9AHRing\":0.0,\"n9FARing\":0.0,\"n9FHRing\":0.0,\"n9FaRing\":0.0,\"n9aHRing\":0.0,\"nBondsKD\":16.0,\"nBondsKS\":103.0,\"nFAHRing\":1.0,\"nFaHRing\":0.0,\"nG12Ring\":0.0,\"AATSC0are\":0.167,\"AATSC1are\":-0.009,\"AATSC2are\":0.019,\"AATSC3are\":-0.005,\"AATSC4are\":-0.011,\"AATSC5are\":0.006,\"AATSC6are\":-0.009,\"AATSC7are\":-0.006,\"AATSC8are\":-0.002,\"AETA_beta\":1.085,\"BCUTdv-1h\":6.038,\"BCUTdv-1l\":0.992,\"BCUTpe-1h\":3.514,\"BCUTpe-1l\":2.243,\"BCUTse-1h\":3.727,\"BCUTse-1l\":2.439,\"ETA_alpha\":28.567,\"ETA_dBeta\":-11.25,\"ETA_eta_B\":1.642,\"ETA_eta_F\":86.157,\"ETA_eta_L\":16.171,\"ETA_eta_R\":186.389,\"ETA_psi_1\":0.524,\"LabuteASA\":357.885,\"LogEE_DzZ\":425.235,\"LogEE_Dzi\":432.231,\"LogEE_Dzm\":425.34,\"LogEE_Dzp\":619.01,\"LogEE_Dzv\":523.759,\"PEOE_VSA1\":44.321,\"PEOE_VSA2\":19.178,\"PEOE_VSA3\":9.589,\"PEOE_VSA4\":0.0,\"PEOE_VSA5\":0.0,\"PEOE_VSA6\":80.578,\"PEOE_VSA7\":54.823,\"PEOE_VSA8\":37.668,\"PEOE_VSA9\":35.649,\"SM1_Dzare\":4.186,\"SpAD_Dzpe\":848.049,\"SpAD_Dzse\":852.055,\"SpAbs_DzZ\":848.09,\"SpAbs_Dzi\":863.062,\"SpAbs_Dzm\":848.311,\"SpAbs_Dzp\":1254.85,\"SpAbs_Dzv\":1054.611,\"SpDiam_Dt\":1459.836,\"SpMAD_DzZ\":13.734,\"SpMAD_Dzi\":13.96,\"SpMAD_Dzm\":13.737,\"SpMAD_Dzp\":20.085,\"SpMAD_Dzv\":16.951,\"SpMax_DzZ\":425.235,\"SpMax_Dzi\":432.231,\"SpMax_Dzm\":425.34,\"SpMax_Dzp\":619.01,\"SpMax_Dzv\":523.759,\"VE1_Dzare\":7.757,\"VE2_Dzare\":0.125,\"VE3_Dzare\":3.873,\"VR1_Dzare\":574.565,\"VR2_Dzare\":9.267,\"VR3_Dzare\":8.178,\"n10AHRing\":0.0,\"n10FARing\":0.0,\"n10FHRing\":0.0,\"n10FaRing\":0.0,\"n10aHRing\":0.0,\"n11AHRing\":0.0,\"n11FARing\":0.0,\"n11FHRing\":0.0,\"n11FaRing\":0.0,\"n11aHRing\":0.0,\"n12AHRing\":0.0,\"n12FARing\":0.0,\"n12FHRing\":0.0,\"n12FaRing\":0.0,\"n12aHRing\":0.0,\"n4FAHRing\":0.0,\"n4FaHRing\":0.0,\"n5FAHRing\":0.0,\"n5FaHRing\":0.0,\"n6FAHRing\":0.0,\"n6FaHRing\":0.0,\"n7FAHRing\":0.0,\"n7FaHRing\":0.0,\"n8FAHRing\":0.0,\"n8FaHRing\":0.0,\"n9FAHRing\":0.0,\"n9FaHRing\":0.0,\"nAromAtom\":18.0,\"nAromBond\":18.0,\"nG12ARing\":0.0,\"nG12FRing\":1.0,\"nG12HRing\":0.0,\"nG12aRing\":0.0,\"AETA_alpha\":0.461,\"AETA_dBeta\":-0.181,\"AETA_eta_B\":0.026,\"AETA_eta_F\":1.39,\"AETA_eta_L\":0.261,\"AETA_eta_R\":3.006,\"BCUTare-1h\":3.568,\"BCUTare-1l\":2.193,\"ETA_beta_s\":39.25,\"ETA_dPsi_A\":0.19,\"ETA_dPsi_B\":0.0,\"ETA_eta_BR\":2.244,\"ETA_eta_FL\":13.101,\"ETA_eta_RL\":29.272,\"GeomRadius\":10.431,\"LogEE_Dzpe\":423.514,\"LogEE_Dzse\":425.513,\"PEOE_VSA10\":23.913,\"PEOE_VSA11\":23.592,\"PEOE_VSA12\":0.0,\"PEOE_VSA13\":5.907,\"SlogP_VSA1\":5.317,\"SlogP_VSA2\":105.32,\"SlogP_VSA3\":42.862,\"SlogP_VSA4\":16.748,\"SlogP_VSA5\":86.705,\"SlogP_VSA6\":102.142,\"SlogP_VSA7\":0.0,\"SlogP_VSA8\":0.0,\"SlogP_VSA9\":0.0,\"SpAD_Dzare\":839.55,\"SpAbs_Dzpe\":844.51,\"SpAbs_Dzse\":848.669,\"SpDiam_DzZ\":599.412,\"SpDiam_Dzi\":609.17,\"SpDiam_Dzm\":599.56,\"SpDiam_Dzp\":874.37,\"SpDiam_Dzv\":739.108,\"SpMAD_Dzpe\":13.678,\"SpMAD_Dzse\":13.743,\"SpMax_Dzpe\":423.514,\"SpMax_Dzse\":425.513,\"n10FAHRing\":0.0,\"n10FaHRing\":0.0,\"n11FAHRing\":0.0,\"n11FaHRing\":0.0,\"n12FAHRing\":0.0,\"n12FaHRing\":0.0,\"nG12AHRing\":0.0,\"nG12FARing\":1.0,\"nG12FHRing\":1.0,\"nG12FaRing\":0.0,\"nG12aHRing\":0.0,\"nHeavyAtom\":62.0,\"AETA_beta_s\":0.633,\"AETA_eta_BR\":0.036,\"AETA_eta_FL\":0.211,\"AETA_eta_RL\":0.472,\"DetourIndex\":33353.0,\"EState_VSA1\":112.604,\"EState_VSA2\":35.301,\"EState_VSA3\":5.563,\"EState_VSA4\":13.847,\"EState_VSA5\":25.98,\"EState_VSA6\":92.71,\"EState_VSA7\":0.0,\"EState_VSA8\":5.317,\"EState_VSA9\":23.684,\"ETA_beta_ns\":28.0,\"ETA_shape_p\":0.21,\"ETA_shape_x\":0.07,\"ETA_shape_y\":0.333,\"GhoseFilter\":0.0,\"LogEE_Dzare\":419.275,\"SlogP_VSA10\":0.0,\"SlogP_VSA11\":0.0,\"SpAbs_Dzare\":835.635,\"SpDiam_Dzpe\":596.97,\"SpDiam_Dzse\":599.806,\"SpMAD_Dzare\":13.541,\"SpMax_Dzare\":419.275,\"TopoPSA(NO)\":221.29,\"VSA_EState1\":30.272,\"VSA_EState2\":83.453,\"VSA_EState3\":40.234,\"VSA_EState4\":-7.019,\"VSA_EState5\":-6.841,\"VSA_EState6\":22.938,\"VSA_EState7\":-10.512,\"VSA_EState8\":7.974,\"VSA_EState9\":0.0,\"nBridgehead\":2.0,\"nG12FAHRing\":1.0,\"nG12FaHRing\":0.0,\"AETA_beta_ns\":0.452,\"EState_VSA10\":39.292,\"ETA_dAlpha_A\":0.0,\"ETA_dAlpha_B\":0.039,\"FilterItLogS\":-6.533,\"GeomDiameter\":18.781,\"SpDiam_Dzare\":590.982,\"ETA_beta_ns_d\":0.0,\"ETA_epsilon_1\":0.618,\"ETA_epsilon_2\":0.88,\"ETA_epsilon_3\":0.443,\"ETA_epsilon_4\":0.57,\"ETA_epsilon_5\":0.844,\"fukui_neutral\":[0.001,0.001,0.007,0.0,0.004,0.035,0.036,0.002,-0.002,0.0,0.014,0.003,0.001,0.023,0.0,0.0,-0.003,0.0,0.001,0.011,0.002,-0.001,0.004,0.012,0.023,0.008,0.015,0.014,0.023,0.011,0.01,0.0,0.007,-0.003,-0.001,-0.001,0.006,0.014,0.001,0.006,-0.001,0.022,0.01,0.024,0.014,0.013,0.013,0.026,0.014,0.012,0.0,0.001,0.007,0.015,0.008,0.002,0.025,0.022,-0.003,0.001,-0.002,-0.003,0.007,0.013,0.006,0.015,0.011,0.011,0.006,0.006,0.006,0.011,0.016,0.017,0.009,0.011,0.011,-0.001,0.005,0.0,0.005,0.014,0.019,0.019,0.014,0.005,0.004,0.009,0.003,0.012,0.01,0.0,0.0,0.01,0.012,0.019,0.021,0.018,0.01,0.003,0.012,0.015,0.013,0.006,0.013,0.009,0.003,0.011,0.011,0.002,0.011,0.014,0.01],\"AETA_beta_ns_d\":0.0,\"ETA_dEpsilon_A\":0.175,\"ETA_dEpsilon_B\":0.048,\"ETA_dEpsilon_C\":-0.128,\"ETA_dEpsilon_D\":0.035,\"GeomShapeIndex\":0.8,\"PetitjeanIndex\":0.474,\"TopoShapeIndex\":0.9,\"fukui_negative\":[0.001,0.0,0.007,0.001,0.006,0.006,0.018,0.006,-0.003,0.003,0.019,0.005,0.001,0.036,0.002,0.002,0.0,0.001,0.003,0.014,0.001,-0.001,-0.003,-0.001,0.008,-0.001,0.011,0.014,0.01,0.011,0.005,0.002,0.008,-0.003,-0.001,-0.003,0.002,0.012,0.001,0.007,-0.001,0.033,0.004,0.025,0.009,0.014,0.014,0.021,0.018,0.008,0.006,0.004,0.008,0.019,0.011,0.004,0.029,0.03,-0.002,0.002,-0.001,-0.001,0.007,0.013,0.005,0.016,0.011,0.009,0.007,0.008,0.009,0.012,0.018,0.023,0.017,0.021,0.011,0.0,0.009,0.001,0.005,0.009,0.015,0.015,0.01,0.0,0.007,0.01,0.004,0.013,0.01,0.001,0.001,0.011,0.011,0.018,0.02,0.018,0.008,0.005,0.015,0.018,0.016,0.009,0.015,0.009,0.003,0.012,0.011,0.003,0.012,0.014,0.014],\"fukui_positive\":[0.001,0.001,0.007,0.0,0.002,0.064,0.055,-0.001,-0.001,-0.003,0.009,0.0,0.0,0.011,-0.001,-0.002,-0.006,-0.001,0.0,0.008,0.002,-0.002,0.011,0.024,0.037,0.018,0.019,0.014,0.035,0.011,0.015,-0.002,0.007,-0.003,-0.001,0.0,0.01,0.017,0.001,0.005,0.0,0.011,0.015,0.022,0.018,0.012,0.013,0.032,0.01,0.015,-0.005,-0.001,0.005,0.01,0.006,0.0,0.021,0.013,-0.003,-0.001,-0.002,-0.005,0.007,0.013,0.006,0.014,0.011,0.013,0.005,0.003,0.002,0.009,0.014,0.01,0.001,0.002,0.011,-0.003,0.002,-0.001,0.005,0.018,0.024,0.024,0.019,0.01,0.001,0.008,0.001,0.011,0.009,0.0,-0.002,0.008,0.013,0.019,0.021,0.019,0.012,0.0,0.01,0.012,0.011,0.003,0.012,0.009,0.003,0.01,0.011,0.001,0.009,0.014,0.007],\"GeomPetitjeanIndex\":0.445,\"global_electrophilicity_index\":2.4121},\"optimization\":\"b00965e1-039e-42ec-9830-310baa27463e\",\"initial_molecule\":{\"cell\":null,\"atoms\":[{\"mass\":null,\"position\":[-3.02424558,6.22559732,-1.94463017],\"atomic_number\":6},{\"mass\":null,\"position\":[-1.9937103,5.49888778,-1.13991718],\"atomic_number\":6},{\"mass\":null,\"position\":[-1.39948727,5.97364229,-0.17970889],\"atomic_number\":8},{\"mass\":null,\"position\":[-1.84946279,4.2262541,-1.59260577],\"atomic_number\":8},{\"mass\":null,\"position\":[-0.88948491,3.46009693,-0.89379797],\"atomic_number\":6},{\"mass\":null,\"position\":[-1.2384549,2.99350419,0.54041691],\"atomic_number\":6},{\"mass\":null,\"position\":[-0.32994914,3.00264745,1.39682841],\"atomic_number\":8},{\"mass\":null,\"position\":[-2.61553259,2.35541795,0.92909608],\"atomic_number\":6},{\"mass\":null,\"position\":[-3.80111661,3.12491702,0.35460176],\"atomic_number\":6},{\"mass\":null,\"position\":[-2.60911417,2.58784152,2.50074053],\"atomic_number\":6},{\"mass\":null,\"position\":[-2.4532894,3.97593282,2.8101885],\"atomic_number\":8},{\"mass\":null,\"position\":[-3.86659456,2.1683112,3.21517811],\"atomic_number\":6},{\"mass\":null,\"position\":[-4.15867992,0.7189809,2.9360112],\"atomic_number\":6},{\"mass\":null,\"position\":[-5.53338393,0.60697925,2.48990284],\"atomic_number\":8},{\"mass\":null,\"position\":[-5.13331822,0.00223513,1.25370113],\"atomic_number\":6},{\"mass\":null,\"position\":[-3.62045446,0.01605487,1.63791848],\"atomic_number\":6},{\"mass\":null,\"position\":[-2.92530161,-1.24730448,1.89253793],\"atomic_number\":8},{\"mass\":null,\"position\":[-3.54377867,-2.26529723,2.54192496],\"atomic_number\":6},{\"mass\":null,\"position\":[-2.57158961,-3.38181852,2.77621649],\"atomic_number\":6},{\"mass\":null,\"position\":[-4.7001937,-2.30084026,2.92176889],\"atomic_number\":8},{\"mass\":null,\"position\":[-2.65739441,0.7890716,0.61756234],\"atomic_number\":6},{\"mass\":null,\"position\":[-2.93570225,0.22621472,-0.87281476],\"atomic_number\":6},{\"mass\":null,\"position\":[-3.33337424,-1.19916547,-0.74292301],\"atomic_number\":8},{\"mass\":null,\"position\":[-4.51040048,-1.60924432,-1.28391247],\"atomic_number\":6},{\"mass\":null,\"position\":[-5.34852722,-0.88236553,-1.78206115],\"atomic_number\":8},{\"mass\":null,\"position\":[-4.63910629,-3.08326903,-1.1517405],\"atomic_number\":6},{\"mass\":null,\"position\":[-5.92270381,-3.64066697,-1.2416721],\"atomic_number\":6},{\"mass\":null,\"position\":[-6.08195765,-5.02845113,-1.16526656],\"atomic_number\":6},{\"mass\":null,\"position\":[-4.97598306,-5.8573835,-1.00174473],\"atomic_number\":6},{\"mass\":null,\"position\":[-3.69403713,-5.30723764,-0.91927864],\"atomic_number\":6},{\"mass\":null,\"position\":[-3.52877264,-3.92010458,-0.9841671],\"atomic_number\":6},{\"mass\":null,\"position\":[-1.78386469,0.12947347,-1.9768009],\"atomic_number\":6},{\"mass\":null,\"position\":[-2.34214876,-0.63317616,-3.08665694],\"atomic_number\":8},{\"mass\":null,\"position\":[-0.57689379,-0.72305382,-1.47675675],\"atomic_number\":6},{\"mass\":null,\"position\":[0.78032555,-0.00550862,-1.36562113],\"atomic_number\":6},{\"mass\":null,\"position\":[1.48155192,-0.53873233,-0.2197697],\"atomic_number\":8},{\"mass\":null,\"position\":[2.08267636,-1.74659251,-0.41587569],\"atomic_number\":6},{\"mass\":null,\"position\":[1.85231958,-2.50669615,-1.3448345],\"atomic_number\":8},{\"mass\":null,\"position\":[3.1258736,-2.00414145,0.66776794],\"atomic_number\":6},{\"mass\":null,\"position\":[2.5584198,-1.7986054,1.96580092],\"atomic_number\":8},{\"mass\":null,\"position\":[4.34266782,-1.06978449,0.44935025],\"atomic_number\":6},{\"mass\":null,\"position\":[5.41905854,-1.36644326,1.39743567],\"atomic_number\":7},{\"mass\":null,\"position\":[5.98312476,-0.39590033,2.19012629],\"atomic_number\":6},{\"mass\":null,\"position\":[5.51933172,0.73372934,2.29412751],\"atomic_number\":8},{\"mass\":null,\"position\":[7.19059923,-0.7909827,2.96228299],\"atomic_number\":6},{\"mass\":null,\"position\":[7.50465589,-0.06348517,4.11798085],\"atomic_number\":6},{\"mass\":null,\"position\":[8.63069132,-0.39784708,4.87981067],\"atomic_number\":6},{\"mass\":null,\"position\":[9.46802668,-1.43631118,4.4764235],\"atomic_number\":6},{\"mass\":null,\"position\":[9.17774791,-2.14545695,3.31192596],\"atomic_number\":6},{\"mass\":null,\"position\":[8.04741052,-1.822374,2.54840174],\"atomic_number\":6},{\"mass\":null,\"position\":[4.94101299,-1.06790303,-0.94421544],\"atomic_number\":6},{\"mass\":null,\"position\":[5.45591238,0.13210491,-1.46312955],\"atomic_number\":6},{\"mass\":null,\"position\":[6.0228648,0.18242173,-2.73974747],\"atomic_number\":6},{\"mass\":null,\"position\":[6.10060342,-0.97561944,-3.50741742],\"atomic_number\":6},{\"mass\":null,\"position\":[5.61755696,-2.17688227,-3.00078887],\"atomic_number\":6},{\"mass\":null,\"position\":[5.05644661,-2.22875177,-1.7193124],\"atomic_number\":6},{\"mass\":null,\"position\":[0.64413184,1.50012529,-1.16188091],\"atomic_number\":6},{\"mass\":null,\"position\":[-0.46691594,2.17255022,-1.59359306],\"atomic_number\":6},{\"mass\":null,\"position\":[-1.35385037,1.47553113,-2.62315744],\"atomic_number\":6},{\"mass\":null,\"position\":[-0.48622374,1.24692523,-3.92137146],\"atomic_number\":6},{\"mass\":null,\"position\":[-2.57307036,2.23143196,-3.21787912],\"atomic_number\":6},{\"mass\":null,\"position\":[1.80034552,2.13027382,-0.40267163],\"atomic_number\":6},{\"mass\":null,\"position\":[-2.89605359,6.01174956,-3.00878039],\"atomic_number\":1},{\"mass\":null,\"position\":[-2.90248045,7.30698963,-1.80323865],\"atomic_number\":1},{\"mass\":null,\"position\":[-4.02437083,5.92688902,-1.6132678],\"atomic_number\":1},{\"mass\":null,\"position\":[-0.00031195,4.09548276,-0.81153964],\"atomic_number\":1},{\"mass\":null,\"position\":[-3.71374325,4.20561083,0.54427868],\"atomic_number\":1},{\"mass\":null,\"position\":[-4.76667634,2.81710348,0.77319336],\"atomic_number\":1},{\"mass\":null,\"position\":[-3.90124628,3.00558254,-0.72449127],\"atomic_number\":1},{\"mass\":null,\"position\":[-1.77360489,2.0451467,2.95683578],\"atomic_number\":1},{\"mass\":null,\"position\":[-1.50353456,4.2003449,2.67988662],\"atomic_number\":1},{\"mass\":null,\"position\":[-4.70889188,2.81795045,2.94915869],\"atomic_number\":1},{\"mass\":null,\"position\":[-3.74435757,2.32724509,4.29384682],\"atomic_number\":1},{\"mass\":null,\"position\":[-4.01864015,0.12517843,3.84652866],\"atomic_number\":1},{\"mass\":null,\"position\":[-5.42175169,0.63969608,0.41345187],\"atomic_number\":1},{\"mass\":null,\"position\":[-5.60825623,-0.97252162,1.11082942],\"atomic_number\":1},{\"mass\":null,\"position\":[-2.37850951,-3.4556463,3.84986015],\"atomic_number\":1},{\"mass\":null,\"position\":[-1.62539267,-3.20316966,2.26040544],\"atomic_number\":1},{\"mass\":null,\"position\":[-3.00195325,-4.31126195,2.40133783],\"atomic_number\":1},{\"mass\":null,\"position\":[-1.64421756,0.44305811,0.87003424],\"atomic_number\":1},{\"mass\":null,\"position\":[-3.78896508,0.76231416,-1.29002844],\"atomic_number\":1},{\"mass\":null,\"position\":[-6.79565068,-3.00302449,-1.36382573],\"atomic_number\":1},{\"mass\":null,\"position\":[-7.08396751,-5.45837802,-1.22074314],\"atomic_number\":1},{\"mass\":null,\"position\":[-5.11064167,-6.93839054,-0.95575634],\"atomic_number\":1},{\"mass\":null,\"position\":[-2.83519757,-5.9583647,-0.81143822],\"atomic_number\":1},{\"mass\":null,\"position\":[-2.52149682,-3.51525566,-0.92944937],\"atomic_number\":1},{\"mass\":null,\"position\":[-2.57332293,-1.52304219,-2.77475868],\"atomic_number\":1},{\"mass\":null,\"position\":[-0.43729973,-1.58771406,-2.13922091],\"atomic_number\":1},{\"mass\":null,\"position\":[-0.82469296,-1.17380814,-0.51337712],\"atomic_number\":1},{\"mass\":null,\"position\":[1.40461866,-0.1665222,-2.25425262],\"atomic_number\":1},{\"mass\":null,\"position\":[3.41278088,-3.06168623,0.63049478],\"atomic_number\":1},{\"mass\":null,\"position\":[2.2506539,-0.86774439,2.01376961],\"atomic_number\":1},{\"mass\":null,\"position\":[3.99077326,-0.04907179,0.65230596],\"atomic_number\":1},{\"mass\":null,\"position\":[5.77180031,-2.3113448,1.42199363],\"atomic_number\":1},{\"mass\":null,\"position\":[6.86823647,0.75883609,4.44064421],\"atomic_number\":1},{\"mass\":null,\"position\":[8.8690723,0.16509953,5.7808202],\"atomic_number\":1},{\"mass\":null,\"position\":[10.34744852,-1.6922965,5.06534876],\"atomic_number\":1},{\"mass\":null,\"position\":[9.84154078,-2.94464458,2.99230743],\"atomic_number\":1},{\"mass\":null,\"position\":[7.8848537,-2.37096723,1.62523439],\"atomic_number\":1},{\"mass\":null,\"position\":[5.4056998,1.0418383,-0.87396415],\"atomic_number\":1},{\"mass\":null,\"position\":[6.41403242,1.1200936,-3.12216071],\"atomic_number\":1},{\"mass\":null,\"position\":[6.55179999,-0.94324658,-4.49629011],\"atomic_number\":1},{\"mass\":null,\"position\":[5.68953294,-3.08569893,-3.59854465],\"atomic_number\":1},{\"mass\":null,\"position\":[4.70840518,-3.19415143,-1.3542377],\"atomic_number\":1},{\"mass\":null,\"position\":[-1.10481756,0.93193683,-4.77492189],\"atomic_number\":1},{\"mass\":null,\"position\":[0.0193446,2.1793846,-4.20961463],\"atomic_number\":1},{\"mass\":null,\"position\":[0.27172463,0.46556756,-3.82626538],\"atomic_number\":1},{\"mass\":null,\"position\":[-3.10871952,1.62595377,-3.95973995],\"atomic_number\":1},{\"mass\":null,\"position\":[-2.25191524,3.13642365,-3.74469198],\"atomic_number\":1},{\"mass\":null,\"position\":[-3.31425956,2.5149076,-2.48150908],\"atomic_number\":1},{\"mass\":null,\"position\":[1.80687073,3.22283543,-0.45133808],\"atomic_number\":1},{\"mass\":null,\"position\":[2.74440949,1.80371307,-0.85453828],\"atomic_number\":1},{\"mass\":null,\"position\":[1.79605437,1.82126287,0.64811845],\"atomic_number\":1}],\"charge\":0,\"dipole\":null,\"energy\":null,\"smiles\":null,\"stress\":null,\"elapsed\":null,\"gradient\":null,\"velocities\":null,\"multiplicity\":1,\"homo_lumo_gap\":null,\"scf_completed\":null,\"scf_iterations\":null,\"mulliken_charges\":null,\"calculation_index\":null,\"vibrational_modes\":null,\"zero_point_energy\":null,\"thermal_energy_corr\":null,\"thermal_enthalpy_corr\":null,\"mulliken_spin_densities\":null,\"thermal_free_energy_corr\":null}},\"notes\":\"\",\"starred\":false,\"public\":false,\"email_when_complete\":false,\"max_credits\":null,\"elapsed\":314.468653,\"credits_charged\":5.24,\"is_finished\":true,\"status_code\":2,\"status_description\":\"COMPLETED_OK\",\"is_successful\":true,\"is_failed\":false,\"is_running\":false}",
+      "success": true
+    },
+    {
+      "timestamp": "2025-10-08T19:47:59.145713",
+      "event_type": "api_call",
+      "api_model": "openai/gpt-5",
+      "generation_id": "gen-1759977915-gRkHnAJrfJvomYFnW7tU",
+      "prompt_tokens": 46046,
+      "completion_tokens": 6154,
+      "total_tokens": 52200,
+      "native_tokens_prompt": 46046,
+      "native_tokens_completion": 6154,
+      "reasoning_tokens": 4672,
+      "cached_tokens": 24960,
+      "total_cost": 0.0910175
+    },
+    {
+      "timestamp": "2025-10-08T19:47:59.145932",
+      "event_type": "thinking",
+      "content": "Agent reasoning: Plan:\n- Get paclitaxel structure (SMILES).\n- Generate conformers (rapid), optimize, and select the lowest-energy conformer.\n- Compute descriptors from which to predict ADMET with emphasis on BBB permeability (TPSA, logP, HBD/HBA, rotatable bonds, solubility).\n- Use a quantitative BBB model (Clark’s logBB) and classify permeability.\n\nMolecule lookup\n- Name: paclitaxel (taxol)\n- SMILES used: CC(=O)O[C@H]1C(=O)[C@]2(C)[C@@H](O)C[C@H]3OC[C@@]3(OC(C)=O)C2[C@H](OC(=O)c4ccccc4)[C@]5(O)C[C@H](OC(=O)[C@H](O)[C@@H](NC(=O)c6ccccc6)c7ccccc7)C(=C1C5(C)C)C\n\nWorkflow 1: Conformer search and optimization (rapid)\n- Workflow: “Paclitaxel conformer search (rapid)”\n- Mode: rapid\n- Final method: aimnet2_wb97md3\n- Solvent: gas phase (vacuum)\n- Result: 8 optimized conformers\n\nSmart polling log (Conformer search)\n- Submitted. I’ll check status in 60 seconds (check #1).\n- Check #1 (after 60 s): RUNNING\n- I’ll wait 120 seconds before next check (check #2).\n- Check #2 (after +120 s): RUNNING\n- I’ll wait 240 seconds before next check (check #3).\n- Check #3 (after +240 s): RUNNING\n- I’ll wait 480 seconds before next check (check #4).\n- Check #4 (after +480 s): COMPLETED_OK\n\nConformer energies (aimnet2_wb97md3; Hartree), relative to min (kcal/mol)\n1: -2931.690711  ΔE = +4.13\n2: -2931.695574  ΔE = +1.08\n3: -2931.697302  ΔE = 0.00  ← lowest energy\n4: -2931.682825  ΔE = +9.08\n5: -2931.696992  ΔE = +0.19\n6: -2931.683332  ΔE = +8.76\n7: -2931.697014  ΔE = +0.18\n8: -2931.680741  ΔE = +10.39\n- Selected lowest-energy conformer: index 3\n- Conformer UUID: 7bb6443c-e026-429b-a58c-12b70ee02070\n- Minimum energy: -2931.697302 Eh\n\nNote: ADMET-relevant descriptors used below (TPSA, SLogP, HBD, HBA) are conformer-independent; 3D VSA/shape terms can vary slightly with conformation but do not change the BBB conclusion here.\n\nWorkflow 2: Descriptor computation for ADMET (from paclitaxel structure)\n- Workflow: “Paclitaxel descriptors (lowest-energy conformer)”\n- Mode: rapid\n\nSmart polling log (Descriptors)\n- Submitted. I’ll check status in 60 seconds (check #1).\n- Check #1 (after 60 s): RUNNING\n- I’ll wait 120 seconds before next check (check #2).\n- Check #2 (after +120 s): RUNNING\n- I’ll wait 240 seconds before next check (check #3).\n- Check #3 (after +240 s): COMPLETED_OK\n\nKey computed descriptors (used for ADMET/BBB)\n- Molecular weight (MW): 853.331 g/mol\n- SLogP: 3.736\n- TPSA: 226.71 Å²\n- H-bond donors (HBD): 4\n- H-bond acceptors (HBA): 14\n- Rotatable bonds: 10\n- FilterItLogS (aqueous solubility, log10 mol/L): -6.533\n  - Estimated solubility: 10^(-6.533) ≈ 2.93e-7 M\n  - In mass units: 2.93e-7 mol/L × 853.33 g/mol ≈ 2.5e-4 g/L ≈ 0.00025 mg/mL (very low)\n\nBBB permeability prediction\n- Quantitative Clark logBB model:\n  logBB = 0.152 × logP − 0.0148 × TPSA + 0.139\n  = 0.152 × 3.736 − 0.0148 × 226.71 + 0.139\n  = 0.568 − 3.355 + 0.139 ≈ −2.65\n  ⇒ Brain/plasma concentration ratio ≈ 10^(−2.65) ≈ 0.0022 (about 0.22% of plasma)\n- Rule-based indicators:\n  - TPSA 226.7 Å² >> 90 Å² (strongly predicts poor BBB penetration)\n  - MW 853 g/mol >> typical CNS-friendly range (<450–500)\n  - HBD/HBA: 4/14 (HBA > 10 suggests poor CNS penetration)\n  - Rotatable bonds: 10 (borderline-high; Veber rule for oral absorption uses TPSA ≤140 and rotB ≤10; here TPSA is far above threshold)\n- Net prediction: Non-permeant across the BBB by passive diffusion; very low likelihood of CNS exposure at equilibrium.\n- Additional ADMET notes:\n  - Very low aqueous solubility (logS ≈ −6.53) suggests formulation challenges.\n  - logD7.4 ≈ logP ≈ 3.74 (no strongly ionizable groups at physiological pH), but the extremely high TPSA dominates, preventing BBB penetration.\n  - Efflux liability: Large, polar, and peptidic/amide-rich scaffolds often act as P-gp substrates; while not explicitly computed here, the profile is consistent with likely efflux, further reducing CNS exposure.\n\nFinal results summary\n- Lowest-energy conformer: UUID 7bb6443c-e026-429b-a58c-12b70ee02070; E = −2931.697302 Eh\n- Key properties: MW 853.3; SLogP 3.736; TPSA 226.7 Å²; HBD 4; HBA 14; RotB 10; logS −6.533 (~2.9e-7 M; ~0.00025 mg/mL)\n- BBB permeability (Clark): logBB ≈ −2.65 ⇒ predicted non-BBB permeant\n\nAll workflows completed successfully and results retrieved.",
+      "reasoning_type": "decision"
+    },
+    {
+      "timestamp": "2025-10-08T19:47:59.146869",
+      "event_type": "thinking",
+      "content": "System: Actually waiting 120 seconds as requested by agent",
+      "reasoning_type": "analysis"
+    }
+  ],
+  "final_answer": "Plan:\n- Get paclitaxel structure (SMILES).\n- Generate conformers (rapid), optimize, and select the lowest-energy conformer.\n- Compute descriptors from which to predict ADMET with emphasis on BBB permeability (TPSA, logP, HBD/HBA, rotatable bonds, solubility).\n- Use a quantitative BBB model (Clark’s logBB) and classify permeability.\n\nMolecule lookup\n- Name: paclitaxel (taxol)\n- SMILES used: CC(=O)O[C@H]1C(=O)[C@]2(C)[C@@H](O)C[C@H]3OC[C@@]3(OC(C)=O)C2[C@H](OC(=O)c4ccccc4)[C@]5(O)C[C@H](OC(=O)[C@H](O)[C@@H](NC(=O)c6ccccc6)c7ccccc7)C(=C1C5(C)C)C\n\nWorkflow 1: Conformer search and optimization (rapid)\n- Workflow: “Paclitaxel conformer search (rapid)”\n- Mode: rapid\n- Final method: aimnet2_wb97md3\n- Solvent: gas phase (vacuum)\n- Result: 8 optimized conformers\n\nSmart polling log (Conformer search)\n- Submitted. I’ll check status in 60 seconds (check #1).\n- Check #1 (after 60 s): RUNNING\n- I’ll wait 120 seconds before next check (check #2).\n- Check #2 (after +120 s): RUNNING\n- I’ll wait 240 seconds before next check (check #3).\n- Check #3 (after +240 s): RUNNING\n- I’ll wait 480 seconds before next check (check #4).\n- Check #4 (after +480 s): COMPLETED_OK\n\nConformer energies (aimnet2_wb97md3; Hartree), relative to min (kcal/mol)\n1: -2931.690711  ΔE = +4.13\n2: -2931.695574  ΔE = +1.08\n3: -2931.697302  ΔE = 0.00  ← lowest energy\n4: -2931.682825  ΔE = +9.08\n5: -2931.696992  ΔE = +0.19\n6: -2931.683332  ΔE = +8.76\n7: -2931.697014  ΔE = +0.18\n8: -2931.680741  ΔE = +10.39\n- Selected lowest-energy conformer: index 3\n- Conformer UUID: 7bb6443c-e026-429b-a58c-12b70ee02070\n- Minimum energy: -2931.697302 Eh\n\nNote: ADMET-relevant descriptors used below (TPSA, SLogP, HBD, HBA) are conformer-independent; 3D VSA/shape terms can vary slightly with conformation but do not change the BBB conclusion here.\n\nWorkflow 2: Descriptor computation for ADMET (from paclitaxel structure)\n- Workflow: “Paclitaxel descriptors (lowest-energy conformer)”\n- Mode: rapid\n\nSmart polling log (Descriptors)\n- Submitted. I’ll check status in 60 seconds (check #1).\n- Check #1 (after 60 s): RUNNING\n- I’ll wait 120 seconds before next check (check #2).\n- Check #2 (after +120 s): RUNNING\n- I’ll wait 240 seconds before next check (check #3).\n- Check #3 (after +240 s): COMPLETED_OK\n\nKey computed descriptors (used for ADMET/BBB)\n- Molecular weight (MW): 853.331 g/mol\n- SLogP: 3.736\n- TPSA: 226.71 Å²\n- H-bond donors (HBD): 4\n- H-bond acceptors (HBA): 14\n- Rotatable bonds: 10\n- FilterItLogS (aqueous solubility, log10 mol/L): -6.533\n  - Estimated solubility: 10^(-6.533) ≈ 2.93e-7 M\n  - In mass units: 2.93e-7 mol/L × 853.33 g/mol ≈ 2.5e-4 g/L ≈ 0.00025 mg/mL (very low)\n\nBBB permeability prediction\n- Quantitative Clark logBB model:\n  logBB = 0.152 × logP − 0.0148 × TPSA + 0.139\n  = 0.152 × 3.736 − 0.0148 × 226.71 + 0.139\n  = 0.568 − 3.355 + 0.139 ≈ −2.65\n  ⇒ Brain/plasma concentration ratio ≈ 10^(−2.65) ≈ 0.0022 (about 0.22% of plasma)\n- Rule-based indicators:\n  - TPSA 226.7 Å² >> 90 Å² (strongly predicts poor BBB penetration)\n  - MW 853 g/mol >> typical CNS-friendly range (<450–500)\n  - HBD/HBA: 4/14 (HBA > 10 suggests poor CNS penetration)\n  - Rotatable bonds: 10 (borderline-high; Veber rule for oral absorption uses TPSA ≤140 and rotB ≤10; here TPSA is far above threshold)\n- Net prediction: Non-permeant across the BBB by passive diffusion; very low likelihood of CNS exposure at equilibrium.\n- Additional ADMET notes:\n  - Very low aqueous solubility (logS ≈ −6.53) suggests formulation challenges.\n  - logD7.4 ≈ logP ≈ 3.74 (no strongly ionizable groups at physiological pH), but the extremely high TPSA dominates, preventing BBB penetration.\n  - Efflux liability: Large, polar, and peptidic/amide-rich scaffolds often act as P-gp substrates; while not explicitly computed here, the profile is consistent with likely efflux, further reducing CNS exposure.\n\nFinal results summary\n- Lowest-energy conformer: UUID 7bb6443c-e026-429b-a58c-12b70ee02070; E = −2931.697302 Eh\n- Key properties: MW 853.3; SLogP 3.736; TPSA 226.7 Å²; HBD 4; HBA 14; RotB 10; logS −6.533 (~2.9e-7 M; ~0.00025 mg/mL)\n- BBB permeability (Clark): logBB ≈ −2.65 ⇒ predicted non-BBB permeant\n\nAll workflows completed successfully and results retrieved.",
+  "completed_successfully": true,
+  "total_thinking_steps": 35,
+  "total_tool_calls": 15,
+  "successful_tool_calls": 15,
+  "total_web_searches": 0,
+  "total_api_calls": 16,
+  "total_cost_usd": 0.37077175,
+  "total_prompt_tokens": 319707,
+  "total_completion_tokens": 24733,
+  "total_tokens": 344440,
+  "total_native_prompt_tokens": 319707,
+  "total_native_completion_tokens": 24733,
+  "total_reasoning_tokens": 22016,
+  "total_cached_tokens": 245504
+}

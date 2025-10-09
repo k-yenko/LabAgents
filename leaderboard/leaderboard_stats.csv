@@ -1,0 +1,2 @@
+total_evaluations,unique_models,unique_tiers,avg_score,median_score,min_score,max_score,last_updated,tier1_count,tier3_count,tier2_count,llm_judge_format_count
+196,9,3,64.1,83.3,0.0,100.0,2025-10-08T20:42:59.331635,90,52,54,196

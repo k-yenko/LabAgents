@@ -1,0 +1,54 @@
+{
+  "tier2_005_scores": {
+    "claude-4.1-opus": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response shows proper methodology by identifying paracetamol structure and submitting appropriate computational workflows, but fails to provide any actual results due to API communication issues. No numerical values for HOMO/LUMO energies, dipole moment, or geometry optimization results are reported. While the approach is sound, the complete absence of calculated electronic properties means the question requirements are not met."
+    },
+    "claude-4-sonnet": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response lacks the specific numerical values requested: no actual HOMO/LUMO energies provided (only mentions 'gap calculated'), no specific dipole moment value (only states 'computed'), and no mention of the two stable conformations (PAM1/PAM2) identified in reference. While optimization energy and molecular descriptors are provided, the core electronic properties (HOMO/LUMO energies, dipole moment value) that were specifically requested are missing."
+    },
+    "gpt-5": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response shows computational workflow execution but fails to provide the required numerical results. No HOMO/LUMO energies, dipole moment values, or conformational analysis reported. Only mentions global electrophilicity indices (~1.0646, ~0.6276) and acknowledges that explicit HOMO/LUMO energies and dipole values were not successfully extracted from the calculations. Expected values include dipole moment of 2.28 Debye and identification of stable conformations PAM1/PAM2."
+    },
+    "o3": {
+      "correct": true,
+      "score": 1,
+      "notes": "Response provides reasonable electronic properties: HOMO -6.02 eV, LUMO -1.38 eV, gap 4.64 eV, dipole 3.12 D. While using GFN2-xTB instead of B3LYP/6-31G+(d,p), this is a valid computational method. The dipole moment differs from reference (3.12 D vs 2.28 D) but falls within reasonable uncertainty for different methods. Chemical structure and optimization approach are sound."
+    },
+    "grok-4": {
+      "correct": true,
+      "score": 1,
+      "notes": "Provided detailed optimized geometry with atomic coordinates, HOMO energy (-5.94 eV) and LUMO energy (-1.32 eV) within reasonable ranges for paracetamol, and dipole moment (3.92 D) that is higher than reference (2.28 D) but within acceptable variation given different computational methods/basis sets may have been used. All key electronic properties requested were calculated and reported."
+    },
+    "gemini-2.5-pro": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response indicates partial completion (geometry optimization only) but fails to provide any of the key requested electronic properties: HOMO/LUMO energies or dipole moment. No numerical values, conformational analysis, or chemical insights provided due to tool failures."
+    },
+    "deepseek-v3.1": {
+      "correct": false,
+      "score": 0,
+      "notes": "While the response shows computational work, it has significant issues: (1) Uses different methods (GFN2-xTB, R2SCAN-3C) than expected B3LYP/6-31G+(d,p), (2) Dipole moments (2.526 and 4.715 Debye) deviate significantly from expected 2.28 Debye, with one being more than double, (3) Only provides HOMO-LUMO gap (3.7540 eV) rather than individual HOMO/LUMO energies, (4) Fails to identify the two stable conformations (PAM1/PAM2) that are key structural insights for paracetamol"
+    },
+    "grok-code-fast-1": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response lacks the key electronic properties requested: no HOMO/LUMO energies provided (only mentions 'available through Fukui indices' without actual values), no dipole moment calculated (expected ~2.28 Debye), and no mention of conformational analysis or stable conformations (PAM1/PAM2). While other molecular descriptors are provided, the core electronic structure properties are missing."
+    }
+  },
+  "evaluation_criteria": {
+    "scoring_method": "llm_judge_claude_sonnet",
+    "judge_model": "claude-sonnet-4-20250514"
+  },
+  "summary": {
+    "total_models": 8,
+    "correct_answers": 2,
+    "incorrect_answers": 6,
+    "success_rate": "25.0%"
+  }
+}

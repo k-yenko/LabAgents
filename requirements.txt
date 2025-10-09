@@ -1,0 +1,6 @@
+python-dotenv
+httpx
+mcp
+openai
+requests
+pydantic

@@ -1,0 +1,54 @@
+{
+  "tier2_004_scores": {
+    "claude-4.1-opus": {
+      "correct": true,
+      "score": 1,
+      "notes": "Response correctly identifies morphine has essentially one stable tautomeric form due to rigid structure. pKa values are reasonable: tertiary amine pKa=7.46 (vs expected 8.0), phenolic OH pKa=10.55 (vs expected 9.9) - both within acceptable computational variation. Correctly determines dominant form at pH 7.4 is monocationic species with protonated amine (~53% vs expected ~80%) and neutral phenolic OH. Sound chemical reasoning throughout."
+    },
+    "claude-4-sonnet": {
+      "correct": false,
+      "score": 0,
+      "notes": "Major error in protonation state analysis. Claims nitrogen is deprotonated at pH 7.4 (pKa 7.26), but when pH > pKa, weak bases are deprotonated while weak acids are protonated. For morphine's tertiary amine (weak base), pH 7.4 < pKa 7.26 means it should be predominantly protonated (~58% based on Henderson-Hasselbalch). Expected answer shows ~80% protonation. The pKa values are within reasonable ranges (N: 7.26 vs expected 8.0; phenolic OH: 10.27 vs expected 9.9), and correctly identifies single tautomeric form, but the fundamental misunderstanding of acid-base chemistry makes the conclusion incorrect."
+    },
+    "gpt-5": {
+      "correct": true,
+      "score": 1,
+      "notes": "Excellent response with accurate analysis. Correctly identified single dominant tautomeric form due to rigid structure. pKa values are within expected ranges: tertiary amine ~7.35 (cf. expected 8.0), phenolic OH ~10.42 (cf. expected 9.9). Correctly determined monocationic species dominates at pH 7.4 with protonated amine and neutral phenolic OH. Provided additional valuable details including macroscopic pKa values and logD analysis."
+    },
+    "o3": {
+      "correct": true,
+      "score": 1,
+      "notes": "Response correctly identifies morphine has essentially one tautomeric form due to rigid structure. pKa values (7.57 for amine, 10.46 for phenolic OH) are within reasonable range of expected values (8.0 and 9.9). Correctly concludes that at pH 7.4, the amine is predominantly protonated while phenolic OH remains neutral, matching the expected monocationic dominant species."
+    },
+    "grok-4": {
+      "correct": true,
+      "score": 1,
+      "notes": "Correctly identified morphine exists as a single tautomer due to rigid structure. pKa values are reasonable: amine pKa=7.534 (close to expected 8.0), phenolic OH pKa=10.317 (close to expected 9.9). Correctly determined that at pH 7.4, the dominant form is the monocationic species with protonated amine (80.49%) and neutral phenolic OH. The macroscopic pKa analysis and microstate distribution provide additional valuable detail beyond the expected answer."
+    },
+    "gemini-2.5-pro": {
+      "correct": true,
+      "score": 1,
+      "notes": "Correctly identified single major tautomer due to rigid structure. pKa values are reasonable: 7.61 for tertiary amine (close to expected 8.0), 10.08 for phenolic OH (close to expected 9.9). Correctly determined that cationic form with protonated amine dominates at pH 7.4. Minor numerical differences are within acceptable computational uncertainty."
+    },
+    "deepseek-v3.1": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response contains critical errors: claims phenolic OH remains protonated at pH 7.4 (incorrect - should be deprotonated), fails to provide required pKa values (expected ~8.0 for amine, ~9.9 for phenol), and doesn't identify the correct dominant species (monocationic with protonated amine and neutral phenol). While correctly identifies canonical structure dominance, the protonation state analysis is fundamentally wrong."
+    },
+    "grok-code-fast-1": {
+      "correct": false,
+      "score": 0,
+      "notes": "Major errors in pKa assignments and dominant form prediction. Claims phenolic OH has pKa=7.424 (should be ~9.9) and predicts phenolate anion dominance at pH 7.4, when morphine actually exists as monocationic species with protonated tertiary amine. Correctly identifies single tautomeric form but misses the critical tertiary amine pKa (~8.0) entirely."
+    }
+  },
+  "evaluation_criteria": {
+    "scoring_method": "llm_judge_claude_sonnet",
+    "judge_model": "claude-sonnet-4-20250514"
+  },
+  "summary": {
+    "total_models": 8,
+    "correct_answers": 5,
+    "incorrect_answers": 3,
+    "success_rate": "62.5%"
+  }
+}

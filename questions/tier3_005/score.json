@@ -1,0 +1,54 @@
+{
+  "tier3_005_scores": {
+    "claude-4.1-opus": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response provides no scientific content about paclitaxel conformers or ADMET properties. While the model attempted computational workflows that failed due to molecular complexity, it did not provide any literature values, chemical reasoning, or insights about conformational analysis, energy differences, LogP, molecular weight, solubility, or blood-brain barrier permeability. The response is purely procedural without addressing the scientific question."
+    },
+    "claude-4-sonnet": {
+      "correct": true,
+      "score": 1,
+      "notes": "Provided accurate conformational analysis with 9 conformers and proper energy ranking. ADMET properties are within expected ranges: LogP=3.736 (vs expected ~3.96), MW=853.331 (vs expected 853.92). Correctly identified very poor BBB permeability due to high TPSA (260.331 \u0172), large molecular size, and multiple H-bond acceptors. Sound chemical reasoning throughout, though P-glycoprotein efflux mechanism not explicitly mentioned."
+    },
+    "gpt-5": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response provides accurate molecular descriptors (MW: 853.331 vs expected 853.92, SLogP: 3.736 vs expected ~3.96) but fails to complete the core task. Conformer generation workflows are still running and no lowest energy conformer was selected. No ADMET properties or BBB permeability analysis was provided. While the partial results are accurate, the response does not address the main question components of conformer selection and BBB permeability prediction."
+    },
+    "o3": {
+      "correct": false,
+      "score": 0,
+      "notes": "The response provides no scientific content due to a technical workflow failure. While the model appropriately reported the technical issue and requested to retry, it failed to provide any of the expected information about paclitaxel conformers, ADMET properties, or blood-brain barrier permeability. No numerical values, chemical reasoning, or key insights were provided."
+    },
+    "grok-4": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response provides no scientific content - only reports technical difficulties with computational tools. Does not address conformer generation, energy analysis, or ADMET properties including blood-brain barrier permeability. No numerical values, chemical reasoning, or key insights provided."
+    },
+    "gemini-2.5-pro": {
+      "correct": true,
+      "score": 1,
+      "notes": "Response correctly identifies poor BBB permeability with sound reasoning. Molecular weight 853.331 g/mol matches literature (853.92), TPSA 221.29 \u00c5\u00b2 is reasonable, and correctly identifies key barriers (size, polarity, H-bond acceptors). While missing P-glycoprotein efflux mechanism and conformer population details, the core ADMET analysis and BBB conclusion are accurate."
+    },
+    "deepseek-v3.1": {
+      "correct": false,
+      "score": 0,
+      "notes": "Response lacks all essential content. Only provides a brief summary stating steps were completed without any actual results, numerical values, or scientific insights. Missing critical information like conformer analysis, energy differences, ADMET property values (LogP, MW, solubility), and specific BBB permeability mechanisms (P-glycoprotein efflux). No chemical reasoning or literature-based values provided."
+    },
+    "grok-code-fast-1": {
+      "correct": true,
+      "score": 1,
+      "notes": "Despite technical workflow issues, provided accurate ADMET analysis. Correctly identified poor BBB permeability due to high MW (854 Da vs expected 853.92), P-glycoprotein efflux, and multiple physicochemical barriers. Sound chemical reasoning throughout, though unable to complete conformer generation due to system limitations."
+    }
+  },
+  "evaluation_criteria": {
+    "scoring_method": "llm_judge_claude_sonnet",
+    "judge_model": "claude-sonnet-4-20250514"
+  },
+  "summary": {
+    "total_models": 8,
+    "correct_answers": 3,
+    "incorrect_answers": 5,
+    "success_rate": "37.5%"
+  }
+}
