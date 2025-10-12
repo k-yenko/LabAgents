@@ -86,3 +86,50 @@ system_prompt_template.py
 benchmark_reference.md
 EVALUATION_README.md
 evaluation_rubric.md
+
+# Drafts and archived content
+drafts/
+archived_logs/
+reflections/
+
+# Analysis and intermediate data
+analysis/
+data/
+leaderboard/
+results/
+
+# Unused plots and figures
+figures/
+
+# Keep only essential plots (sonnet4_judge, token_analysis, judge_comparison, performance)
+# Ignore judge-specific unused plots
+plots/qwen_judge/
+plots/gemini_judge/
+plots/gpt5_judge/
+plots/efficiency/
+
+# Ignore unused plot files in kept directories
+plots/performance/*_correctness_focus.png
+plots/performance/*_judge_comparison.png
+plots/performance/*_pass_fail.png
+plots/performance/*_score_heatmap.png
+plots/sonnet4_judge/performance_heatmap.png
+plots/sonnet4_judge/radar_chart_claude_judge.png
+plots/sonnet4_judge/score_breakdown.png
+plots/sonnet4_judge/summary_statistics.txt
+plots/sonnet4_judge/tier_performance.png
+plots/sonnet4_judge/weighted_score_performance.png
+plots/token_analysis/token_breakdown_by_question_grouped.png
+plots/token_analysis/token_breakdown_by_tier.png
+plots/token_analysis/token_breakdown_faceted.png
+plots/token_analysis/token_breakdown_heatmap.png
+plots/judge_comparison/judge_bias_delta.png
+plots/judge_comparison/judge_correlation.png
+plots/judge_comparison/judge_disagreement.png
+plots/judge_comparison/rank_consistency.png
+plots/judge_comparison/scatter_matrix.png
+plots/judge_comparison/severity_index.png
+
+# Documentation drafts
+openrouter_docs/
+claude_docs/

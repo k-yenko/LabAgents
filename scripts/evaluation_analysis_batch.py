@@ -42,7 +42,7 @@ def normalize_model_name(filename_model):
     elif 'deepseek' in model:
         return 'deepseek/deepseek-chat-v3.1:free'
     elif 'x-ai_grok-4-fast' in model and 'free' in model:
-        return 'x-ai/grok-4-fast:free'
+        return 'x-ai/grok-4-fast'
     elif 'x-ai_grok-code-fast-1' in model:
         return 'x-ai/grok-code-fast-1'
 

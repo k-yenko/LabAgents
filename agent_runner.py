@@ -85,7 +85,8 @@ def prune_conversation_history(messages, max_recent_exchanges=3, always_keep_fir
     """
     Prune conversation history to reduce token usage while maintaining context.
 
-    Preserves tool_use/tool_result pairs to avoid breaking Anthropic API requirements.
+    Preserves tool_use/tool_result pairs to avoid breaking OpenAI/Anthropic API requirements.
+    CRITICAL: Never removes a tool_result without its corresponding tool_use, and vice versa.
 
     Args:
         messages: List of message dictionaries
@@ -95,7 +96,7 @@ def prune_conversation_history(messages, max_recent_exchanges=3, always_keep_fir
     Returns:
         Pruned list of messages
     """
-    if len(messages) <= 2:  # Too short to prune
+    if len(messages) <= 6:  # Too short to prune (need at least a few exchanges)
         return messages
 
     # Build a map of tool_use_id -> message_index for tool_use blocks
@@ -111,7 +112,7 @@ def prune_conversation_history(messages, max_recent_exchanges=3, always_keep_fir
     # Build a set of message indices we MUST keep (tool dependencies)
     must_keep_indices = set()
 
-    # For each tool_result, find its corresponding tool_use
+    # For each tool_result, find its corresponding tool_use and mark BOTH as must-keep
     for i, msg in enumerate(messages):
         if msg["role"] == "user":
             content = msg.get("content", [])
@@ -120,40 +121,69 @@ def prune_conversation_history(messages, max_recent_exchanges=3, always_keep_fir
                     if isinstance(block, dict) and block.get("type") == "tool_result":
                         tool_use_id = block.get("tool_use_id")
                         if tool_use_id and tool_use_id in tool_use_map:
-                            # Mark both the tool_use and tool_result messages as must-keep
+                            # CRITICAL: Mark both the tool_use and tool_result messages as must-keep
                             must_keep_indices.add(tool_use_map[tool_use_id])
                             must_keep_indices.add(i)
 
-    pruned = []
-
-    # Keep first message if requested (original question)
-    if always_keep_first and messages[0]["role"] == "user":
-        pruned.append(messages[0])
-        start_index = 1
-    else:
-        start_index = 0
-
-    # Keep only recent exchanges
-    recent_messages = messages[start_index:]
-
-    # Count backwards to keep last N exchanges
+    # Calculate cutoff for recent messages
     exchanges_to_keep = max_recent_exchanges * 3  # Rough estimate: user, assistant, tool result
-    if len(recent_messages) > exchanges_to_keep:
-        # Calculate the cutoff index (absolute, not relative)
-        cutoff_index = len(messages) - exchanges_to_keep
+    cutoff_index = max(1, len(messages) - exchanges_to_keep)  # Never cut before message 1
 
-        # Keep messages that are either:
-        # 1. After the cutoff (recent messages)
-        # 2. Required for tool dependencies
-        for i in range(start_index, len(messages)):
-            if i >= cutoff_index or i in must_keep_indices:
-                pruned.append(messages[i])
-    else:
-        pruned.extend(recent_messages)
+    # Build keep_indices: messages we want to keep
+    keep_indices = set()
+
+    # Always keep first message if requested
+    if always_keep_first:
+        keep_indices.add(0)
+
+    # Keep all recent messages (after cutoff)
+    for i in range(cutoff_index, len(messages)):
+        keep_indices.add(i)
+
+    # Add all must-keep tool dependency messages
+    keep_indices.update(must_keep_indices)
+
+    # CRITICAL FIX: If we're keeping a tool_result but not its tool_use (or vice versa),
+    # we MUST keep both to avoid API errors
+    for i in list(keep_indices):  # Iterate over copy since we'll modify the set
+        msg = messages[i]
+
+        # Check if this is a tool_result
+        if msg["role"] == "user":
+            content = msg.get("content", [])
+            if isinstance(content, list):
+                for block in content:
+                    if isinstance(block, dict) and block.get("type") == "tool_result":
+                        tool_use_id = block.get("tool_use_id")
+                        if tool_use_id and tool_use_id in tool_use_map:
+                            # Ensure the corresponding tool_use is also kept
+                            keep_indices.add(tool_use_map[tool_use_id])
+
+        # Check if this is a tool_use
+        elif msg["role"] == "assistant":
+            content = msg.get("content", [])
+            if isinstance(content, list):
+                for block in content:
+                    if isinstance(block, dict) and block.get("type") == "tool_use":
+                        tool_use_id = block.get("id")
+                        # Find the corresponding tool_result
+                        for j, other_msg in enumerate(messages):
+                            if other_msg["role"] == "user":
+                                other_content = other_msg.get("content", [])
+                                if isinstance(other_content, list):
+                                    for other_block in other_content:
+                                        if isinstance(other_block, dict) and \
+                                           other_block.get("type") == "tool_result" and \
+                                           other_block.get("tool_use_id") == tool_use_id:
+                                            # Ensure the corresponding tool_result is also kept
+                                            keep_indices.add(j)
+
+    # Build pruned list in order
+    pruned = [messages[i] for i in sorted(keep_indices)]
 
     # Log pruning
     if len(pruned) < len(messages):
-        tokens_saved = sum(len(str(msg.get("content", ""))) for msg in messages if msg not in pruned) // 4
+        tokens_saved = sum(len(str(msg.get("content", ""))) for msg in messages if messages.index(msg) not in keep_indices) // 4
         print(f"📉 Pruned conversation: {len(messages)} → {len(pruned)} messages (~{tokens_saved:,} tokens saved)")
 
     return pruned
@@ -461,7 +491,8 @@ async def test_with_simple_logging(main_question: str, question_id: str, model_n
             print(f"\n--- Iteration {iteration} ---")
 
             # Prune conversation history after iteration 5 to reduce token usage
-            if iteration > 5:
+            # DISABLED for GPT-5 due to tool call chain breaking issues with OpenRouter
+            if iteration > 5 and "gpt-5" not in model_name.lower():
                 messages = prune_conversation_history(messages, max_recent_exchanges=3)
 
             # Get response from AI with the determined model
@@ -918,7 +949,7 @@ if __name__ == "__main__":
         "anthropic/claude-sonnet-4.5",    # Auto-routes to claude-sonnet-4-5-20250929
         "openai/gpt-5",
         "openai/o3",
-        "x-ai/grok-4-fast:free",
+        "x-ai/grok-4-fast",
         "google/gemini-2.5-pro",
         "deepseek/deepseek-chat-v3.1:free",
         "x-ai/grok-code-fast-1"
@@ -930,7 +961,7 @@ if __name__ == "__main__":
         "anthropic/claude-sonnet-4.5",    # Auto-routes to claude-sonnet-4-5-20250929
         "openai/gpt-5",
         "openai/o3",
-        "x-ai/grok-4-fast:free",
+        "x-ai/grok-4-fast",
         "google/gemini-2.5-pro",
         "deepseek/deepseek-chat-v3.1:free",
         "x-ai/grok-code-fast-1"

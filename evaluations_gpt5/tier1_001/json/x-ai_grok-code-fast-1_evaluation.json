@@ -1,0 +1,62 @@
+{
+  "evaluation_timestamp": "2025-10-11T15:18:17.810451",
+  "question_id": "tier1_001",
+  "completion_score": 1,
+  "correctness_score": 0,
+  "tool_use_score": 0,
+  "total_score": 1,
+  "overall_assessment": "fail",
+  "reasoning": "Completion: The agent launched a solubility workflow for water at 310.15 K but never retrieved a result. The last status check showed RUNNING, and no numerical prediction was presented, nor any interpretation.\n\nCorrectness: No computed value was produced, so accuracy cannot be evaluated. Additionally, the SMILES used corresponds to a molecule with MW \u22481137 (C49H61N12O16PS), not remdesivir (MW 602.58; C27H35N6O8P), guaranteeing any eventual result would be for the wrong structure. PubChem (CID 121304016) shows the correct canonical SMILES and composition for remdesivir. ([pubchemlite.lcsb.uni.lu](https://pubchemlite.lcsb.uni.lu/e/compound/121304016?utm_source=openai))\n\nTool use: Multiple critical failures:\n- Could not map the common name \u201cremdesivir\u201d to a valid structure via the lookup tool, then proceeded without correcting.\n- Submitted an invalid SMILES (wrong compound; MW ~1137 vs 602), which was \u201cvalidated\u201d and then used as the workflow input.\n- Never completed the workflow or fetched results.\n\nFor literature context, remdesivir is essentially insoluble in water at neutral pH: a patent reports 0.0009 mg/mL at pH 6.18 and ~0 mg/mL at pH 6.72, and vendors/ACS list it as insoluble/very slightly soluble; a research article cites 0.028 mg/mL at room temperature (likely method/pH dependent). These corroborate its very low aqueous solubility and the need for SBECD in IV formulations. ([patents.justia.com](https://patents.justia.com/patent/20230355649?utm_source=openai))",
+  "specific_feedback": [
+    "Map the molecule correctly before any computation. Retrieve the canonical SMILES for remdesivir (PubChem CID 121304016) and verify MW/formula (C27H35N6O8P; 602.58 g/mol) match. ([pubchemlite.lcsb.uni.lu](https://pubchemlite.lcsb.uni.lu/e/compound/121304016?utm_source=openai))",
+    "Do not proceed with a workflow if name-to-SMILES resolution fails. Escalate to alternative identifiers (CAS RN 1809249-37-3) or curated sources (DrugBank, PubChem) to obtain the correct structure. ([en.wikipedia.org](https://en.wikipedia.org/wiki/Remdesivir?utm_source=openai))",
+    "After submission, poll until completion and then fetch and report the numerical result with units and conditions.",
+    "Provide immediate sanity checks: compare predicted solubility order of magnitude against literature (expected \u226a0.1 mg/mL at neutral pH; often described as \u201cinsoluble/very slightly soluble\u201d) to catch obvious input errors early. ([patents.justia.com](https://patents.justia.com/patent/20230355649?utm_source=openai))",
+    "Literature validation: 1) Agent\u2019s computed value: None (workflow never completed; moreover, the submitted SMILES was not remdesivir: MW 1137 vs true MW 602.58).\n\n2) Literature value(s) for aqueous solubility:\n- Near-neutral pH (aqueous HCl, pH 6.18): 0.0009 mg/mL; pH 6.72: ~0 mg/mL. Source: US patent application on remdesivir formulations. ([patents.justia.com](https://patents.justia.com/patent/20230355649?utm_source=openai))\n- General aqueous solubility (room temperature): 0.028 mg/mL, reported in a peer\u2011reviewed article (value cited therein). ([pmc.ncbi.nlm.nih.gov](https://pmc.ncbi.nlm.nih.gov/articles/PMC9364662/?utm_source=openai))\n- Qualitative confirmations: \u201cinsoluble\u201d or \u201cvery slightly soluble in water\u201d (ACS; vendor datasheets). ([acs.org](https://www.acs.org/molecule-of-the-week/archive/r/remdesivir.html?utm_source=openai))\n\n3) Absolute error: N/A (no agent result).\n\n4) Percent error: N/A (no agent result).\n\n5) Score justification: With no numerical prediction, correctness cannot be assessed; furthermore, the input structure was incorrect, so any eventual result would not correspond to remdesivir."
+  ],
+  "chemistry_validation": {
+    "tools_used": [
+      "validate_smiles",
+      "workflow_get_status",
+      "molecule_lookup",
+      "batch_molecule_lookup",
+      "submit_solubility_workflow"
+    ],
+    "total_time_minutes": 1.2808377504348756
+  },
+  "web_citations": [
+    {
+      "url": "https://pubchemlite.lcsb.uni.lu/e/compound/121304016?utm_source=openai",
+      "title": "PubChemLite - Remdesivir (C27H35N6O8P)"
+    },
+    {
+      "url": "https://patents.justia.com/patent/20230355649?utm_source=openai",
+      "title": "US Patent Application for FORMULATIONS OF ANTI-VIRAL COMPOUNDS Patent Application (Application #20230355649 issued November 9, 2023) - Justia Patents Search"
+    },
+    {
+      "url": "https://patents.justia.com/patent/20230355649?utm_source=openai",
+      "title": "US Patent Application for FORMULATIONS OF ANTI-VIRAL COMPOUNDS Patent Application (Application #20230355649 issued November 9, 2023) - Justia Patents Search"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9364662/?utm_source=openai",
+      "title": "Remdesivir-loaded bis-MPA hyperbranched dendritic nanocarriers for pulmonary delivery - PMC"
+    },
+    {
+      "url": "https://www.acs.org/molecule-of-the-week/archive/r/remdesivir.html?utm_source=openai",
+      "title": "Remdesivir - American Chemical Society"
+    },
+    {
+      "url": "https://pubchemlite.lcsb.uni.lu/e/compound/121304016?utm_source=openai",
+      "title": "PubChemLite - Remdesivir (C27H35N6O8P)"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Remdesivir?utm_source=openai",
+      "title": "Remdesivir"
+    },
+    {
+      "url": "https://patents.justia.com/patent/20230355649?utm_source=openai",
+      "title": "US Patent Application for FORMULATIONS OF ANTI-VIRAL COMPOUNDS Patent Application (Application #20230355649 issued November 9, 2023) - Justia Patents Search"
+    }
+  ],
+  "evaluator_type": "llm_judge"
+}

@@ -1,0 +1,18 @@
+{
+  "evaluation_timestamp": "2025-10-05T14:22:18.714259",
+  "question_id": "tier1_001",
+  "completion_score": 0,
+  "correctness_score": 0,
+  "tool_use_score": 0,
+  "total_score": 0,
+  "overall_assessment": "fail",
+  "reasoning": "Evaluation failed due to error: 'Annotation' object has no attribute 'get'",
+  "specific_feedback": [
+    "Evaluation failed"
+  ],
+  "chemistry_validation": {
+    "error": "'Annotation' object has no attribute 'get'"
+  },
+  "web_citations": [],
+  "evaluator_type": "llm_judge"
+}

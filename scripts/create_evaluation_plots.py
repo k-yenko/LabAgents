@@ -2,7 +2,7 @@
 """
 create_evaluation_plots.py - generates modern professional evaluation charts from LLM judge evaluations
 
-reads from: evaluations/{question_id}/json/{model}_evaluation.json
+reads from: evaluations_sonnet4/{question_id}/json/{model}_evaluation.json
 generates: modern, professional charts for papers/presentations
 """
 
@@ -26,7 +26,7 @@ MODEL_COLORS = {
     'openai/o3': '#34D399',                      # light emerald
     'google/gemini-2.5-pro': '#F59E0B',          # amber
     'deepseek/deepseek-chat-v3.1:free': '#3B82F6', # blue
-    'x-ai/grok-4-fast:free': '#EC4899',          # pink
+    'x-ai/grok-4-fast': '#EC4899',          # pink
     'x-ai/grok-code-fast-1': '#F472B6',          # light pink
 }
 
@@ -53,11 +53,11 @@ def setup_modern_style():
     })
 
 def load_all_evaluations():
-    """Load all evaluation results from evaluations/ directory"""
+    """Load all evaluation results from evaluations_sonnet4/ directory"""
     evaluations = defaultdict(dict)
 
     # Find all evaluation JSON files
-    eval_pattern = "evaluations/*/json/*_evaluation.json"
+    eval_pattern = "evaluations_sonnet4/*/json/*_evaluation.json"
     eval_files = glob.glob(eval_pattern)
 
     for eval_file in eval_files:
@@ -77,13 +77,17 @@ def load_all_evaluations():
             if 'grok' in model_name and 'free' in model_name:
                 model_name = model_name.replace('_free', ':free')
 
+            # Determine tier for weighting
+            tier = question_id.split('_')[0] if '_' in question_id else 'tier1'
+
             evaluations[question_id][model_name] = {
                 'completion_score': data.get('completion_score', 0),
                 'correctness_score': data.get('correctness_score', 0),
                 'tool_use_score': data.get('tool_use_score', 0),
                 'total_score': data.get('total_score', 0),
                 'overall_assessment': data.get('overall_assessment', 'fail'),
-                'passed': data.get('overall_assessment', 'fail') == 'pass'
+                'passed': data.get('overall_assessment', 'fail') == 'pass',
+                'tier': tier
             }
         except Exception as e:
             print(f"Error loading {eval_file}: {e}")
@@ -91,96 +95,162 @@ def load_all_evaluations():
     return evaluations
 
 def create_overall_performance_chart(evaluations):
-    """Create main performance chart showing pass rate by model"""
+    """Create main performance chart showing weighted score by model"""
     setup_modern_style()
 
-    # Calculate pass rate for each model
-    model_stats = defaultdict(lambda: {'passed': 0, 'total': 0})
-
-    for question_id, models in evaluations.items():
-        for model_name, scores in models.items():
-            model_stats[model_name]['total'] += 1
-            if scores['passed']:
-                model_stats[model_name]['passed'] += 1
-
-    # Calculate pass rates
+    # Calculate weighted score for each model
     model_data = []
-    for model, stats in model_stats.items():
-        pass_rate = (stats['passed'] / stats['total']) * 100 if stats['total'] > 0 else 0
+
+    for model_name in set(m for models in evaluations.values() for m in models.keys()):
+        # Collect all evaluations for this model
+        model_evals = []
+        for question_id, models in evaluations.items():
+            if model_name in models:
+                model_evals.append(models[model_name])
+
+        # Calculate weighted score
+        weighted_score = calculate_weighted_score(model_evals)
+        total_evals = len(model_evals)
+
         model_data.append({
-            'model': model,
-            'pass_rate': pass_rate,
-            'passed': stats['passed'],
-            'total': stats['total']
+            'model': model_name,
+            'weighted_score': weighted_score,
+            'total_evals': total_evals
         })
 
-    # Sort by pass rate descending
-    model_data.sort(key=lambda x: x['pass_rate'], reverse=True)
+    # Sort by weighted score descending
+    model_data.sort(key=lambda x: x['weighted_score'], reverse=True)
 
-    # Create figure
+    # Create figure with extra left margin for logos
     fig, ax = plt.subplots(figsize=(14, 8))
 
     models = [d['model'] for d in model_data]
-    pass_rates = [d['pass_rate'] for d in model_data]
+    scores = [d['weighted_score'] for d in model_data]
     colors = [MODEL_COLORS.get(m, '#6B7280') for m in models]
 
-    bars = ax.barh(models, pass_rates, color=colors, alpha=0.85, edgecolor='white', linewidth=2)
+    # Clean model names - remove company prefix
+    clean_names = []
+    for m in models:
+        if '/' in m:
+            clean_names.append(m.split('/')[-1])
+        else:
+            clean_names.append(m)
 
-    # Add percentage labels
+    # Set xlim before drawing bars to make room for logos
+    ax.set_xlim(-8, 105)
+
+    bars = ax.barh(clean_names, scores, color=colors, alpha=0.85, edgecolor='white', linewidth=2)
+
+    # Add percentage labels (without eval count)
     for i, (bar, data) in enumerate(zip(bars, model_data)):
-        ax.text(bar.get_width() + 2, bar.get_y() + bar.get_height()/2,
-                f"{data['pass_rate']:.1f}% ({data['passed']}/{data['total']})",
+        ax.text(bar.get_width() + 1, bar.get_y() + bar.get_height()/2,
+                f"{data['weighted_score']:.1f}%",
                 va='center', ha='left', fontweight='bold', fontsize=11)
 
-    ax.set_xlabel('Pass Rate (%)', fontsize=13, fontweight='600')
-    ax.set_title('Model Performance on Chemistry Benchmark\nOverall Pass Rate',
+    # Add company logos from files
+    from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+    from PIL import Image
+
+    company_logos = {
+        'anthropic': 'logos/claude-icon.png',
+        'openai': 'logos/openai.svg',
+        'google': 'logos/gemini-2.5.webp',
+        'x-ai': 'logos/xai-logo-hd.webp',
+        'deepseek': 'logos/deepseek.png'
+    }
+
+    # Add company logos to the left of y-axis labels
+    for i, (model, y_pos) in enumerate(zip(models, range(len(models)))):
+        company = model.split('/')[0] if '/' in model else ''
+        logo_path = company_logos.get(company)
+
+        if logo_path and os.path.exists(logo_path):
+            try:
+                if logo_path.endswith('.svg'):
+                    # Skip SVG for now, use placeholder
+                    ax.text(-4, y_pos, '○', va='center', ha='center', fontsize=14, color='gray')
+                else:
+                    img = Image.open(logo_path)
+                    # Convert to RGBA to handle all image modes properly
+                    if img.mode != 'RGBA':
+                        img = img.convert('RGBA')
+                    imagebox = OffsetImage(img, zoom=0.04)  # Larger zoom for visibility
+                    ab = AnnotationBbox(imagebox, (-4, y_pos), frameon=False,
+                                       xycoords='data', box_alignment=(0.5, 0.5),
+                                       clip_on=False)  # Don't clip logos
+                    ax.add_artist(ab)
+            except Exception as e:
+                print(f"Warning: Could not load logo {logo_path}: {e}")
+                ax.text(-4, y_pos, '○', va='center', ha='center', fontsize=14, color='gray')
+        else:
+            ax.text(-4, y_pos, '○', va='center', ha='center', fontsize=14, color='gray')
+
+    ax.set_xlabel('Weighted Score (%)', fontsize=13, fontweight='600')
+
+    # Count total evaluations (should be consistent)
+    total_evals = model_data[0]['total_evals'] if model_data else 0
+    ax.set_title(f'Model Performance on Chemistry Benchmark\nWeighted Score (Tier 1=1x, Tier 2=2x, Tier 3=4x) • {total_evals} evaluations per model',
                  fontsize=18, fontweight='bold', pad=20)
-    ax.set_xlim(0, 110)
+    ax.set_xlim(0, 100)
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
 
     plt.tight_layout()
     os.makedirs('plots', exist_ok=True)
-    plt.savefig('plots/overall_performance.png', dpi=300, bbox_inches='tight', facecolor='white')
+    plt.savefig('plots/performance/overall_performance.png', dpi=300, bbox_inches='tight', facecolor='white')
     plt.close()
 
-    print(f"✅ Created plots/overall_performance.png")
+    print(f"✅ Created plots/performance/overall_performance.png")
+
+def calculate_weighted_score(evaluations_list):
+    """Calculate weighted score with tier1=1x, tier2=2x, tier3=4x"""
+    tier_weights = {'tier1': 1.0, 'tier2': 2.0, 'tier3': 4.0}
+
+    weighted_total = 0
+    weight_sum = 0
+
+    for eval_data in evaluations_list:
+        tier = eval_data.get('tier', 'tier1')
+        weight = tier_weights.get(tier, 1.0)
+        score_normalized = eval_data['total_score'] / 6.0 * 100  # Convert to percentage
+
+        weighted_total += score_normalized * weight
+        weight_sum += weight
+
+    return weighted_total / weight_sum if weight_sum > 0 else 0
 
 def create_score_breakdown_chart(evaluations):
-    """Create breakdown chart showing completion, correctness, and tool use scores"""
+    """Create breakdown chart showing weighted scores for each model"""
     setup_modern_style()
 
-    # Calculate average scores for each model
-    model_scores = defaultdict(lambda: {
-        'completion': [],
-        'correctness': [],
-        'tool_use': []
-    })
+    # Collect all evaluations per model with tier info
+    model_data = defaultdict(list)
 
     for question_id, models in evaluations.items():
         for model_name, scores in models.items():
-            model_scores[model_name]['completion'].append(scores['completion_score'])
-            model_scores[model_name]['correctness'].append(scores['correctness_score'])
-            model_scores[model_name]['tool_use'].append(scores['tool_use_score'])
+            model_data[model_name].append(scores)
 
-    # Calculate averages
+    # Calculate weighted scores
     model_avg = []
-    for model, scores in model_scores.items():
-        avg_completion = np.mean(scores['completion']) if scores['completion'] else 0
-        avg_correctness = np.mean(scores['correctness']) if scores['correctness'] else 0
-        avg_tool_use = np.mean(scores['tool_use']) if scores['tool_use'] else 0
-        total_avg = avg_completion + avg_correctness + avg_tool_use
+    for model, evals in model_data.items():
+        weighted_score = calculate_weighted_score(evals)
+
+        # Also calculate average component scores for display
+        avg_completion = np.mean([e['completion_score'] for e in evals])
+        avg_correctness = np.mean([e['correctness_score'] for e in evals])
+        avg_tool_use = np.mean([e['tool_use_score'] for e in evals])
 
         model_avg.append({
             'model': model,
+            'weighted_score': weighted_score,
             'completion': avg_completion,
             'correctness': avg_correctness,
             'tool_use': avg_tool_use,
-            'total': total_avg
+            'total': avg_completion + avg_correctness + avg_tool_use
         })
 
-    # Sort by total score
-    model_avg.sort(key=lambda x: x['total'], reverse=True)
+    # Sort by weighted score
+    model_avg.sort(key=lambda x: x['weighted_score'], reverse=True)
 
     # Create stacked bar chart
     fig, ax = plt.subplots(figsize=(14, 8))
@@ -197,15 +267,15 @@ def create_score_breakdown_chart(evaluations):
     ax.barh(y_pos, tool_use, left=np.array(completion)+np.array(correctness),
             label='Tool Use', color='#8B5CF6', alpha=0.85)
 
-    # Add total score labels
+    # Add weighted score labels
     for i, data in enumerate(model_avg):
-        ax.text(data['total'] + 0.1, i, f"{data['total']:.1f}/6",
+        ax.text(data['total'] + 0.1, i, f"{data['weighted_score']:.1f}%",
                 va='center', ha='left', fontweight='bold', fontsize=10)
 
     ax.set_yticks(y_pos)
     ax.set_yticklabels(models)
     ax.set_xlabel('Average Score', fontsize=13, fontweight='600')
-    ax.set_title('Score Breakdown by Evaluation Category\nCompletion + Correctness + Tool Use (Max 6)',
+    ax.set_title('Score Breakdown by Evaluation Category (Ranked by Weighted Score)\nCompletion + Correctness + Tool Use',
                  fontsize=18, fontweight='bold', pad=20)
     ax.legend(loc='lower right', fontsize=11, framealpha=0.95)
     ax.set_xlim(0, 7)
@@ -213,10 +283,10 @@ def create_score_breakdown_chart(evaluations):
     ax.spines['right'].set_visible(False)
 
     plt.tight_layout()
-    plt.savefig('plots/score_breakdown.png', dpi=300, bbox_inches='tight', facecolor='white')
+    plt.savefig('plots/performance/score_breakdown.png', dpi=300, bbox_inches='tight', facecolor='white')
     plt.close()
 
-    print(f"✅ Created plots/score_breakdown.png")
+    print(f"✅ Created plots/performance/score_breakdown.png")
 
 def create_tier_performance_chart(evaluations):
     """Create chart showing performance by question tier"""
@@ -277,10 +347,10 @@ def create_tier_performance_chart(evaluations):
     ax.grid(axis='y', alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('plots/tier_performance.png', dpi=300, bbox_inches='tight', facecolor='white')
+    plt.savefig('plots/performance/tier_performance.png', dpi=300, bbox_inches='tight', facecolor='white')
     plt.close()
 
-    print(f"✅ Created plots/tier_performance.png")
+    print(f"✅ Created plots/performance/tier_performance.png")
 
 def create_heatmap(evaluations):
     """Create heatmap showing pass/fail for each model-question combination"""
@@ -324,10 +394,10 @@ def create_heatmap(evaluations):
     plt.xticks(rotation=45, ha='right')
     plt.yticks(rotation=0)
     plt.tight_layout()
-    plt.savefig('plots/performance_heatmap.png', dpi=300, bbox_inches='tight', facecolor='white')
+    plt.savefig('plots/performance/performance_heatmap.png', dpi=300, bbox_inches='tight', facecolor='white')
     plt.close()
 
-    print(f"✅ Created plots/performance_heatmap.png")
+    print(f"✅ Created plots/performance/performance_heatmap.png")
 
 def create_summary_stats(evaluations):
     """Create summary statistics file"""
@@ -355,7 +425,7 @@ def create_summary_stats(evaluations):
             stats['avg_tool_use'].append(scores['tool_use_score'])
 
     # Write summary
-    with open('plots/summary_statistics.txt', 'w') as f:
+    with open('plots/performance/summary_statistics.txt', 'w') as f:
         f.write("=" * 80 + "\n")
         f.write("EVALUATION SUMMARY STATISTICS\n")
         f.write("=" * 80 + "\n\n")
@@ -374,7 +444,7 @@ def create_summary_stats(evaluations):
             f.write(f"  Avg Correctness: {np.mean(stats['avg_correctness']):.2f}/2\n")
             f.write(f"  Avg Tool Use: {np.mean(stats['avg_tool_use']):.2f}/2\n")
 
-    print(f"✅ Created plots/summary_statistics.txt")
+    print(f"✅ Created plots/performance/summary_statistics.txt")
 
 def main():
     """Generate all evaluation plots"""
@@ -385,7 +455,7 @@ def main():
     evaluations = load_all_evaluations()
 
     if not evaluations:
-        print("❌ No evaluations found in evaluations/ directory")
+        print("❌ No evaluations found in evaluations_sonnet4/ directory")
         return
 
     print(f"✅ Loaded {len(evaluations)} questions with evaluations\n")
