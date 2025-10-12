@@ -1,0 +1,46 @@
+{
+  "evaluation_timestamp": "2025-10-11T16:39:00.249568",
+  "question_id": "tier1_006",
+  "completion_score": 1,
+  "correctness_score": 0,
+  "tool_use_score": 0,
+  "total_score": 1,
+  "overall_assessment": "fail",
+  "reasoning": "Completion:\n- The agent started a solubility workflow after looking up and validating ketamine\u2019s SMILES. However, the run status was never retrieved and no numerical solubility result was produced. The agent attempted to poll with an \u201cunknown_tool,\u201d which failed, and then concluded without results.\n\nCorrectness:\n- No computed value was reported, so there is nothing to validate quantitatively against literature. Independently checking literature, ketamine hydrochloride (the pharmaceutically used form) has ethanol solubility on the order of 10\u201320+ mg/mL at 25 \u00b0C, based on a 2024 peer\u2011reviewed study that directly measured solubility in common solvents and supplier datasheets. Importantly, WHO/Int. Pharmacopoeia phrasing \u201csoluble in ethanol (~750 g/L) TS\u201d describes the reagent grade ethanol used for tests, not a numeric solubility of the drug; it must not be read as 750 mg/mL solubility. ([mdpi.com](https://www.mdpi.com/pharmaceutics/pharmaceutics-16-01502/article_deploy/html/images/pharmaceutics-16-01502-g004.png))\n\nTool Use:\n- Good start (molecule_lookup \u2192 validate_smiles \u2192 submit_solubility_workflow) with valid inputs.\n- Critical failure in monitoring/retrieval: used a non\u2011existent \u201cunknown_tool\u201d twice, never called the correct status/results retrieval tool, and thus never obtained the numerical outcome.\n- The agent also did not clarify salt vs. free base, which is crucial because ethanol solubility differs substantially between ketamine base and ketamine HCl for formulation contexts.",
+  "specific_feedback": [
+    "The workflow was not completed: you submitted but never retrieved results. Use the correct status/results retrieval function and handle async polling until \u201ccompleted_at\u201d is populated, then extract the numerical solubility.",
+    "Clarify the chemical form required for \u201cpharmaceutical formulation\u201d (ketamine free base vs ketamine HCl). Most formulations use the hydrochloride salt; ethanol solubility differs by salt form.",
+    "Do not misread pharmacopoeia shorthand: \u201cethanol (~750 g/L) TS\u201d denotes the reagent strength of ethanol, not a solubility value.",
+    "Provide a final numeric answer with units (mg/mL) and temperature, plus uncertainty or range, and cite a primary source (e.g., the 2024 Pharmaceutics paper) to support it.",
+    "Avoid calling non-existent tools (\u201cunknown_tool\u201d); verify available tool names and implement a robust check\u2192wait\u2192recheck loop with timeouts and error handling.",
+    "Literature validation: - Agent\u2019s computed value: None reported.\n\n- Literature values (room temperature \u224825 \u00b0C):\n  \u2022 Ketamine HCl in ethanol: approximately 20 mg/mL from a 2024 peer\u2011reviewed study; the study explicitly measured solubility at 25 \u00b0C and shows ethanol near ~20 mg/mL in Figure 4 (methanol 269.9 \u00b1 25.4 mg/mL; water 158.5 \u00b1 10.2 mg/mL; ethanol >10\u00d7 lower than methanol). ([mdpi.com](https://www.mdpi.com/pharmaceutics/pharmaceutics-16-01502/article_deploy/html/images/pharmaceutics-16-01502-g004.png))\n  \u2022 Supplier (Cayman via Biomol) lists Ketamine HCl ethanol solubility of 10 mg/mL on several product pages, consistent with a \u201clow tens of mg/mL\u201d range. ([biomol.com](https://www.biomol.com/products/chemicals/reference-standards/ketamine-hydrochloride-cay11630-1?utm_source=openai))\n  \u2022 Important note: WHO/International Pharmacopoeia wording \u201csoluble in ethanol (~750 g/L) TS\u201d refers to the ethanol test solvent strength (~96% ethanol), not the drug\u2019s solubility magnitude; it must not be interpreted as 750 g/L drug solubility. ([drugs.ncats.io](https://drugs.ncats.io/substance/O18YUO0I83?utm_source=openai))\n\n- Absolute error: N/A (no agent value).\n- Percent error: N/A.\n- Score justification: No numerical result was produced to compare; hence correctness must be 0/2. Literature indicates ethanol solubility for Ketamine HCl around 10\u201320 mg/mL at 25 \u00b0C under typical lab conditions."
+  ],
+  "chemistry_validation": {
+    "tools_used": [
+      "unknown_tool",
+      "submit_solubility_workflow",
+      "validate_smiles",
+      "molecule_lookup"
+    ],
+    "total_time_minutes": 0.9884001851081848
+  },
+  "web_citations": [
+    {
+      "url": "https://www.mdpi.com/pharmaceutics/pharmaceutics-16-01502/article_deploy/html/images/pharmaceutics-16-01502-g004.png",
+      "title": ""
+    },
+    {
+      "url": "https://www.mdpi.com/pharmaceutics/pharmaceutics-16-01502/article_deploy/html/images/pharmaceutics-16-01502-g004.png",
+      "title": ""
+    },
+    {
+      "url": "https://www.biomol.com/products/chemicals/reference-standards/ketamine-hydrochloride-cay11630-1?utm_source=openai",
+      "title": "Ketamine (hydrochloride) | CAS 1867-66-9 | Cayman Chemical | Biomol.com"
+    },
+    {
+      "url": "https://drugs.ncats.io/substance/O18YUO0I83?utm_source=openai",
+      "title": "KETAMINE HYDROCHLORIDE"
+    }
+  ],
+  "evaluator_type": "llm_judge"
+}

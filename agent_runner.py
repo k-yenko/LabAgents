@@ -949,7 +949,7 @@ if __name__ == "__main__":
         "anthropic/claude-sonnet-4.5",    # Auto-routes to claude-sonnet-4-5-20250929
         "openai/gpt-5",
         "openai/o3",
-        "x-ai/grok-4-fast:free",
+        "x-ai/grok-4-fast",
         "google/gemini-2.5-pro",
         "deepseek/deepseek-chat-v3.1:free",
         "x-ai/grok-code-fast-1"
@@ -961,7 +961,7 @@ if __name__ == "__main__":
         "anthropic/claude-sonnet-4.5",    # Auto-routes to claude-sonnet-4-5-20250929
         "openai/gpt-5",
         "openai/o3",
-        "x-ai/grok-4-fast:free",
+        "x-ai/grok-4-fast",
         "google/gemini-2.5-pro",
         "deepseek/deepseek-chat-v3.1:free",
         "x-ai/grok-code-fast-1"

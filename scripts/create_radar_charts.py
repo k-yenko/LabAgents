@@ -181,13 +181,13 @@ def main():
     print("🎨 Creating radar charts...")
     create_radar_chart(
         claude_metrics,
-        "/Users/katherineyenko/Desktop/sandbox/labagents/plots/radar_chart_claude_judge.png",
+        "/Users/katherineyenko/Desktop/sandbox/labagents/plots/performance/radar_chart_claude_judge.png",
         " (Claude Sonnet 4 Judge)"
     )
 
     create_radar_chart(
         qwen_metrics,
-        "/Users/katherineyenko/Desktop/sandbox/labagents/plots_qwen/radar_chart_qwen_judge.png",
+        "/Users/katherineyenko/Desktop/sandbox/labagents/plots/qwen_judge/radar_chart_qwen_judge.png",
         " (Qwen Judge)"
     )
 

@@ -4,3 +4,8 @@ mcp
 openai
 requests
 pydantic
+matplotlib
+seaborn
+pandas
+numpy
+anthropic

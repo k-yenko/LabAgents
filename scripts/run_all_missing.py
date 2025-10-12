@@ -24,7 +24,7 @@ ALL_MODELS = [
     "openai/o3",
     "google/gemini-2.5-pro",
     "deepseek/deepseek-chat-v3.1:free",
-    "x-ai/grok-4-fast:free",
+    "x-ai/grok-4-fast",
     "x-ai/grok-code-fast-1"
 ]
 

@@ -73,10 +73,10 @@ def create_grouped_bar_chart(df):
     ax.grid(True, axis='y', alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('plots/token_breakdown_by_question_grouped.png', dpi=300, bbox_inches='tight', facecolor='white')
+    plt.savefig('plots/token_analysis/token_breakdown_by_question_grouped.png', dpi=300, bbox_inches='tight', facecolor='white')
     plt.close()
 
-    print("✅ Created plots/token_breakdown_by_question_grouped.png")
+    print("✅ Created plots/token_analysis/token_breakdown_by_question_grouped.png")
 
 def create_heatmap(df):
     """Create heatmap: questions vs models, color = token usage"""
@@ -102,10 +102,10 @@ def create_heatmap(df):
     ax.set_ylabel('Model', fontsize=12, fontweight='600')
 
     plt.tight_layout()
-    plt.savefig('plots/token_breakdown_heatmap.png', dpi=300, bbox_inches='tight', facecolor='white')
+    plt.savefig('plots/token_analysis/token_breakdown_heatmap.png', dpi=300, bbox_inches='tight', facecolor='white')
     plt.close()
 
-    print("✅ Created plots/token_breakdown_heatmap.png")
+    print("✅ Created plots/token_analysis/token_breakdown_heatmap.png")
 
 def create_tier_comparison(df):
     """Compare token usage by tier (cleaner view)"""
@@ -143,10 +143,10 @@ def create_tier_comparison(df):
     plt.suptitle('Input Token Usage by Difficulty Tier\nAverage Across All Questions in Tier',
                  fontsize=16, fontweight='bold', y=1.02)
     plt.tight_layout()
-    plt.savefig('plots/token_breakdown_by_tier.png', dpi=300, bbox_inches='tight', facecolor='white')
+    plt.savefig('plots/token_analysis/token_breakdown_by_tier.png', dpi=300, bbox_inches='tight', facecolor='white')
     plt.close()
 
-    print("✅ Created plots/token_breakdown_by_tier.png")
+    print("✅ Created plots/token_analysis/token_breakdown_by_tier.png")
 
 def create_faceted_by_tier(df):
     """Create faceted plot showing questions within each tier"""
@@ -192,10 +192,10 @@ def create_faceted_by_tier(df):
     plt.suptitle('Input Token Usage by Question\nGrouped by Difficulty Tier',
                  fontsize=16, fontweight='bold', y=0.995)
     plt.tight_layout()
-    plt.savefig('plots/token_breakdown_faceted.png', dpi=300, bbox_inches='tight', facecolor='white')
+    plt.savefig('plots/token_analysis/token_breakdown_faceted.png', dpi=300, bbox_inches='tight', facecolor='white')
     plt.close()
 
-    print("✅ Created plots/token_breakdown_faceted.png")
+    print("✅ Created plots/token_analysis/token_breakdown_faceted.png")
 
 def main():
     print("🎨 Creating token breakdown visualizations...")

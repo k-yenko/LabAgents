@@ -4,7 +4,7 @@ run_all_missing_evals.py - batch run LLM judge evaluations on logs that don't ha
 
 what this does:
 - scans logs/ directory for all successful log files
-- checks evaluations/ directory to see which logs already have evaluations
+- checks evaluations_sonnet4/ directory to see which logs already have evaluations
 - finds logs missing evaluations
 - runs llm_judge_evaluator.py on all missing ones
 - displays progress and summary

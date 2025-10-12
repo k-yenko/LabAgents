@@ -1,6 +1,6 @@
 {
   "question_id": "tier1_007",
-  "model_name": "x-ai/grok-4-fast:free",
+  "model_name": "x-ai/grok-4-fast",
   "timestamp_start": "2025-09-20T21:46:00.268629",
   "timestamp_end": "2025-09-20T21:46:57.808069",
   "total_time_ms": 57539.29018974304,
@@ -9,7 +9,7 @@
     {
       "timestamp": "2025-09-20T21:46:04.951092",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758429961-pVZg40Kvch15GDT0vJ8s",
       "prompt_tokens": 12662,
       "completion_tokens": 270,
@@ -40,7 +40,7 @@
     {
       "timestamp": "2025-09-20T21:46:16.894742",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758429966-4EkaBgh78ux662jAlvOs",
       "prompt_tokens": 12966,
       "completion_tokens": 1609,
@@ -71,7 +71,7 @@
     {
       "timestamp": "2025-09-20T21:46:35.227669",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758429978-DToBRf9EP10mMLH0snis",
       "prompt_tokens": 14592,
       "completion_tokens": 3466,
@@ -105,7 +105,7 @@
     {
       "timestamp": "2025-09-20T21:46:41.331495",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758429996-TcsS7PRgiX734UhWTivq",
       "prompt_tokens": 18083,
       "completion_tokens": 779,
@@ -136,7 +136,7 @@
     {
       "timestamp": "2025-09-20T21:46:44.258721",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758430002-ukB6UboBB2Ihg3RTYGi5",
       "prompt_tokens": 18937,
       "completion_tokens": 256,
@@ -170,7 +170,7 @@
     {
       "timestamp": "2025-09-20T21:46:47.805845",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758430005-PFgValFQATZGu2ATjWI0",
       "prompt_tokens": 20409,
       "completion_tokens": 156,

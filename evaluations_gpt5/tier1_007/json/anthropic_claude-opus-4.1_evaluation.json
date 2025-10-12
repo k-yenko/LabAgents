@@ -1,0 +1,57 @@
+{
+  "evaluation_timestamp": "2025-10-11T17:49:12.946160",
+  "question_id": "tier1_007",
+  "completion_score": 2,
+  "correctness_score": 0,
+  "tool_use_score": 0,
+  "total_score": 2,
+  "overall_assessment": "fail",
+  "reasoning": "Completion:\n- The trace shows the pKa workflow was submitted for a lysine model, polled until completion, and results were retrieved; the agent provided a numerical result and interpretation.\n\nCorrectness:\n- Chemistry/target definition: In semaglutide, the \u03b5-amine of Lys26 is not a free amine; it is acylated with a C18 diacid via a linker. The only free amine in semaglutide is the N\u2011terminal amine. Modeling the \u201camine group in semaglutide\u201d with the \u03b5\u2011amine of free lysine is therefore conceptually incorrect. ([pmc.ncbi.nlm.nih.gov](https://pmc.ncbi.nlm.nih.gov/articles/PMC6474072/?utm_source=openai))\n- Appropriate literature comparison: For the group the question actually concerns (the free N\u2011terminus in peptides), the typical N\u2011terminal amine pKa is ~7.7 (avg; range ~6.8\u20139.1). Comparing the agent\u2019s 9.58 to 7.7 gives an absolute error of 1.88 pH units (~24% on a pKa scale)\u2014outside the \u00b10.5 unit criterion. ([employees.csbsju.edu](https://employees.csbsju.edu/hjakubowski/classes/ch331/protstructure/tabpKasidechainsProt.html?utm_source=openai))\n- Even if we (incorrectly) accept the proxy choice (lysine \u03b5\u2011amine), literature values for Lys side\u2011chain pKa cluster around ~10.5; the agent\u2019s 9.58 is still ~0.9 units low (outside \u00b10.5), though within ~10%. ([employees.csbsju.edu](https://employees.csbsju.edu/hjakubowski/classes/ch331/protstructure/tabpKasidechainsProt.html?utm_source=openai))\n\nTool use:\n- The agent used the tools correctly from an execution standpoint, but chose an inappropriate model system (free lysine) for the property asked (amine in semaglutide), leading to a critical target-definition error. A minimal, defensible model would have focused on the N\u2011terminal amine microenvironment (e.g., an N\u2011terminal His residue context) rather than a lysine \u03b5\u2011amine, which is capped in semaglutide. ([pmc.ncbi.nlm.nih.gov](https://pmc.ncbi.nlm.nih.gov/articles/PMC6474072/?utm_source=openai))",
+  "specific_feedback": [
+    "You successfully executed the workflow, but selected an incorrect model: semaglutide\u2019s \u03b5\u2011amine on Lys26 is acylated and not basic; the relevant free amine is the N\u2011terminal amine. Next time, either compute microscopic pKa directly on semaglutide (targeting the N\u2011terminus) or build a focused fragment/model that mimics the N\u2011terminal environment (e.g., a capped di-/tripeptide starting at His). Validate the target functional group against primary literature before launching calculations. ([pmc.ncbi.nlm.nih.gov](https://pmc.ncbi.nlm.nih.gov/articles/PMC6474072/?utm_source=openai))",
+    "Literature validation: - Agent\u2019s computed value: 9.58 (claimed for the \u03b5\u2011amine of lysine used as a proxy; presented as \u201cSemaglutide amine group pKa\u201d).\n- Literature value (relevant to semaglutide): The \u03b5\u2011amine at Lys26 in semaglutide is acylated (not a free amine); the only free amine is the N\u2011terminal amine. Typical pKa for N\u2011terminal amines in peptides: 7.7 on average (range 6.8\u20139.1). Sources:\n  - Semaglutide Lys26 acylation (structure/design): Hallmark review on the discovery/development of semaglutide. ([pmc.ncbi.nlm.nih.gov](https://pmc.ncbi.nlm.nih.gov/articles/PMC6474072/?utm_source=openai))\n  - N\u2011terminal amine pKa distribution in proteins/peptides: compiled table of measured pKa values; N\u2011terminus avg ~7.7. ([employees.csbsju.edu](https://employees.csbsju.edu/hjakubowski/classes/ch331/protstructure/tabpKasidechainsProt.html?utm_source=openai))\n- Absolute error: |9.58 \u2212 7.70| = 1.88 pKa units.\n- Percent error: 1.88 / 7.70 \u00d7 100% \u2248 24.4%.\n- Score justification: The agent reported a value for the wrong functional group (a capped \u03b5\u2011amine not present as a base in semaglutide). Relative to the correct group (N\u2011terminus), the error is >1.5 pKa units, so 0/2 for correctness. For completeness, even against the proxy\u2019s appropriate literature (Lys \u03b5\u2011amine pKa \u2248 10.5), the result is ~0.9 units off, outside the \u00b10.5 threshold. ([employees.csbsju.edu](https://employees.csbsju.edu/hjakubowski/classes/ch331/protstructure/tabpKasidechainsProt.html?utm_source=openai))"
+  ],
+  "chemistry_validation": {
+    "tools_used": [
+      "molecule_lookup",
+      "retrieve_workflow",
+      "submit_pka_workflow"
+    ],
+    "total_time_minutes": 8.012820712725322
+  },
+  "web_citations": [
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6474072/?utm_source=openai",
+      "title": "The Discovery and Development of Liraglutide and Semaglutide - PMC"
+    },
+    {
+      "url": "https://employees.csbsju.edu/hjakubowski/classes/ch331/protstructure/tabpKasidechainsProt.html?utm_source=openai",
+      "title": "Table"
+    },
+    {
+      "url": "https://employees.csbsju.edu/hjakubowski/classes/ch331/protstructure/tabpKasidechainsProt.html?utm_source=openai",
+      "title": "Table"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6474072/?utm_source=openai",
+      "title": "The Discovery and Development of Liraglutide and Semaglutide - PMC"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6474072/?utm_source=openai",
+      "title": "The Discovery and Development of Liraglutide and Semaglutide - PMC"
+    },
+    {
+      "url": "https://employees.csbsju.edu/hjakubowski/classes/ch331/protstructure/tabpKasidechainsProt.html?utm_source=openai",
+      "title": "Table"
+    },
+    {
+      "url": "https://employees.csbsju.edu/hjakubowski/classes/ch331/protstructure/tabpKasidechainsProt.html?utm_source=openai",
+      "title": "Table"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6474072/?utm_source=openai",
+      "title": "The Discovery and Development of Liraglutide and Semaglutide - PMC"
+    }
+  ],
+  "evaluator_type": "llm_judge"
+}

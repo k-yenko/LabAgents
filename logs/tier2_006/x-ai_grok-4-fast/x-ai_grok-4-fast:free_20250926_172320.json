@@ -1,6 +1,6 @@
 {
   "question_id": "tier2_006",
-  "model_name": "x-ai/grok-4-fast:free",
+  "model_name": "x-ai/grok-4-fast",
   "timestamp_start": "2025-09-26T17:22:11.225738",
   "timestamp_end": "2025-09-26T17:23:20.468390",
   "total_time_ms": 69242.45023727417,
@@ -9,7 +9,7 @@
     {
       "timestamp": "2025-09-26T17:22:14.956733",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758932532-kQU12wRhYSOLvcqLvpGg",
       "prompt_tokens": 13127,
       "completion_tokens": 126,
@@ -41,7 +41,7 @@
     {
       "timestamp": "2025-09-26T17:22:18.180228",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758932536-s7o98C5bSV279gPMLBsH",
       "prompt_tokens": 13280,
       "completion_tokens": 216,
@@ -75,7 +75,7 @@
     {
       "timestamp": "2025-09-26T17:22:21.573254",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758932539-hw7DZMbZJOkAMHBRRg4X",
       "prompt_tokens": 13706,
       "completion_tokens": 101,
@@ -122,7 +122,7 @@
     {
       "timestamp": "2025-09-26T17:22:24.797650",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758932543-wK7FZyshTDjwC3ZagaD8",
       "prompt_tokens": 13887,
       "completion_tokens": 72,
@@ -142,7 +142,7 @@
     {
       "timestamp": "2025-09-26T17:22:27.972906",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758932546-SCuXKP5kwi3j68Ee2OXM",
       "prompt_tokens": 14039,
       "completion_tokens": 67,
@@ -162,7 +162,7 @@
     {
       "timestamp": "2025-09-26T17:22:31.094615",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758932549-H9kaay5OTHeaLYqFOnuu",
       "prompt_tokens": 14186,
       "completion_tokens": 67,
@@ -182,7 +182,7 @@
     {
       "timestamp": "2025-09-26T17:22:34.130991",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758932553-36ItmOBTNm7KkU5XQF8a",
       "prompt_tokens": 14333,
       "completion_tokens": 67,
@@ -202,7 +202,7 @@
     {
       "timestamp": "2025-09-26T17:22:37.226425",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758932556-R3v8PVFtTNEWrRGoifJz",
       "prompt_tokens": 14480,
       "completion_tokens": 68,
@@ -222,7 +222,7 @@
     {
       "timestamp": "2025-09-26T17:22:40.148610",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758932559-nuxAqgFfi1G5614nZXBb",
       "prompt_tokens": 14628,
       "completion_tokens": 68,
@@ -242,7 +242,7 @@
     {
       "timestamp": "2025-09-26T17:22:43.937150",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758932562-jZdkEvkBpXuBnlDaExuT",
       "prompt_tokens": 14776,
       "completion_tokens": 81,
@@ -262,7 +262,7 @@
     {
       "timestamp": "2025-09-26T17:22:47.012165",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758932566-dIXNhchTXTQe8mOpT4k0",
       "prompt_tokens": 14937,
       "completion_tokens": 68,
@@ -282,7 +282,7 @@
     {
       "timestamp": "2025-09-26T17:22:50.606098",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758932569-ADfZoIZaDeLIQJkdu6rd",
       "prompt_tokens": 15085,
       "completion_tokens": 87,
@@ -302,7 +302,7 @@
     {
       "timestamp": "2025-09-26T17:22:57.251488",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758932572-EEm10qtqQLMgqRA7MZIv",
       "prompt_tokens": 15252,
       "completion_tokens": 314,
@@ -333,7 +333,7 @@
     {
       "timestamp": "2025-09-26T17:23:03.409424",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758932578-kM0PESrimMvhGwYVjI9r",
       "prompt_tokens": 15833,
       "completion_tokens": 122,
@@ -353,7 +353,7 @@
     {
       "timestamp": "2025-09-26T17:23:12.100935",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758932585-TytkwChitwshuZEKsEet",
       "prompt_tokens": 16035,
       "completion_tokens": 704,
@@ -373,7 +373,7 @@
     {
       "timestamp": "2025-09-26T17:23:20.466859",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758932594-3nWCNdNZ39zT2fOjkaLJ",
       "prompt_tokens": 16819,
       "completion_tokens": 801,

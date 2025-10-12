@@ -68,7 +68,7 @@ def load_evaluations():
     """Load all evaluation results"""
     evaluations = defaultdict(lambda: defaultdict(list))
 
-    eval_files = glob.glob("evaluations/*/json/*_evaluation.json")
+    eval_files = glob.glob("evaluations_sonnet4/*/json/*_evaluation.json")
 
     for eval_file in eval_files:
         try:

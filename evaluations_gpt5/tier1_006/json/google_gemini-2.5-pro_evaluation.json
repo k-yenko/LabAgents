@@ -1,0 +1,41 @@
+{
+  "evaluation_timestamp": "2025-10-11T16:36:06.808015",
+  "question_id": "tier1_006",
+  "completion_score": 2,
+  "correctness_score": 2,
+  "tool_use_score": 2,
+  "total_score": 6,
+  "overall_assessment": "pass",
+  "reasoning": "- Completion: The trace shows the solubility workflow was submitted, polled to completion, and results were retrieved. The agent reported a numerical result with an interpretation (log S at 298.15 K).\n- Correctness: Convert the agent\u2019s log S to practical units and compare to experimental literature for the same species (free base) in ethanol at room temperature. A recent patent reports R\u2011ketamine free base solubility in ethanol of 62\u201383 mg/mL at ambient conditions. The agent\u2019s prediction corresponds to ~115 mg/mL, which is 37\u201358% higher depending on whether you compare to the upper bound (83 mg/mL) or the midpoint of the reported range (72.5 mg/mL). Given the reported range is approximate and methods were semi\u2011quantitative, the prediction is within typical ML error for solubility.\n- Tool use: The agent chose reasonable tools and a sensible sequence (SMILES lookup \u2192 run solubility workflow \u2192 poll \u2192 retrieve results). Inputs (SMILES, temperature, solvent) are appropriate and valid.",
+  "specific_feedback": [
+    "Good job completing the workflow and reporting a clear numerical result. For formulation relevance, convert log S to mg/mL (you predicted \u2248115 mg/mL) and explicitly state the chemical form. The question likely implies the hydrochloride salt; your run used the free base, which has very different ethanol solubility. In future, confirm and report the species and provide a literature cross\u2011check alongside the model\u2019s uncertainty.",
+    "Literature validation: 1) Agent\u2019s computed value\n- log S (mol/L) at 298.15 K: \u22120.316 \u00b1 0.167\n- Converted to molarity: 10^(\u22120.316) \u2248 0.483 M\n- Using ketamine free base MW \u2248 237.7 g/mol \u2192 \u2248 114.8 mg/mL. ([chemsrc.com](https://www.chemsrc.com/en/cas/100477-72-3_828937.html?utm_source=openai))\n\n2) Literature value (same species: ketamine free base) in ethanol at ambient temp\n- R\u2011ketamine free base: 62\u201383 mg/mL (approximate, ambient conditions). ([patents.justia.com](https://patents.justia.com/patent/20240336556))\n\n3) Absolute error\n- Versus upper bound (83 mg/mL): |114.8 \u2212 83| = 31.8 mg/mL\n- Versus range midpoint (72.5 mg/mL): |114.8 \u2212 72.5| = 42.3 mg/mL\n\n4) Percent error\n- Versus upper bound: 31.8/83 = 38%\n- Versus range midpoint: 42.3/72.5 = 58%\n\n5) Score justification\n- The experimental figure is a range from an approximate method; taking the nearest bound, the prediction is +38%, which is within the \u00b150% criterion for solubility. Even using the midpoint, it is only slightly outside the \u00b150% threshold, and the model\u2019s stated uncertainty (\u00b10.167 log units \u2248 \u00d71.47) spans down to ~78 mg/mL, overlapping the reported 62\u201383 mg/mL range. Therefore, I award 2/2 for correctness. ([patents.justia.com](https://patents.justia.com/patent/20240336556))\n\nNote for formulation context\n- If the intended species were ketamine hydrochloride (the usual pharmaceutical salt), recent experimental work shows ethanol solubility orders lower than methanol and below water; Figure 4 indicates ethanol \u2272 ~25\u201330 mg/mL at 25 \u00b0C, far below the free\u2011base value. This underscores the importance of specifying salt vs free base when formulating. ([mdpi.com](https://www.mdpi.com/pharmaceutics/pharmaceutics-16-01502/article_deploy/html/images/pharmaceutics-16-01502-g004.png))"
+  ],
+  "chemistry_validation": {
+    "tools_used": [
+      "submit_solubility_workflow",
+      "batch_molecule_lookup",
+      "retrieve_workflow"
+    ],
+    "total_time_minutes": 3.4227991978327434
+  },
+  "web_citations": [
+    {
+      "url": "https://www.chemsrc.com/en/cas/100477-72-3_828937.html?utm_source=openai",
+      "title": "ketamine | CAS#:100477-72-3 | Chemsrc"
+    },
+    {
+      "url": "https://patents.justia.com/patent/20240336556",
+      "title": "U.S. Patent Application for R-KETAMINE SALTS AND METHODS OF USE THEREOF Patent Application (Application #20240336556 issued October 10, 2024) - Justia Patents Search"
+    },
+    {
+      "url": "https://patents.justia.com/patent/20240336556",
+      "title": "U.S. Patent Application for R-KETAMINE SALTS AND METHODS OF USE THEREOF Patent Application (Application #20240336556 issued October 10, 2024) - Justia Patents Search"
+    },
+    {
+      "url": "https://www.mdpi.com/pharmaceutics/pharmaceutics-16-01502/article_deploy/html/images/pharmaceutics-16-01502-g004.png",
+      "title": ""
+    }
+  ],
+  "evaluator_type": "llm_judge"
+}

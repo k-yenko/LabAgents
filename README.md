@@ -1,65 +1,85 @@
 # LabAgents
 
-A domain-specific benchmark evaluating how well LLM agents leverage computational chemistry tools via MCP (Model Context Protocol). We tested 8+ models on 22 chemistry tasks requiring tool selection, workflow planning, and multi-step execution.
+A domain-specific benchmark evaluating how well LLM agents leverage computational chemistry tools via MCP (Model Context Protocol). I tested 9 frontier models on 22 chemistry tasks requiring tool selection, workflow planning, and multi-step execution.
 
-> *Can an AI agent reason like a scientist?*
+> *Can AI agents reason like chemists? I put them to the test.. twice.*
 
 ---
 
 ## Table of Contents
 
-1. [The Journey](#the-journey)
+1. [Key Findings](#key-findings)
 2. [Evaluation Results](#evaluation-results)
-3. [What I Learned](#what-we-learned)
-4. [Benchmark Design](#benchmark-design)
-5. [Quick Start](#quick-start)
-6. [Technical Details](#technical-details)
+3. [Benchmark Design](#benchmark-design)
+4. [Quick Start](#quick-start)
+5. [Technical Details](#technical-details)
 
 ---
 
-## The Journey
+## What is this?
 
-### Where It Started
+This benchmark evaluates LLM agents on chemistry tasks using the [Rowan MCP Server](https://github.com/rowansci/mcp-server-rowan) - a tool server that provides access to computational chemistry workflows. I tested 9 frontier models across 22 questions spanning three difficulty tiers, from basic tool selection to complex multi-step reasoning.
 
-I built the Rowan MCP server as a fun project to connect a model to external tools - no virtual environments, no package installations, but just a way to connect with external domain-specific tools.
+**Why chemistry?** Chemistry requires both domain knowledge and precise tool execution. Unlike general coding tasks, there's ground truth from literature to validate against. If an agent calculates a pKa of 9.2 when literature says 4.3, that's objectively wrong - no hand-waving allowed.
 
-### The Questions That Keep Me Up
+**The evaluation challenge:** How do you grade open-ended agent tasks? I used LLM-as-judge with web search enabled, testing 3 different judges (Claude Sonnet 4, Qwen, Gemini) to measure bias. Judges score on 3 dimensions: Completion, Correctness, and Tool Use.
 
-Once I had the MCP running, I knew I'd eventually need to address my blind faith in Claude to pick out the right tools and use them correctly to solve chemical questions. Claude was helpful during development, but how do I know it's:
-- Calling tools with the correct parameters?
-- Getting answers that match what we'd see in the lab?
-- Actually the best model for these tasks?
+---
 
-My first approach was knowingly naive - I gave all the models the same tools and prompts, ran them through some questions, and subjectively compared the outputs. No real method for evals, just vibes. 
+## Key Findings
 
-### What I'm Still Learning
+### 1. Claude models are very good at using tools
 
-And I'm still figuring out the best way to evaluate. But I believe researchers will use different models for different tasks within the same pipeline. For example, in a single drug discovery workflow:
-- Maybe Gemini 2.5 Pro is best at protein structure predictions,
-- Maybe Claude is best at chemical property calculations, and
-- Maybe ChatGPT is best at ADMET predictions
+![Overall Performance](plots/sonnet4_judge/overall_performance.png)
 
-**How would we know? Where is this information consolidated?**
+Claude models dominate the leaderboard with all three variants in the top 3 positions. Claude Sonnet 4 achieves 88.4% weighted score, demonstrating consistent tool selection and execution across all difficulty tiers. The gap between Claude (85-88%) and other models (34-70%) reveals differences in agentic capabilities beyond just chemical reasoning. 
 
-This project is my attempt to start answering these questions - and eventually build **BioArena**: a scientist-validated, domain-specific ranking system for life sciences AI.
+> **Disclaimer**: The primary judge is also Claude Sonnet 4. Yes, Claude is grading Claude. Perhaps the tournament is rigged, but in light of this, I also evaluated with Qwen 3 Max (independent verifier, since Qwen wasn't used as an evaluator here), Gemini 2.5 Pro, and GPT-5 as other judges. More on this later.
 
-### My Observations
+### 2. Token usage varies a lot across different models
 
-**1. Models are getting better at tool use**
-- Claude Sonnet 4: 88.4% weighted score (NEW #1!)
-- All Claude models dominate top 3: Sonnet 4 (88.4%), Sonnet 4.5 (87.0%), Opus 4.1 (85.1%)
-- Clear tier: Claude > GPT-5/Gemini > Grok/DeepSeek > o3
+![Token Usage Breakdown](plots/token_analysis/token_usage.png)
 
-**2. Domain expertise is essential**
-- tier1_001 was a deliberate trick question (drug NOT soluble in water)
-- Models confidently reported solubility concentrations
-- Judges didn't even catch this either; they need domain grounding too
+GPT-5 uses 579K tokens per question on average, which is 2x more than Claude models (260-343K) and 6x more than o3 (94K). Individual data points (dots) reveal certain usage patterns: Claude Opus 4.1's top 4 outliers all occur on tier 3 questions (reaching 2.3M tokens on tier3_003), indicating extended reasoning on complex multi-step tasks. o3 shows tight clustering around 94K because it typically ends conversations after submitting workflows rather than waiting for computation results, essentially treating task submission as completion. This explains both its low token usage and poor performance (33.7%):  reasoning capabilities don't translate to agent performance when the model doesn't follow through on tool execution.
 
-**3. Reasoning ≠ Tool Execution**
-- O3 reasons exceptionally well but struggles with tool selection
-- Strong reasoning doesn't automatically translate to good agent performance
+### 3. Domain expertise is essential
 
-- **I still need human-labeled golden datasets for ground truth**
+**The tier1_001 Trick Question:**
+
+Question: "What is the predicted aqueous solubility of remdesivir at physiological temperature?"
+
+**Truth**: Remdesivir is NOT water-soluble (requires special formulation for clinical use)
+
+![Trick Question Results](plots/performance/tier1_001_trick_question.png)
+
+**What happened**: The 9 models tested either reported computational predictions - ranging from "105.5 g/L" to "log S = -1.14"— or never completed the answer. Either way, none of the models recognized the compound as insoluble. 
+
+**Judge performance**: Both judges caught the error and gave 0/2 correctness scores. But **4/9 models still passed** with Sonnet as a judge because they earned 4/6 total points from completion (2/2) + tool use (2/2) + correctness (0/2).
+
+**The evaluation design question**: Should models pass when they execute tools correctly but get wrong answers? Currently yes - 4/9 passed with 4/6 points despite 0/2 correctness. This raises a few concerns: 
+
+1. Evaluation scoring: should correctness be weighted more, or be a required minimum to pass? 
+2. Model reasoning: models never questioned whether remdesivir should be water-soluble before computing it. They treated tool execution as the goal, not a validation step. When should models think before computing? 
+
+### 4. Judge bias exists, but correlation remains high
+
+![Judge Comparison Heatmap](plots/judge_comparison/judge_heatmap.png)
+
+I evaluated all 9 models with 4 different judges (Claude Sonnet-4, Qwen, GPT-5, Gemini) to measure judge bias. The heatmap reveals several patterns:
+
+**Key Findings:**
+
+1. **Qwen is the most lenient** (70.6% mean) - consistently scores models 3-15 points higher than other judges, particularly on mid-tier performers like DeepSeek (+12.8 vs Gemini) and Grok models (+19.2 vs GPT-5 on grok-4-fast).
+
+2. **GPT-5 and Gemini are harshest** (55.3% and 56.4% means) - Both judges score significantly lower across the board, with GPT-5 giving o3 only 32.1% (vs 49.6% from Qwen, a 17.5 point gap).
+
+3. **Strong rank correlation despite score differences** - All judge pairs show r > 0.87, with Claude-Qwen at r = 0.97 ([full correlation matrix](plots/judge_comparison/judge_summary.txt)). This means judges agree on relative rankings even when absolute scores differ by 10-20 points.
+
+4. **Claude models excel regardless of judge** - All three Claude variants score 67-88% across all judges, maintaining top-3 positions. This consistency suggests genuine capability rather than judge bias.
+
+While absolute scores shift by judge (±15 points), relative rankings are stable. Claude dominance holds across all evaluators, validating the initial finding.
+
+*Note: GPT-5 evaluations are mostly complete but a few missing evaluations were identified and need to be run.*
 
 ---
 
@@ -67,75 +87,22 @@ This project is my attempt to start answering these questions - and eventually b
 
 ### Overall Leaderboard (Weighted by Difficulty)
 
-*Tier 1 = 1x weight, Tier 2 = 2x weight, Tier 3 = 4x weight*
+*Tier 1 = 1x weight, Tier 2 = 2x weight, Tier 3 = 4x weight | Sorted by Claude Sonnet 4 judge scores*
 
-| Rank | Model | Weighted Score | Evaluations |
-|------|-------|---------------|-------------|
-| 🥇 1 | Claude Sonnet 4 | 88.4% | 22/22 |
-| 🥈 2 | Claude Sonnet 4.5 | 87.0% | 22/22 |
-| 🥉 3 | Claude Opus 4.1 | 85.1% | 22/22 |
-| 4 | GPT-5 | 69.9% | 22/22 |
-| 5 | Gemini 2.5 Pro | 69.2% | 22/22 |
-| 6 | Grok Code Fast 1 | 63.4% | 22/22 |
-| 7 | DeepSeek v3.1 | 58.0% | 22/22 |
-| 8 | Grok 4 Fast | 53.9% | 20/22 |
-| 9 | o3 | 33.7% | 22/22 |
+| Model | Claude Sonnet 4 | Qwen | Gemini | GPT-5 |
+|-------|----------------|------|--------|-------|
+| 🥇 Claude Sonnet 4 | 88.4% | 80.8% | 56.2% | 71.6% |
+| 🥈 Claude Sonnet 4.5 | 87.0% | 88.0% | 80.1% | 74.6% |
+| 🥉 Claude Opus 4.1 | 85.1% | 84.4% | 80.8% | 79.6% |
+| GPT-5 | 69.9% | 68.1% | 64.5% | 64.9% |
+| Gemini 2.5 Pro | 69.2% | 71.0% | 54.7% | 60.9% |
+| Grok Code Fast 1 | 63.4% | 68.1% | 48.9% | 47.1% |
+| DeepSeek v3.1 | 58.0% | 63.4% | 51.9% | 41.7% |
+| Grok 4 Fast | 48.9% | 61.6% | 44.6% | 41.7% |
+| o3 | 33.7% | 49.6% | 26.1% | 38.2% |
+| **Evaluations** | **22/22** | **22/22** | **22/22*** | **12-15/22** |
 
 *Full results in [leaderboard/](leaderboard/)*
-
-### Judge Comparison
-
-I was using Claude for everything, including judging the results. To check for same-family bias, I added **Qwen 3 Max** as an independent judge (Qwen wasn't evaluated in the benchmark, so it has no stake in the results).
-
-- **Claude Sonnet 4** (primary judge with web search)
-- **Qwen 3 Max** (independent verification)
-
-*Judge agreement analysis in [plots_comparison/](plots_comparison/)*
-
----
-
-## What We Learned
-
-### 1. Validation Methodology Evolution
-
-**The LLM-as-Judge Pipeline:**
-Following Hamel Husain's evaluation principles, we:
-1. Created human-labeled golden datasets (in progress)
-2. Held out test sets for unbiased validation
-3. Measured judge performance against expert labels
-
-**Key finding**: Web-search enabled judges perform better, but still miss domain-specific edge cases.
-
-### 2. Judge Performance & Bias
-
-Comparing 3 judges (Claude Sonnet 4, Qwen, GPT-5):
-- **Agreement rate**: [To be analyzed from plots_comparison/]
-- **Same-family bias**: [Evidence from cross-judge analysis]
-- **Literature validation**: Web search dramatically improves correctness scoring
-
-### 3. Model Capabilities
-
-**Tool Selection**: Claude models dominate
-- Sonnet 4.5: Best overall (90.7%)
-- Opus 4.1: Most consistent (22/22 questions)
-- GPT-5: Struggles with tool orchestration (63.6%)
-
-**Reasoning vs Execution**:
-- O3 has strong reasoning but poor tool selection
-- Gemini balances both reasonably well (69.2%)
-
-### 4. Next Steps
-
-**Immediate priorities:**
-- [ ] Create human-labeled golden dataset for all 22 questions
-- [ ] Update Rowan MCP with latest tool improvements
-- [ ] Detailed analysis of tier1_001 (trick question case study)
-- [ ] Expand benchmark to protein structure and toxicity tasks
-
-**Long-term vision: BioArena**
-- Scientist-validated rankings across life sciences domains
-- Community-driven evaluation with expert verification
-- Domain-specific leaderboards (chemistry, biology, clinical)
 
 ---
 
@@ -146,25 +113,45 @@ Comparing 3 judges (Claude Sonnet 4, Qwen, GPT-5):
 **Tier 1: Basic Tool Selection** (10 questions)
 - Single-tool tasks testing tool selection accuracy
 - Example: "Calculate the logP of aspirin"
+- Tests: Can models identify the right tool?
 
 **Tier 2: Multi-Tool Orchestration** (6 questions)
-- Independent parallel workflows requiring planning
+- Parallel workflows requiring planning
 - Example: "Generate conformers AND calculate pKa for ibuprofen"
+- Tests: Can models plan and execute parallel tasks?
 
 **Tier 3: Scientific Reasoning** (6 questions)
-- Complex conditional logic and sequential dependencies
+- Complex conditional logic with dependencies
 - Example: "Find the most stable tautomer, then calculate its properties"
+- Tests: Can models handle scientific decision-making?
 
-**[→ See All Questions](QUESTIONS.md)**
+**[→ See All Questions](questions/)**
 
 ### Evaluation Methodology
 
-We used **LLM-as-Judge** evaluation with:
-- **Web-search enabled judges** to validate against literature values
-- **Multiple independent judges** (Claude, Qwen, GPT-5) to detect bias
-- **Weighted scoring** (1x tier1, 2x tier2, 4x tier3) to emphasize complexity
-- **3 dimensions**: Completion (0-2), Correctness (0-2), Tool Use (0-2)
-- **Pass threshold**: 4/6 points
+**LLM-as-Judge Pipeline:**
+- ✅ **Web-search enabled** - Validates against literature
+- ✅ **Multiple judges** - Claude, Qwen, Gemini, GPT-5
+- ✅ **Weighted scoring** - 1x, 2x, 4x by tier
+- ✅ **3 dimensions** - Completion (0-2), Correctness (0-2), Tool Use (0-2)
+- ✅ **Citation tracking** - Judges cite sources
+- ✅ **Pass threshold** - 4/6 points
+
+**Rubric Example (Correctness):**
+```
+STEP 1: Search for literature values
+  → "[molecule name] [property] experimental value"
+
+STEP 2: Extract and compare
+  → Agent's value: X
+  → Literature: Y (from [source])
+  → Error: |X - Y|
+
+STEP 3: Score by error magnitude
+  ✓ pKa: within ±0.5 = 2/2
+  ✓ logP: within ±0.3 = 2/2
+  ✓ Solubility: within ±50% = 2/2
+```
 
 ---
 
@@ -177,71 +164,58 @@ We used **LLM-as-Judge** evaluation with:
 python agent_runner.py tier1_001 --model "openai/gpt-5"
 
 # All questions in a tier
-python agent_runner.py tier1 --model "anthropic/claude-sonnet-4.5"
+python agent_runner.py tier1 --model "anthropic/claude-sonnet-4"
 
-# Specific model on all tiers
-./run_missing_sonnet45.sh
+# All models on one question
+python agent_runner.py tier1_001 --all-models
 ```
 
 ### Evaluate with LLM Judge
 
 ```bash
-# Evaluate all logs for a question
-python scripts/run_all_missing_evals.py
+# Run evaluations with all judges
+python scripts/run_additional_judges.py
 
-# Generate leaderboard and plots
-python leaderboard/update_leaderboard.py
-python scripts/create_evaluation_plots.py
+# Single judge evaluation
+python llm_judge_evaluator.py --single logs/tier1_001/model_timestamp.json \
+  --output-dir evaluations_sonnet4 --judge "anthropic/claude-sonnet-4"
 ```
 
 ---
 
 ## Technical Details
 
-### Models Evaluated
+### Rowan MCP Tools
 
-| Model | Provider | Type |
-|-------|----------|------|
-| Claude Opus 4.1 | Anthropic | Flagship reasoning |
-| Claude Sonnet 4.5 | Anthropic | Latest balanced |
-| Claude Sonnet 4 | Anthropic | Fast reasoning |
-| GPT-5 | OpenAI | Latest flagship |
-| o3 | OpenAI | Reasoning specialist |
-| Gemini 2.5 Pro | Google | Multimodal flagship |
-| DeepSeek v3.1 | DeepSeek | Open-source |
-| Grok 4 Fast | xAI | Fast variant |
-
-### Rowan MCP Tools (32 total)
-
-**Core Calculations**: Geometry optimization, conformers, electronic properties, MD simulations
+**Core Calculations**: Geometry optimization, conformer search, molecular descriptors
 
 **Chemical Properties**: pKa, redox potential, solubility, tautomers, Fukui indices
 
-**Drug Discovery**: ADMET prediction, descriptors, molecular docking
+**Drug Discovery**: Molecular docking (protein-ligand)
 
-**Reaction Analysis**: PES scans, IRC calculations, TS optimization
-
-**[→ Full Tool Documentation](https://docs.rowansci.com)**
-
----
+**Reaction Analysis**: Potential energy surface scans
 
 ### Directory Structure
 
 ```
 labagents/
-├── agent_runner.py           # Main agent execution script
-├── llm_judge_evaluator.py    # LLM-as-judge evaluation
-├── logs/                     # Agent execution logs
+├── agent_runner.py              # Main agent execution
+├── llm_judge_evaluator.py       # LLM-as-judge evaluation
+├── logs/                        # Agent execution logs
 │   └── {question_id}/{model}/
-├── evaluations/              # Judge evaluations (Claude Sonnet 4)
-├── evaluations_qwen/         # Qwen judge evaluations
-├── evaluations_gpt5/         # GPT-5 judge evaluations
-├── leaderboard/              # Leaderboard CSVs
-├── plots/                    # Visualization plots
-├── plots_qwen/               # Qwen judge plots
-├── plots_comparison/         # Cross-judge comparison
-├── questions/                # Benchmark task definitions
-└── scripts/                  # Utilities and automation
+├── evaluations_sonnet4/         # Claude Sonnet 4 judge
+├── evaluations_qwen/            # Qwen judge
+├── evaluations_gemini/          # Gemini judge
+├── evaluations_gpt5/            # GPT-5 judge
+├── leaderboard/                 # Weighted leaderboard CSVs
+├── plots/
+│   ├── performance/             # Main performance plots
+│   ├── efficiency/              # Cost/speed/resource analysis
+│   ├── token_analysis/          # Token usage patterns
+│   ├── judge_comparison/        # Inter-judge reliability
+│   └── qwen_judge/              # Qwen-specific results
+├── questions/                   # Benchmark task definitions
+└── scripts/                     # Automation utilities
 ```
 
 ### Requirements
@@ -249,9 +223,17 @@ labagents/
 - Python 3.13+
 - `.env` with `OPENROUTER_API_KEY`
 - Rowan MCP server running locally
-- Dependencies: `openai`, `anthropic`, `matplotlib`, `seaborn`
+- Dependencies: `openai`, `anthropic`, `matplotlib`, `seaborn`, `pandas`
 
 ```bash
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
+
+---
+
+## What's Next
+
+- [ ] Complete missing GPT-5 and Gemini evaluations
+- [ ] Create human-labeled golden dataset
+- [ ] Update Rowan MCP with latest tools (!)

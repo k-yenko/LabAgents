@@ -1,6 +1,6 @@
 {
   "question_id": "tier1_004",
-  "model_name": "x-ai/grok-4-fast:free",
+  "model_name": "x-ai/grok-4-fast",
   "timestamp_start": "2025-09-20T17:06:47.021966",
   "timestamp_end": "2025-09-20T17:07:08.115954",
   "total_time_ms": 21093.842029571533,
@@ -9,7 +9,7 @@
     {
       "timestamp": "2025-09-20T17:06:52.076560",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758413208-1XmrGOfBc5ZdqEAzGHba",
       "prompt_tokens": 12666,
       "completion_tokens": 346,
@@ -41,7 +41,7 @@
     {
       "timestamp": "2025-09-20T17:06:55.288558",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758413213-hah1yDjUh1KM9ncsoX12",
       "prompt_tokens": 13045,
       "completion_tokens": 270,
@@ -73,7 +73,7 @@
     {
       "timestamp": "2025-09-20T17:06:58.114084",
       "event_type": "api_call",
-      "api_model": "x-ai/grok-4-fast:free",
+      "api_model": "x-ai/grok-4-fast",
       "generation_id": "gen-1758413216-OuzJe9F68jV9s2yf9UCc",
       "prompt_tokens": 14569,
       "completion_tokens": 59,

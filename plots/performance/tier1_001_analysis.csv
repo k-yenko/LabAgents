@@ -1,0 +1,109 @@
+model,model_short,completed,final_answer,tools_used,sonnet_completion,sonnet_correctness,sonnet_tool_use,sonnet_total,sonnet_pass,qwen_completion,qwen_correctness,qwen_tool_use,qwen_total,qwen_pass
+google/gemini-2.5-pro,gemini-2.5-pro,True,"The predicted aqueous solubility of remdesivir at physiological temperature (310.15 K) is -1.14 log S, with an uncertainty of 0.24 log S.","['molecule_lookup', 'molecule_lookup', 'submit_solubility_workflow', 'retrieve_workflow']",2.0,0.0,2.0,4.0,True,2.0,1.0,2.0,5.0,True
+deepseek/deepseek-chat-v3.1:free,deepseek-chat-v3.1:free,True," I apologize, but it appears the web search functionality is not currently available, and the molecule lookup tool cannot find remdesivir in its database. 
+
+To proceed with the solubility prediction, I would need either:
+1. The exact SMILES string for remdesivir
+2. Or access to web search to look up the molecular structure
+
+Could you please provide the SMILES string for remdesivir? If you don't have it readily available, you might need to:
+- Look it up in a chemical database like PubChem or ChemSpider
+- Provide the molecular formula or structure drawing
+- Use an alternative identifier like its CAS number (1809249-37-3)
+
+Once you provide the SMILES string, I can immediately submit a solubility prediction workflow to calculate the aqueous solubility at physiological temperature (typically 310.15 K or 37°C).","['molecule_lookup', 'unknown_tool', 'unknown_tool', 'unknown_tool', 'unknown_tool']",,,,,,,,,,
+anthropic/claude-sonnet-4.5,claude-sonnet-4.5,True,"
+
+Perfect! I have the complete results. Let me analyze and present the findings:
+
+## **Aqueous Solubility of Remdesivir at Physiological Temperature**
+
+### **Results:**
+
+**Predicted log S (aqueous solubility):** **-1.57 ± 0.02** (log mol/L)
+
+**Temperature:** 310.15 K (37°C - physiological body temperature)
+
+**Method:** FastSolv (machine learning-based solubility prediction)
+
+### **Interpretation:**
+
+The log S value of -1.57 means:
+
+- **Solubility = 10^(-1.57) ≈ 0.027 mol/L**
+- **Solubility ≈ 27 mM**
+- **Mass solubility ≈ 15 mg/mL** (using molecular weight of 555.52 g/mol)
+
+### **Classification:**
+
+With a log S of -1.57, remdesivir is classified as having **moderate to good aqueous solubility**. This level of solubility is appropriate for a pharmaceutical compound intended for intravenous administration.
+
+### **Context:**
+
+This predicted solubility is consistent with remdesivir being formulated as an injectable medication. The actual pharmaceutical formulation uses sulfobutylether-β-cyclodextrin as a solubilizing agent to enhance solubility and stability in clinical preparations, but the intrinsic solubility prediction here represents the compound itself in pure water.
+
+**Computational Details:**
+- Calculation time: ~42 seconds
+- Credits charged: 0.7
+- Uncertainty: ±0.018 log units (very low uncertainty)
+
+The calculation has been completed successfully with a definitive numerical answer for the aqueous solubility of remdesivir at physiological temperature.","['molecule_lookup', 'molecule_lookup', 'validate_smiles', 'submit_solubility_workflow', 'workflow_get_status', 'retrieve_workflow']",2.0,0.0,2.0,4.0,True,2.0,0.0,2.0,4.0,True
+anthropic/claude-opus-4.1,claude-opus-4.1,True,"Perfect! I have the results. Let me extract and interpret the solubility data:
+
+## Results: Predicted Aqueous Solubility of Remdesivir at Physiological Temperature
+
+**Temperature:** 310.15 K (37°C - physiological temperature)
+
+**Predicted log S (aqueous solubility):** -0.756 ± 0.196
+
+**Interpretation:**
+- The log S value of -0.756 means the predicted molar solubility is 10^(-0.756) = 0.175 M
+- This corresponds to approximately **175 mM** or **175 mmol/L**
+- Given remdesivir's molecular weight of approximately 602.6 g/mol, this translates to about **105.5 g/L** in water
+
+**Key Points:**
+1. The prediction was made using the FastSolv method implemented in Rowan
+2. The uncertainty of ±0.196 log units indicates the prediction confidence interval
+3. A log S value of -0.756 suggests remdesivir has moderate aqueous solubility at body temperature
+4. This is somewhat higher than typical experimental values reported for remdesivir (which is generally considered poorly water-soluble), likely due to model limitations with complex phosphoramidate prodrugs
+
+The calculation has been completed successfully, providing a quantitative prediction of remdesivir's aqueous solubility at physiological conditions.","['molecule_lookup', 'molecule_lookup', 'submit_solubility_workflow', 'retrieve_workflow']",2.0,0.0,2.0,4.0,True,2.0,0.0,2.0,4.0,True
+openai/o3,o3,True,"Submitted a solubility‐prediction workflow for remdesivir in water at 310.15 K  
+(workflow UUID = 8a4697bb-1c0f-45d3-9539-7ec6e7abd477).
+
+I’ll check the status in 10 seconds and keep you updated with the required smart-polling schedule.","['molecule_lookup', 'molecule_lookup', 'molecule_lookup', 'molecule_lookup', 'validate_smiles', 'submit_solubility_workflow']",1.0,0.0,1.0,2.0,False,2.0,0.0,2.0,4.0,True
+x-ai/grok-code-fast-1,grok-code-fast-1,True,I'll wait 20 seconds before the next status check.,"['molecule_lookup', 'molecule_lookup', 'batch_molecule_lookup', 'validate_smiles', 'submit_solubility_workflow', 'workflow_get_status']",0.0,0.0,1.0,1.0,False,1.0,0.0,2.0,3.0,False
+openai/gpt-5,gpt-5,True,"Plan:
+1) Get the molecular structure of remdesivir as SMILES (required input for solubility prediction).
+2) Run a Rowan Solubility workflow for water at 310.15 K (37°C).
+3) Monitor the workflow with smart polling until it finishes.
+4) Retrieve results and report predicted aqueous solubility (log S) at 37°C, plus conversion to mol/L and mg/mL.
+
+I tried to fetch the SMILES via the molecule lookup tool, but it could not resolve “remdesivir,” “GS-5734,” or the CAS 1809249-37-3. To proceed, please provide one of the following:
+- A SMILES or InChI for remdesivir, or
+- Permission for me to use an external identifier you trust (e.g., a specific SMILES string you supply), or
+- An SDF/MOL file path if you have one available.
+
+Once I have a valid structure, I’ll immediately submit the solubility workflow and monitor it to completion.","['molecule_lookup', 'molecule_lookup', 'molecule_lookup', 'batch_molecule_lookup']",1.0,0.0,1.0,2.0,False,0.0,0.0,1.0,1.0,False
+anthropic/claude-sonnet-4,claude-sonnet-4,True,"Perfect! I have the results. Let me analyze the solubility prediction:
+
+## Results: Predicted Aqueous Solubility of Remdesivir at Physiological Temperature
+
+**Calculated Values:**
+- **Solubility (log S)**: -1.57 ± 0.02
+- **Temperature**: 310.15 K (37°C, physiological temperature)
+- **Solvent**: Water
+- **Method**: FastSolv (machine learning-based solubility prediction)
+
+**Interpretation:**
+- The predicted log S value of -1.57 means the solubility in water at 37°C is approximately **10^(-1.57) = 0.027 mol/L**
+- Converting to mg/mL: 0.027 mol/L × 555.52 g/mol = **15.0 mg/mL**
+- This indicates **moderate aqueous solubility** at physiological temperature
+
+**Summary:**
+Remdesivir is predicted to have an aqueous solubility of approximately **15.0 mg/mL** (or 0.027 M) at physiological temperature (37°C). This moderate solubility is consistent with its formulation requirements for intravenous administration, where solubility enhancers are often used in pharmaceutical preparations.
+
+The calculation completed in ~98 seconds using Rowan's FastSolv machine learning model, with an uncertainty estimate of ±0.02 in the log S value.","['molecule_lookup', 'molecule_lookup', 'validate_smiles', 'submit_solubility_workflow', 'retrieve_workflow']",2.0,0.0,2.0,4.0,True,2.0,2.0,2.0,6.0,True
+x-ai/grok-4-fast,grok-4-fast,True,"I'll now check the status of the solubility prediction workflow in 10 seconds. 
+
+**Note:** This workflow involves machine learning-based solubility prediction, which typically completes in a few minutes. I'll use smart polling to monitor progress without overloading the server.","['molecule_lookup', 'molecule_lookup', 'molecule_lookup', 'batch_molecule_lookup', 'validate_smiles', 'submit_solubility_workflow']",,,,,,,,,,
