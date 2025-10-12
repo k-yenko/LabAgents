@@ -20,9 +20,7 @@ A domain-specific benchmark evaluating how well LLM agents leverage computationa
 
 This benchmark evaluates LLM agents on chemistry tasks using the [Rowan MCP Server](https://github.com/rowansci/mcp-server-rowan) - a tool server that provides access to computational chemistry workflows. I tested 9 frontier models across 22 questions spanning three difficulty tiers, from basic tool selection to complex multi-step reasoning.
 
-**Why chemistry?** Chemistry requires both domain knowledge and precise tool execution. Unlike general coding tasks, there's ground truth from literature to validate against. If an agent calculates a pKa of 9.2 when literature says 4.3, that's objectively wrong - no hand-waving allowed.
-
-**The evaluation challenge:** How do you grade open-ended agent tasks? I used LLM-as-judge with web search enabled, testing 3 different judges (Claude Sonnet 4, Qwen, Gemini) to measure bias. Judges score on 3 dimensions: Completion, Correctness, and Tool Use.
+**The evaluation challenge:** How do you grade open-ended agent tasks? I used LLM-as-judge with web search enabled, testing 4 different judges (Claude Sonnet 4, Qwen, Gemini, and GPT-5) to measure bias. Judges score on 3 dimensions: Completion, Correctness, and Tool Use.
 
 ---
 
