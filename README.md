@@ -26,7 +26,7 @@ This benchmark evaluates LLM agents on chemistry tasks using the [Rowan MCP Serv
 
 ## Key Findings
 
-### 1. Claude models are very good at using tools
+### 1. Claude models lead in tool use
 
 ![Overall Performance](plots/sonnet4_judge/overall_performance.png)
 
