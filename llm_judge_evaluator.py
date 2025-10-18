@@ -58,14 +58,21 @@ class ComputationalChemistryJudge:
                 success = event.get("success", False)
                 exec_time = event.get("execution_time_ms", 0)
 
-                # Truncate very long results to avoid token explosion
+                # Aggressively truncate results - judge only needs to know what was computed, not full data
                 result_str = str(result)
-                if len(result_str) > 500:
-                    result_str = result_str[:500] + "... [truncated]"
+                if len(result_str) > 300:
+                    result_str = result_str[:300] + f"... [truncated, {len(result_str)} chars total]"
+
+                # Also truncate large parameters (like SMILES strings, geometries)
+                params_str = str(parameters)
+                if len(params_str) > 200:
+                    params_str = params_str[:200] + "... [truncated]"
+                else:
+                    params_str = params_str
 
                 execution_trace.append(
                     f"  🔧 {tool_name}\n"
-                    f"     Parameters: {parameters}\n"
+                    f"     Parameters: {params_str}\n"
                     f"     Result: {result_str}\n"
                     f"     Status: {'✓ Success' if success else '✗ Failed'} ({exec_time}ms)"
                 )

@@ -1,0 +1,27 @@
+{
+  "evaluation_timestamp": "2025-10-12T15:43:16.029958",
+  "question_id": "tier3_003",
+  "completion_score": 0,
+  "correctness_score": 0,
+  "tool_use_score": 0,
+  "total_score": 0,
+  "overall_assessment": "fail",
+  "reasoning": "No reasoning",
+  "specific_feedback": [],
+  "chemistry_validation": {
+    "tools_used": [
+      "retrieve_calculation_molecules",
+      "sanitize_protein",
+      "submit_conformer_search_workflow",
+      "submit_docking_workflow",
+      "submit_descriptors_workflow",
+      "molecule_lookup",
+      "workflow_get_status",
+      "retrieve_workflow",
+      "create_protein_from_pdb_id"
+    ],
+    "total_time_minutes": 29.779951786994936
+  },
+  "web_citations": [],
+  "evaluator_type": "llm_judge"
+}

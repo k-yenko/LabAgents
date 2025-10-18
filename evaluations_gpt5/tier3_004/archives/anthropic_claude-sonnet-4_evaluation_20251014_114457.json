@@ -1,0 +1,24 @@
+{
+  "evaluation_timestamp": "2025-10-12T16:23:46.721884",
+  "question_id": "tier3_004",
+  "completion_score": 0,
+  "correctness_score": 0,
+  "tool_use_score": 0,
+  "total_score": 0,
+  "overall_assessment": "fail",
+  "reasoning": "No reasoning",
+  "specific_feedback": [],
+  "chemistry_validation": {
+    "tools_used": [
+      "submit_scan_workflow",
+      "retrieve_calculation_molecules",
+      "molecule_lookup",
+      "workflow_get_status",
+      "retrieve_workflow",
+      "submit_fukui_workflow"
+    ],
+    "total_time_minutes": 12.625208298365274
+  },
+  "web_citations": [],
+  "evaluator_type": "llm_judge"
+}

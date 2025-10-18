@@ -1,58 +1,36 @@
 {
-  "evaluation_timestamp": "2025-10-12T15:01:22.073312",
+  "evaluation_timestamp": "2025-10-12T15:06:36.614383",
   "question_id": "tier3_001",
   "completion_score": 2,
-  "correctness_score": 1,
+  "correctness_score": 0,
   "tool_use_score": 2,
-  "total_score": 5,
+  "total_score": 4,
   "overall_assessment": "pass",
-  "reasoning": "- Completion: The trace shows successful runs for tautomer search, pKa workflows for two tautomers, and descriptor calculation for the deprotonated species, followed by an interpretation that identifies the dominant form and predicts protein binding. All workflows report \u201cCOMPLETED_OK,\u201d and numerical outputs (tautomer populations, pKa, descriptors) are presented and discussed.\n- Correctness: Literature reports an experimental pKa for warfarin near 5.0 (5.05 \u00b1 0.1; multiple sources). The agent\u2019s computed pKa (2.64) is off by ~2.4 units, which exceeds the \u00b10.5 criterion. However, the computed logP (2.98) aligns closely with experimental logP \u2248 2.70. The conclusion that warfarin is predominantly anionic at pH 7.4 remains qualitatively correct, but the tautomer distribution the agent reports (enol ~96%) conflicts with literature indicating a substantial preference for the cyclic hemiketal in aqueous media (\u224820:1 hemiketal:enol). Protein binding prediction (\u201cvery high; albumin\u201d) is consistent with 98\u201399.6% binding reported clinically.\n- Tool use: The agent used appropriate cheminformatics workflows in a sensible order: SMILES lookup \u2192 tautomer enumeration \u2192 pKa calculations \u2192 deprotonated-species descriptors. Polling for workflow completion and retrieving results were done correctly. Minor inefficiency from long waits is acceptable; no failed calls or invalid inputs.",
+  "reasoning": "Completion:\n- The trace shows the tautomer search workflow completed (COMPLETED_OK), both pKa workflows for two tautomers completed (COMPLETED_OK), and the descriptors job for the dominant anion completed (COMPLETED_OK). The agent then synthesized and interpreted these outputs (dominant species at pH 7.4 and protein-binding prediction). That satisfies the completion criteria.\n\nCorrectness:\n- pKa: The agent reported pKa = 2.64 for the phenolic/enolic OH. Literature sources report warfarin\u2019s acidic pKa \u2248 5.0\u20135.05. This is off by \u22482.4 pKa units (>30%), which materially affects the Henderson\u2013Hasselbalch fraction (agent claimed ~99.998% deprotonation at pH 7.4; with pKa \u2248 5.0 the correct fraction is ~99.6%). Therefore pKa accuracy fails the \u00b10.5 criterion. \n- LogP: The agent cited SLogP \u2248 2.98 for the dominant form. Experimental logP values around 2.70 are reported. The 0.28 difference is within \u00b10.3, acceptable by rubric.\n- Protein binding: The agent\u2019s qualitative prediction of very high albumin binding is consistent with literature (\u224898\u201399.6% bound), but since pKa is substantially wrong, overall correctness is driven down to 0/2 per rubric.\n\nTool Use:\n- The agent used appropriate tools in a logical sequence: molecule lookup \u2192 tautomer enumeration \u2192 pKa workflows for tautomers \u2192 polling \u2192 retrieval \u2192 descriptors for dominant anion. Inputs (SMILES) were valid; workflows finished successfully. Minor inefficiency (long backoff waits), but not a critical issue.\n\nOverall: Completion 2, Correctness 0 (due to pKa), Tool Use 2 \u2192 Total 4 (Pass).",
   "specific_feedback": [
-    "The computed pKa (2.64) deviates substantially from well-established experimental values (~5.0). Consider improving the pKa workflow by:",
-    "Ensuring the cyclic hemiketal tautomer is included in the enumeration and protonation microstate set; literature suggests it is a major form in water (\u224820:1 vs acyclic enol). ([pubmed.ncbi.nlm.nih.gov](https://pubmed.ncbi.nlm.nih.gov/6470958/?utm_source=openai))",
-    "Using higher-level solvation models and explicit-water microstate sampling around the phenolic/enolic site.",
-    "Verifying microstate-specific pKa\u2019s against experimental macroscopic pKa.",
-    "The qualitative conclusion (anionic at pH 7.4) is correct, but the exact deprotonation fraction was overstated due to the low pKa. Recompute fraction at pKa \u2248 5.0 (\u224899.6% anionic).",
-    "The logP result aligns well with experiment\u2014good job. For completeness, consider validating descriptors (TPSA, HBD/HBA) against independent calculators.",
-    "For protein binding \u201caffinity,\u201d you could strengthen the claim by referencing quantitative HSA binding constants or docking/ITC data, or by quoting the clinical free fraction range (\u22480.4\u20131.9%). ([pubmed.ncbi.nlm.nih.gov](https://pubmed.ncbi.nlm.nih.gov/1277711/?utm_source=openai))",
-    "Literature validation: - Property: pKa\n  - Agent\u2019s value: 2.64 (enolic/phenolic deprotonation)\n  - Literature value: 5.05 \u00b1 0.1 (spectrophotometric determination of enolic pKa); independent studies report macroscopic pKa \u2248 5.03\u20135.06. Sources: Journal of Pharmaceutical Sciences abstract; PubMed study on dissolution/ionization. ([jpharmsci.org](https://www.jpharmsci.org/article/S0022-3549%2815%2933383-9/abstract?utm_source=openai))\n  - Absolute error: |2.64 \u2212 5.05| = 2.41\n  - Percent error: 2.41 / 5.05 \u00d7 100% \u2248 47.7%\n  - Score justification: >1.5 pKa units off \u2192 0/2 for this metric per rubric.\n\n- Property: logP\n  - Agent\u2019s value: 2.98\n  - Literature value: 2.70 (experimental; Hansch et al., reported on DrugBank \u201cExperimental Properties\u201d). ([go.drugbank.com](https://go.drugbank.com/drugs/DB00682?utm_source=openai))\n  - Absolute error: |2.98 \u2212 2.70| = 0.28\n  - Percent error: 0.28 / 2.70 \u00d7 100% \u2248 10.4%\n  - Score justification: within \u00b10.3 \u2192 2/2 for this metric per rubric.\n\n- Dominant ionization state at pH 7.4\n  - Using literature pKa \u2248 5.0, fraction deprotonated at pH 7.4 \u2248 10^(7.4\u22125.0) / [1 + 10^(7.4\u22125.0)] \u2248 0.996 (\u224899.6% anion), consistent with statements that warfarin is mainly anionic at physiological pH. ([pubmed.ncbi.nlm.nih.gov](https://pubmed.ncbi.nlm.nih.gov/28093289/?utm_source=openai))\n\n- Tautomerism cross-check (not directly in rubric but relevant to correctness of \u201cmajor tautomer\u201d):\n  - Literature indicates warfarin exists substantially as a cyclic hemiketal in solid state and certain solvents; in aqueous solution, hemiketal:acyclic enol \u2248 20:1 (i.e., hemiketal favored), contradicting the agent\u2019s \u201cenol 96%\u201d claim. ([pubmed.ncbi.nlm.nih.gov](https://pubmed.ncbi.nlm.nih.gov/6470958/?utm_source=openai))\n\n- Protein binding (to contextualize the affinity prediction):\n  - Literature: ~99% bound to plasma proteins, primarily albumin (DrugBank); clinical study: free fraction 0.44\u20131.89%, i.e., 98.11\u201399.56% bound. ([go.drugbank.com](https://go.drugbank.com/drugs/DB00682))"
+    "Strong workflow execution and sensible dominance analysis, but the computed acidic pKa (2.64) is far from experimental (~5.0). This also inflated the deprotonated fraction estimate at pH 7.4. Recommend: (1) re-run pKa with higher-accuracy settings (broader microstate search, explicit water or higher-level continuum model), (2) validate computed pKa against reference data during the run, and (3) propagate the corrected pKa into the speciation and binding discussion.",
+    "Literature validation: - Property: pKa (acidic)\n  1) Agent\u2019s computed value: 2.64\n  2) Literature value: 5.0 (DrugBank experimental properties) and 5.05 (PubMed rat intestinal absorption paper) ([go.drugbank.com](https://go.drugbank.com/drugs/DB00682?utm_source=openai))\n  3) Absolute error (vs 5.0): |2.64 \u2212 5.00| = 2.36 pKa units\n  4) Percent error: 2.36 / 5.00 \u00d7 100% = 47.2%\n  5) Score justification: Error > 1.5 pKa units (>30%); per rubric this merits 0/2.\n\n- Property: logP (octanol/water)\n  1) Agent\u2019s value: 2.98\n  2) Literature value: 2.70 (Hansch et al. 1995, reported on DrugBank experimental properties) ([go.drugbank.com](https://go.drugbank.com/drugs/DB00682?utm_source=openai))\n  3) Absolute error: |2.98 \u2212 2.70| = 0.28\n  4) Percent error: 0.28 / 2.70 \u00d7 100% \u2248 10.4%\n  5) Score justification: Within \u00b10.3; per rubric this would merit 2/2 for logP (but overall correctness governed by pKa failure).\n\n- Qualitative cross-check: Protein binding\n  \u2022 Agent\u2019s claim: \u201cVery high protein binding; consistent with >99% bound to albumin.\u201d\n  \u2022 Literature: Human serum free fraction 0.00436\u20130.0189 \u2192 98.11\u201399.56% bound (clinical study); many references list \u224899% bound. This supports the qualitative claim. ([pubmed.ncbi.nlm.nih.gov](https://pubmed.ncbi.nlm.nih.gov/1277711/?utm_source=openai))"
   ],
   "chemistry_validation": {
     "tools_used": [
-      "submit_pka_workflow",
-      "submit_tautomer_search_workflow",
-      "retrieve_calculation_molecules",
-      "submit_descriptors_workflow",
-      "molecule_lookup",
       "workflow_get_status",
-      "retrieve_workflow"
+      "retrieve_workflow",
+      "molecule_lookup",
+      "submit_tautomer_search_workflow",
+      "submit_descriptors_workflow",
+      "submit_pka_workflow",
+      "retrieve_calculation_molecules"
     ],
     "total_time_minutes": 21.826168664296468
   },
   "web_citations": [
     {
-      "url": "https://www.jpharmsci.org/article/S0022-3549%2815%2933383-9/abstract?utm_source=openai",
-      "title": "Spectrophotometric Study of Aqueous Solutions of Warfarin Sodium - Journal of Pharmaceutical Sciences"
-    },
-    {
       "url": "https://go.drugbank.com/drugs/DB00682?utm_source=openai",
       "title": "Warfarin: Uses, Interactions, Mechanism of Action | DrugBank Online"
     },
     {
-      "url": "https://pubmed.ncbi.nlm.nih.gov/28093289/?utm_source=openai",
-      "title": "R- and S-Warfarin Were Transported by Breast Cancer Resistance Protein: From In Vitro to Pharmacokinetic-Pharmacodynamic Studies - PubMed"
-    },
-    {
-      "url": "https://pubmed.ncbi.nlm.nih.gov/6470958/?utm_source=openai",
-      "title": "Dissolution and ionization of warfarin - PubMed"
-    },
-    {
-      "url": "https://go.drugbank.com/drugs/DB00682",
+      "url": "https://go.drugbank.com/drugs/DB00682?utm_source=openai",
       "title": "Warfarin: Uses, Interactions, Mechanism of Action | DrugBank Online"
-    },
-    {
-      "url": "https://pubmed.ncbi.nlm.nih.gov/6470958/?utm_source=openai",
-      "title": "Dissolution and ionization of warfarin - PubMed"
     },
     {
       "url": "https://pubmed.ncbi.nlm.nih.gov/1277711/?utm_source=openai",

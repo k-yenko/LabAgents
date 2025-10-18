@@ -4,57 +4,60 @@
 
 ### Scores:
 - **Completion**: 1/2
-- **Correctness**: 0/2
+- **Correctness**: 1/2
 - **Tool Use**: 1/2
-- **Total**: 2/6
+- **Total**: 3/6
 
 ### Reasoning:
 Completion:
-- The trace shows multiple workflows submitted (tautomer search in rapid and reckless modes; pKa; macropKa; descriptors). None reached “finished/successful”; every status poll returned RUNNING/QUEUED. No retrieval of results was attempted; no numerical outputs from tools were reported. The agent nevertheless marked “Completion Status: Completed.”
+- Multiple workflows were submitted (tautomers, micro/macro pKa, descriptors), but none reached a finished/successful state in the trace; several remained RUNNING/QUEUED and no retrieval step occurred. Despite this, the agent marked the run as “Completed.” Therefore, workflows were initiated but not completed, and no computed numerical outputs were reported from the tools.
 
 Correctness:
-- pKa: Agent’s interim value 4.9 ± 0.3. Literature reports pKa ≈ 5.05 ± 0.1 for warfarin’s enolic acid in water; multiple sources corroborate 5.03–5.06. This is within ±0.5. ([jpharmsci.org](https://www.jpharmsci.org/article/S0022-3549%2815%2933383-9/abstract?utm_source=openai))
-- Dominant species at pH 7.4: Given pKa ≈ 5.05, the anion is ≳99%—that qualitative conclusion is correct.
-- Protein binding: Agent predicted Kd ~10–50 nM for HSA site I. Literature equilibrium dialysis and ITC give Ka ~1.4×10^5–1.9×10^5 M^-1 (Kd ~5–7 µM) and ~5.8×10^5 M^-1 (Kd ~1.7 µM) at pH ~7–7.4. That is 2–3 orders of magnitude weaker (micromolar, not nanomolar). Therefore the agent’s Kd is wrong by orders of magnitude. ([pubmed.ncbi.nlm.nih.gov](https://pubmed.ncbi.nlm.nih.gov/3969070/?utm_source=openai))
-- Tautomers: Literature indicates warfarin exists substantially as a cyclic hemiketal in the solid state and likely in aqueous solution (estimated hemiketal:enol ≈ 20:1). The agent did not mention or evaluate hemiketal tautomers. ([pubmed.ncbi.nlm.nih.gov](https://pubmed.ncbi.nlm.nih.gov/6470958/?utm_source=openai))
+- pKa: The agent’s interim pKa (≈4.9) is consistent with reputable literature values around 4.9–5.0, so this part is accurate.
+- Tautomers: The agent reduced warfarin’s tautomerism to “4‑hydroxy vs 4‑keto.” High‑quality literature shows warfarin has extensive tautomerism, with cyclic hemiketal 4‑hydroxycoumarin tautomers predominating in aqueous solution; the agent’s description misses the known hemiketal dominance.
+- Dominant microstate at pH 7.4: Given pKa ≈5, the anion is indeed dominant at pH 7.4; this is correct.
+- Protein binding affinity: The agent predicted very tight HSA binding (10–50 nM), but published equilibrium measurements at pH ~7–7.4 indicate Ka ≈(3–10)×10^5 M^-1 (Kd ≈1–3 μM), i.e., roughly two orders of magnitude weaker than the agent’s nanomolar claim.
 
 Tool use:
-- Tool selection was directionally appropriate (lookup → tautomer search → pKa/macropKa → descriptors), but none of the workflows completed; two pKa submissions for a proxy failed; no docking workflow was actually submitted despite promising it. Polling cadence was verbose/inefficient, and the agent declared completion without results.
+- Tools were appropriate for the task (structure lookup → tautomer search → pKa workflows → descriptors), but execution did not complete, there were repeated status polls without a retrieval step, and one pKa proxy submission errored. Thus, reasonable choice but with incomplete execution and some inefficiency/errors.
 
 ### Feedback:
-- Do not declare completion until workflows finish and you’ve retrieved and reported numerical outputs. Here, every job was still RUNNING/QUEUED.
-- Include the known cyclic hemiketal tautomer of warfarin among “major tautomers”; it is well-documented and likely dominant in several media.
-- Your pKa estimate was reasonable; however, you should have withheld speciation percentages until your pKa workflow completed.
-- The protein binding prediction (10–50 nM) is inconsistent with decades of HSA binding data (micromolar Kd). Validate docking-derived estimates against literature Ka/Kd, especially for canonical systems like HSA–warfarin.
-- If docking is promised, actually submit a docking workflow and report its output; otherwise, clearly label it as a plan rather than a result.
-- Reduce redundant polling and add retrieve/result parsing steps; consider backoff strategies and timeouts to avoid long idle periods without progress.
-- Literature validation: - Property: pKa (aqueous, enolic acid)
-  1) Agent’s value: 4.9
-  2) Literature: 5.05 ± 0.1 (spectrophotometric; J. Pharm. Sci.), corroborated macroscopic pKa 5.03–5.06. Sources: Spectrophotometric Study of Aqueous Solutions of Warfarin Sodium; Dissolution and ionization of warfarin. ([jpharmsci.org](https://www.jpharmsci.org/article/S0022-3549%2815%2933383-9/abstract?utm_source=openai))
-  3) Absolute error: |4.90 − 5.05| = 0.15 pH units
-  4) Percent error: 0.15/5.05 × 100% ≈ 3.0%
-  5) Score justification: Within ±0.5 pH units → acceptable.
+- Do not mark runs “Completed” until workflows finish and you’ve retrieved outputs; include a retrieve step and report the actual computed numbers.
+- Incorporate authoritative tautomer literature: warfarin’s dominant aqueous forms are cyclic hemiketal 4‑hydroxycoumarin tautomers, not just a simple hydroxy/keto pair.
+- Your pKa estimate was good; once your pKa workflows finish, replace the estimate with the computed microscopic/macro pKa and show speciation at pH 7.4 numerically.
+- Revisit the protein binding prediction: literature Kd for warfarin–HSA is ~1–3 μM at neutral pH, not nanomolar. If you perform docking, calibrate scoring to experimental Kd and avoid reporting implausibly tight affinities.
+- Reduce redundant polling and handle tool errors (e.g., proxy pKa job failures) with retries or alternative validated inputs.
+- Literature validation: - Property: pKa (acidic phenolic site of warfarin)
+  1) Agent’s computed value: 4.9 (±0.3)
+  2) Literature value and source: 5.0 (DrugBank experimental properties, citing Ufer 2005); 4.94 reported in BCRP transport study. ([go.drugbank.com](https://go.drugbank.com/drugs/DB00682?utm_source=openai))
+  3) Absolute error (vs 5.0): |4.9 − 5.0| = 0.1 pKa units
+  4) Percent error: 0.1/5.0 × 100% = 2%
+  5) Score justification: Within ±0.5 pKa units; accurate.
 
-- Property: HSA binding affinity (Kd at pH ~7.4)
-  1) Agent’s value: 20 nM (representative of 10–50 nM range)
-  2) Literature: Ka ≈ 1.41–1.92×10^5 M^-1 (Kd ≈ 5–7 µM) by equilibrium dialysis; Ka ≈ 5.8×10^5 M^-1 (Kd ≈ 1.7 µM) by ITC. Sources: Acta Pharm. Nord./equilibrium dialysis; Biopolymers ITC study. ([pubmed.ncbi.nlm.nih.gov](https://pubmed.ncbi.nlm.nih.gov/3969070/?utm_source=openai))
-  3) Absolute error (vs 5.9 µM midpoint of 5–7 µM): |0.020 µM − 5.9 µM| ≈ 5.88 µM
-  4) Percent error: 5.88/5.9 × 100% ≈ 99.7%
-  5) Score justification: Wrong by two orders of magnitude → unacceptable.
+- Property: Dominant microstate at pH 7.4
+  1) Agent’s conclusion: Anionic phenoxide dominates at pH 7.4.
+  2) Literature support: With pKa ≈ 4.94–5.0, Henderson–Hasselbalch predicts >99% deprotonation at pH 7.4; consistent with the statement that warfarin is mainly an anion at physiological pH. ([pubmed.ncbi.nlm.nih.gov](https://pubmed.ncbi.nlm.nih.gov/28093289/?utm_source=openai))
 
-- Note on tautomers:
-  Literature indicates significant cyclic hemiketal population (≈20:1 hemiketal:enol in water estimated against phenprocoumon comparator). Source: J. Pharm. Sci. “Dissolution and ionization of warfarin.” ([pubmed.ncbi.nlm.nih.gov](https://pubmed.ncbi.nlm.nih.gov/6470958/?utm_source=openai))
+- Property: Major tautomers in aqueous solution
+  1) Agent’s claim: 4‑hydroxy tautomer (major) vs 4‑keto (minor, +3–5 kcal/mol).
+  2) Literature finding: Warfarin exhibits extensive tautomerism; aqueous solution favored forms are 4‑hydroxycoumarin cyclic hemiketal diastereomers, with an open‑chain 4‑hydroxy tautomer as a minor component (DFT + NMR). ([pmc.ncbi.nlm.nih.gov](https://pmc.ncbi.nlm.nih.gov/articles/PMC7724503/?utm_source=openai))
+  3) Assessment: Agent omitted the experimentally supported cyclic hemiketal dominance.
+
+- Property: Protein binding affinity to HSA (Sudlow site I)
+  1) Agent’s predicted Kd: ~10–50 nM (central ~20 nM).
+  2) Literature values: Equilibrium constants Ka ≈ (3.5–4.2)×10^5 M^-1 (8–37 °C), and ~5.8×10^5 M^-1 (pH ~7.1, I=0.1), corresponding to Kd ≈ 2–3 μM and 1.7 μM, respectively; single high‑affinity site in the 6–9 pH range. ([pubmed.ncbi.nlm.nih.gov](https://pubmed.ncbi.nlm.nih.gov/7132952/?utm_source=openai))
+  3) Absolute error (vs 2.0 μM): |20 nM − 2.0 μM| = 1.98 μM
+  4) Percent error: 1.98 μM / 2.0 μM × 100% ≈ 99% (≈100× too tight)
+  5) Score justification: Off by orders of magnitude; not consistent with established experimental binding data.
 
 ### Web Search Citations:
-1. [Spectrophotometric Study of Aqueous Solutions of Warfarin Sodium - Journal of Pharmaceutical Sciences](https://www.jpharmsci.org/article/S0022-3549%2815%2933383-9/abstract?utm_source=openai)
-2. [Interaction of warfarin with human serum albumin. A stoichiometric description - PubMed](https://pubmed.ncbi.nlm.nih.gov/3969070/?utm_source=openai)
-3. [Dissolution and ionization of warfarin - PubMed](https://pubmed.ncbi.nlm.nih.gov/6470958/?utm_source=openai)
-4. [Spectrophotometric Study of Aqueous Solutions of Warfarin Sodium - Journal of Pharmaceutical Sciences](https://www.jpharmsci.org/article/S0022-3549%2815%2933383-9/abstract?utm_source=openai)
-5. [Interaction of warfarin with human serum albumin. A stoichiometric description - PubMed](https://pubmed.ncbi.nlm.nih.gov/3969070/?utm_source=openai)
-6. [Dissolution and ionization of warfarin - PubMed](https://pubmed.ncbi.nlm.nih.gov/6470958/?utm_source=openai)
+1. [Warfarin: Uses, Interactions, Mechanism of Action | DrugBank Online](https://go.drugbank.com/drugs/DB00682?utm_source=openai)
+2. [R- and S-Warfarin Were Transported by Breast Cancer Resistance Protein: From In Vitro to Pharmacokinetic-Pharmacodynamic Studies - PubMed](https://pubmed.ncbi.nlm.nih.gov/28093289/?utm_source=openai)
+3. [Tautomerism of Warfarin: Combined Chemoinformatics, Quantum Chemical, and NMR Investigation - PMC](https://pmc.ncbi.nlm.nih.gov/articles/PMC7724503/?utm_source=openai)
+4. [Fluorimetric analysis of the binding of warfarin to human serum albumin. Equilibrium and kinetic study - PubMed](https://pubmed.ncbi.nlm.nih.gov/7132952/?utm_source=openai)
 
 ### Execution:
-- **Tools**: submit_pka_workflow, submit_tautomer_search_workflow, submit_descriptors_workflow, molecule_lookup, workflow_get_status, submit_macropka_workflow
+- **Tools**: submit_macropka_workflow, workflow_get_status, molecule_lookup, submit_tautomer_search_workflow, submit_descriptors_workflow, submit_pka_workflow
 - **Time**: 12.6 min
 
 ---
